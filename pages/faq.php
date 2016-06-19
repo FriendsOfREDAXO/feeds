@@ -24,6 +24,11 @@ $content = '
        <li>In der Auswahlbox darunter entweder "Get User Access Token" oder "Get Page Access Token" auswählen, und den Anweisungen folgen. Beim User Access Token bei den Permisssions <code>user_posts</code> auswählen.</li>
        <li>Im Feld "Zugriffsschlüssel" befindet sich das Access Token</li>
     </ul>
+    <h3>Wie werden die Streams aktualisiert?</h3>
+    <ul>
+        <li>Entweder manuell über "Stream abrufen" oder </li>
+        <li>automatisch über den Cronjob "YFeed: Feeds abrufen" im Cronjob-Addon.</li>
+    </ul>
     ';
 
 $fragment = new rex_fragment();
