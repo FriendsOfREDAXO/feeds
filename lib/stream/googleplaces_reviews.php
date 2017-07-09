@@ -52,7 +52,7 @@ class rex_yfeed_stream_googleplaces_reviews extends rex_yfeed_stream_abstract
 		if($response !== false) {
  			$data = json_decode($response,true);
 			$place = $data['result'];
-			dump($place);
+
 			foreach ($place['reviews'] as $review) {
 				$item = new rex_yfeed_item($this->streamId, $review['time']);
 				$item->setContentRaw($review['text']);
