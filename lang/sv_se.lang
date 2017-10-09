@@ -1,0 +1,118 @@
+yfeed = YFeed
+yfeed_add = tillfoga
+yfeed_edit = redigera
+yfeed_delete = radera
+yfeed_delete_question = Vill du verkligen radera?
+
+
+
+yfeed_items = Inlägg
+yfeed_item_author = Autor
+yfeed_item_content = Innehåll
+yfeed_item_content_raw = Innehåll (obearbetat / ofiltrerat)
+yfeed_item_date = Datum
+yfeed_item_edit = Redigera inlägg
+yfeed_item_language = Språk / språkförkortning
+yfeed_item_media = Media
+yfeed_item_raw = All data som Json
+yfeed_item_title = Titel
+yfeed_item_url = Url
+yfeed_item_uid = Id
+
+yfeed_item_status_online = Online
+yfeed_item_status_offline = Offline
+yfeed_item_status_saved = Statusen sparades
+
+yfeed_settings = Inställningar
+yfeed_settings_saved = Inställningarna sparades
+
+yfeed_streams = Streams
+yfeed_stream_add = Tillfoga streams
+yfeed_stream_edit = Redigera stream
+yfeed_stream_delete = Radera stream
+yfeed_stream_delete_question = Vill du verkligen radera stream:en inkl. alla relaterade inlägg?
+yfeed_stream_deleted = Stream raderades
+yfeed_stream_fetch = Hämta stream
+yfeed_stream_fetched = Stream har hämtats och posterna har sparats ({0} är tillagt; {1} har uppdaterat; {2} är orörd eftersom den redigerades av en användare).
+yfeed_stream_general = Allmänt
+yfeed_stream_image = Bild
+yfeed_stream_namespace = Namespace
+yfeed_stream_namespace_error = Namnutrymmet kan inte vara tomt och kan bara innehålla små bokstäver och understreck.
+yfeed_stream_namespace_notice = Ange ett unikt namn. SQL-förfrågan kan filtreras med hjälp av namnrymden.
+yfeed_stream_select_type = Ange typer
+yfeed_stream_title = Titel
+yfeed_stream_type = Typ
+yfeed_stream_url = URL
+yfeed_stream_status_activated = Aktiverad
+yfeed_stream_status_deactivated = Deaktiverad
+yfeed_stream_status_saved = Statusen har sparats
+
+
+yfeed_cronjob = YFeed: Hämta feeds
+
+
+yfeed_facebook = Facebook
+yfeed_facebook_app_id = App Id
+yfeed_facebook_app_secret = App Secret
+yfeed_facebook_app_title = Titel der App
+yfeed_facebook_app_title_note = optional
+yfeed_facebook_settings = Facebook App
+yfeed_facebook_feed = Facebook Feed
+yfeed_facebook_profile_id = User ID eller page ID
+yfeed_facebook_token = Access token
+yfeed_facebook_token_note = Valfritt (krävs för privata inlägg)
+yfeed_facebook_count = Antal inlägg
+yfeed_facebook_result_type = Resultat
+yfeed_facebook_result_type_feed = Alla inlägg
+yfeed_facebook_result_type_posts = Endast egna inlägg
+yfeed_facebook_result_type_tagged = Endast andras inlägg
+
+yfeed_rss = RSS
+yfeed_rss_feed = RSS feed
+yfeed_rss_url = URL
+
+yfeed_twitter = Twitter
+yfeed_twitter_consumer_key = Twitter API key (Consumer Key)
+yfeed_twitter_consumer_secret = Twitter API secret (Consumer Secret)
+yfeed_twitter_count = Antal tweets
+yfeed_twitter_entries = Inlägg
+yfeed_twitter_exclude_replies = Utesluta svar
+yfeed_twitter_oauth_token = Twitter Access token
+yfeed_twitter_oauth_token_secret = Twitter Access token secret
+yfeed_twitter_result_type = Resultat
+yfeed_twitter_result_type_mixed = Hämta de senaste och populäraste tweets
+yfeed_twitter_result_type_recent = Hämta endast de senaste tweets
+yfeed_twitter_result_type_popular = Hämta endast de populäraste tweets
+yfeed_twitter_screen_name = Användarnamn
+yfeed_twitter_settings = Inställningar
+
+yfeed_twitter_user_timeline = Twitter :: Tweets från användaren
+
+yfeed_twitter_hashtag = Twitter :: Hashtag
+yfeed_twitter_hashtag_q = Hashtag
+yfeed_twitter_hashtag_with_prefix = Skriv in hashtags med #
+
+yfeed_google = Google
+yfeed_google_settings = Inställningar
+yfeed_google_key = Google Api-Key
+
+yfeed_youtube_channel = Youtube :: Channel
+yfeed_youtube_channel_id = Channel-ID
+yfeed_youtube_count = Antal inlägg
+
+yfeed_youtube_playlist = Youtube :: Playlist
+yfeed_youtube_playlist_id = Playlist-ID
+
+yfeed_instagram = Instagram
+yfeed_instagram_settings = Inställningar
+yfeed_instagram_access_token = Access Token
+
+yfeed_instagram_tag = Instagram :: Tag
+yfeed_instagram_tag_name = Tagname
+yfeed_instagram_tag_without_prefix = Ange taggen utan #
+yfeed_instagram_count = Antal inlägg
+
+yfeed_instagram_user = Instagram :: user
+yfeed_instagram_username = Användarnamn
+
+yfeed_faq = FAQ
