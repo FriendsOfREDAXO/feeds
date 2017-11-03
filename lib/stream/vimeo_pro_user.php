@@ -45,28 +45,28 @@ class rex_yfeed_stream_vimeo_pro_user extends rex_yfeed_stream_abstract
         $argSeparator = ini_set('arg_separator.output', '&');
 
     	$vimeo = new Vimeo($this->getVimeoClientID(), $this->getVimeoClientSecret());
-		if (!empty($this->getVimeoAccessToken())) {
-		    $vimeo->setToken($this->getVimeoAccessToken());
-		    $videos = $vimeo->request('/me/videos?per_page=100');
-		    $videos = $videos['body'];
-//dump($videos); Total Anzahl wegen Paging (max 100 per Page) wenn mehr als 100 -> Page 2 Request + append an array realisieren		    
-			$videos = $videos['data'];
-		}
+	if (!empty($this->getVimeoAccessToken())) {
+		$vimeo->setToken($this->getVimeoAccessToken());
+		$videos = $vimeo->request('/me/videos?per_page=100');
+		$videos = $videos['body'];
+		//dump($videos); Total Anzahl wegen Paging (max 100 per Page) wenn mehr als 100 -> Page 2 Request + append an array realisieren		    
+		$videos = $videos['data'];
+	}
         ini_set('arg_separator.output', $argSeparator);
 
         foreach ($videos as $video) {
         	$uri = $video['uri'];
-			$uri = str_replace("/videos/","",$uri);
+		$uri = str_replace("/videos/","",$uri);
         	$item = new rex_yfeed_item($this->streamId, $uri);
         	
         	$item->setTitle($video['name']);
         		
-			$item->setContentRaw($video['description']);
-			$item->setContent($video['description']);
+		$item->setContentRaw($video['description']);
+		$item->setContent($video['description']);
 				
-			$item->setUrl($video['link']);
+		$item->setUrl($video['link']);
 				
-			//$item->setMedia($video->snippet->thumbnails->maxres->url);
+		//$item->setMedia($video->snippet->thumbnails->maxres->url);
 
         	$item->setDate(new DateTime($video['created_time']));
         		
