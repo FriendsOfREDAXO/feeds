@@ -49,7 +49,7 @@ class rex_yfeed_stream_vimeo_pro_user extends rex_yfeed_stream_abstract
 		$vimeo->setToken($this->getVimeoAccessToken());
 		$videos = $vimeo->request('/me/videos?per_page=100');
 		$videos = $videos['body'];
-		//dump($videos); Total Anzahl wegen Paging (max 100 per Page) wenn mehr als 100 -> Page 2 Request + append an array realisieren		    
+		//dump($videos);  Total Anzahl wegen Paging (max 100 per Page) wenn mehr als 100 -> Page 2 Request + append an array realisieren		    
 		$videos = $videos['data'];
 	}
         ini_set('arg_separator.output', $argSeparator);
