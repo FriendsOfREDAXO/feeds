@@ -115,4 +115,10 @@ yfeed_instagram_count = Number of entries
 yfeed_instagram_user = Instagram :: user
 yfeed_instagram_username = Username
 
+yfeed_vimeo_pro_user = Vimeo Pro :: All videos of a user
+yfeed_vimeo_user_id = User ID
+yfeed_vimeo_access_token = Access Token
+yfeed_vimeo_client_secret = Client Secret
+
+
 yfeed_faq = FAQ
