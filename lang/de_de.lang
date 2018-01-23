@@ -115,8 +115,8 @@ yfeed_instagram_count = Anzahl der Einträge
 yfeed_instagram_user = Instagram :: Benutzer
 yfeed_instagram_username = Benutzername
 
-yfeed_vimeo_pro_user = Vimeo Pro :: Alle Videos eines User
-yfeed_vimeo_user_id = ID des User
+yfeed_vimeo_pro_user = Vimeo Pro :: Videos eines Pro-Users
+yfeed_vimeo_user_id = User-ID
 yfeed_vimeo_access_token = Access Token
 yfeed_vimeo_client_secret = Client Secret
 
