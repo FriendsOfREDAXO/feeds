@@ -117,4 +117,10 @@ yfeed_instagram_user = Instagram :: Usuario
 yfeed_instagram_username = Nombre de usuario / ID de usuario
 yfeed_instagram_username_notice = Al usar la API oficial (token de acceso depositado), se debe usar la ID de usuario, de lo contrario, el nombre de usuario.
 
+yfeed_vimeo_pro_user = Vimeo Pro :: Vídeos de un usuario profesional
+yfeed_vimeo_user_id = ID de usuario
+yfeed_vimeo_access_token = Token de acceso
+yfeed_vimeo_client_secret = Secreto del cliente
+
+
 yfeed_faq = Preguntas frecuentes
