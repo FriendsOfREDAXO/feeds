@@ -50,6 +50,7 @@ yfeed_stream_status_saved = Status has been saved.
 
 yfeed_cronjob = YFeed: fetch feeds
 
+yfeed_media_manager_effect = File: fetch from YFeed (if *.yfeed)
 
 yfeed_facebook = Facebook
 yfeed_facebook_app_id = App Id
@@ -114,6 +115,7 @@ yfeed_instagram_count = Number of entries
 
 yfeed_instagram_user = Instagram :: user
 yfeed_instagram_username = Username / User-ID
+yfeed_instagram_username_notice = When using the official API (access token is set) the User-ID must be used, otherwise use the username
 
 yfeed_vimeo_pro_user = Vimeo Pro :: All videos of a user
 yfeed_vimeo_user_id = User ID
