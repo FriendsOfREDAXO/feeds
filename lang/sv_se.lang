@@ -50,6 +50,7 @@ yfeed_stream_status_saved = Statusen har sparats
 
 yfeed_cronjob = YFeed: Hämta feeds
 
+yfeed_media_manager_effect = Fil: Läs in från YFeed (om * .yfeed)
 
 yfeed_facebook = Facebook
 yfeed_facebook_app_id = App Id
@@ -114,5 +115,12 @@ yfeed_instagram_count = Antal inlägg
 
 yfeed_instagram_user = Instagram :: user
 yfeed_instagram_username = Användarnamn
+yfeed_instagram_username_notice = Vid användning av det officiella API:et (Access Token deposited) måste användar-ID:n användas, annars användarnamnet.
+
+yfeed_vimeo_pro_user = Vimeo Pro :: Videos av en användare
+yfeed_vimeo_user_id = User-ID
+yfeed_vimeo_access_token = Access Token
+yfeed_vimeo_client_secret = Client Secret
+
 
 yfeed_faq = FAQ
