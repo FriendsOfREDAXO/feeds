@@ -68,6 +68,11 @@ class rex_yfeed_stream_facebook_feed extends rex_yfeed_stream_abstract
 
         /** @var Facebook\GraphNodes\GraphNode $facebookItem */
         foreach ($items as $facebookItem) {
+            // ignore empty content
+            if (is_null($facebookItem->getField('message'))) {
+                continue;
+            }
+            
             $item = new rex_yfeed_item($this->streamId, $facebookItem->getField('id'));
             $item->setTitle($facebookItem->getField('story'));
             $item->setContentRaw($facebookItem->getField('message'));
