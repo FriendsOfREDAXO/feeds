@@ -140,7 +140,7 @@ class rex_yfeed_stream_facebook_feed extends rex_yfeed_stream_abstract
         $oauth = $facebook->getOAuth2Client();
         $metaData = $oauth->debugToken($this->typeParams['token']);
 
-        if ($metaData->getExpiresAt()->getTimestamp() > time() + 60 * 60 * 24 * 50) {
+        if (!$metaData->getExpiresAt() || $metaData->getExpiresAt()->getTimestamp() > time() + 60 * 60 * 24 * 50) {
             return;
         }
 

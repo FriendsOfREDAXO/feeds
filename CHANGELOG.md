@@ -1,6 +1,19 @@
 Changelog
 =========
 
+Version 1.3.0 – 01.07.2018
+--------------------------
+
+### Neu
+
+* Vimeo Pro (@chrison94)
+* Übersetzungen (@ynamite, @nandes2062, @interweave-media)
+
+### Bugfixes
+
+* Diverse Bugfixes für Instagram und Facebook (@alexplusde, @gharlan)
+
+
 Version 1.2.1 – 05.01.2018
 --------------------------
 

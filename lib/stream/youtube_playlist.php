@@ -31,7 +31,7 @@ class rex_yfeed_stream_youtube_playlist extends rex_yfeed_stream_abstract
                 'label' => rex_i18n::msg('yfeed_youtube_count'),
                 'name' => 'count',
                 'type' => 'select',
-                'options' => [5 => 5, 10 => 10, 15 => 15, 20 => 20, 30 => 30, 50 => 50, 75 => 75, 100 => 100],
+                'options' => [5 => 5, 10 => 10, 15 => 15, 20 => 20, 30 => 30, 50 => 50],
                 'default' => 10,
             ],
         ];
