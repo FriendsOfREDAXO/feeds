@@ -63,6 +63,7 @@ yfeed_facebook_profile_id = User ID oder Page ID
 yfeed_facebook_token = Access Token
 yfeed_facebook_token_note = Optional (erforderlich für nicht allgemein öffentliche Einträge)
 yfeed_facebook_count = Anzahl der Einträge
+yfeed_facebook_api_version = API-Version
 yfeed_facebook_result_type = Ergebnis
 yfeed_facebook_result_type_feed = Alle Einträge
 yfeed_facebook_result_type_posts = Nur eigene Einträge
