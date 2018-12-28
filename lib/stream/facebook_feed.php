@@ -114,7 +114,7 @@ class rex_yfeed_stream_facebook_feed extends rex_yfeed_stream_abstract
             $credentials = [
                 'app_id' => rex_config::get('yfeed', 'facebook_app_id'),
                 'app_secret' => rex_config::get('yfeed', 'facebook_app_secret'),
-                'default_graph_version' => 'v2.6',
+                'default_graph_version' => 'v2.12',
             ];
             $facebook = new Facebook\Facebook($credentials);
             if ($this->typeParams['token']) {
@@ -133,7 +133,7 @@ class rex_yfeed_stream_facebook_feed extends rex_yfeed_stream_abstract
         $oauth = $facebook->getOAuth2Client();
         $metaData = $oauth->debugToken($this->typeParams['token']);
 
-        if ($metaData->getExpiresAt()->getTimestamp() > time() + 60 * 60 * 24 * 50) {
+        if (!$metaData->getExpiresAt() || $metaData->getExpiresAt()->getTimestamp() > time() + 60 * 60 * 24 * 50) {
             return;
         }
 

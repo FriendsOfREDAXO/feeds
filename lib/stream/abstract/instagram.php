@@ -56,7 +56,9 @@ abstract class rex_yfeed_stream_instagram_abstract extends rex_yfeed_stream_abst
             $item->setUrl($instagramItem->getLink());
             $item->setDate(new DateTime($instagramItem->getCreatedTime('Y-m-d H:i:s')));
 
-            $item->setMedia($instagramItem->getStandardResImage()->url);
+            if ($image = $instagramItem->getStandardResImage()) {
+                $item->setMedia($image->url);
+            }
 
             $item->setAuthor($instagramItem->getUser()->getFullName());
             $item->setRaw($instagramItem);
@@ -80,7 +82,10 @@ abstract class rex_yfeed_stream_instagram_abstract extends rex_yfeed_stream_abst
             $item->setUrl($instagramItem->getLink());
             $item->setDate(new DateTime('@'.$instagramItem->getCreatedTime()));
 
-            $item->setMedia($instagramItem->getImageStandardResolutionUrl());
+            $image = $instagramItem->getImageHighResolutionUrl() ?: $instagramItem->getImageStandardResolutionUrl();
+            if ($image) {
+                $item->setMedia($image);
+            }
 
             $owner = $instagramItem->getOwner();
             if (!$owner->getFullName()) {
