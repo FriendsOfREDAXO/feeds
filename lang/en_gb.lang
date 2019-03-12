@@ -63,6 +63,7 @@ yfeed_facebook_profile_id = User ID or page ID
 yfeed_facebook_token = Access token
 yfeed_facebook_token_note = Optional (required for private entries)
 yfeed_facebook_count = Number of entries
+yfeed_facebook_api_version = API version
 yfeed_facebook_result_type = Result
 yfeed_facebook_result_type_feed = All entries
 yfeed_facebook_result_type_posts = Only own entries
@@ -123,4 +124,4 @@ yfeed_vimeo_access_token = Access Token
 yfeed_vimeo_client_secret = Client Secret
 
 
-yfeed_faq = FAQ
+yfeed_help = Help
