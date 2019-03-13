@@ -63,6 +63,7 @@ yfeed_facebook_profile_id = User ID eller page ID
 yfeed_facebook_token = Access token
 yfeed_facebook_token_note = Valfritt (krävs för privata inlägg)
 yfeed_facebook_count = Antal inlägg
+yfeed_facebook_api_version = API-version
 yfeed_facebook_result_type = Resultat
 yfeed_facebook_result_type_feed = Alla inlägg
 yfeed_facebook_result_type_posts = Endast egna inlägg
@@ -123,4 +124,4 @@ yfeed_vimeo_access_token = Access Token
 yfeed_vimeo_client_secret = Client Secret
 
 
-yfeed_faq = FAQ
+yfeed_help = Hjälp
