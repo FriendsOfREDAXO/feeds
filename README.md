@@ -1,6 +1,6 @@
-# YFeed
+# Feeds
 
-Ein REDAXO5-AddOn zum Abruf externer Feeds.
+Ein AddOn für REDAXO 5 zum Abruf externer Feeds.
 
 ## Features
 
@@ -8,6 +8,7 @@ Ein REDAXO5-AddOn zum Abruf externer Feeds.
 * Dauerhaftes Speichern der Beiträge in einer Datenbank-Tabelle
 * Nachträgliche Aktualisierung der Beiträge (z.B. nach einem Update / einer Korrektur)
 * Erweiterung um eigene Feed-Typen möglich, z.B. Google My Business o.a.
+* Nutzung der importierten Bilddateien über den REDAXO Media Manager
 
 ## Installation
 
@@ -16,7 +17,7 @@ Ein REDAXO5-AddOn zum Abruf externer Feeds.
 
 ### Einen neuen Feed einrichten
 
-1. Im REDAXO-Backend `AddOns` > `YFeed` aufrufen,
+1. Im REDAXO-Backend `AddOns` > `Feeds` aufrufen,
 2. dort auf das `+`-Symbol klicken,
 3. den Anweisungen der Stream-Einstellungen folgen und
 4. anschließend speichern.
@@ -25,29 +26,29 @@ Ein REDAXO5-AddOn zum Abruf externer Feeds.
 
 ### Feed aktualisieren
 
-Die Feeds können manuell unter `AddOns` > `YFeed` abgerufen werden, oder in regelmäßigen Intervallen über einen Cronjob abgerufen werden:
+Die Feeds können manuell unter `AddOns` > `Feeds` abgerufen werden, oder in regelmäßigen Intervallen über einen Cronjob abgerufen werden:
 
 1. Im REDAXO-Backend unter `AddOns` > `Cronjob` aufrufen,
 2. dort auf das `+`-Symbol klicken,
 3. als Umgebung z.B. `Frontend` auswählen,
-4. als Typ `YFeed: Feeds abrufen` auswählen,
+4. als Typ `Feeds: Feeds abrufen` auswählen,
 5. den Zeitpunkt festlegen (bspw. täglich, stündlich, ...) und
 6. mit `Speichern` bestätigen.
 
-Jetzt werden YFeed-Streams regelmäßig dann abgerufen, wenn die Website aufgerufen wird. [Weitere Infos zu REDAXO-Cronjobs](https://www.redaxo.org/doku/master/cronjobs).
+Jetzt werden Feeds-Streams regelmäßig dann abgerufen, wenn die Website aufgerufen wird. [Weitere Infos zu REDAXO-Cronjobs](https://www.redaxo.org/doku/master/cronjobs).
 
 ## Feed ausgeben
 
 Um ein Feed auszugeben, können die Inhalte in einem Modul oder Template per SQL abgerufen werden, z.B.:
 
 ```
-$stream_id = 1; // ID des Streams in YFeed
+$stream_id = 1; // ID des Streams in Feeds
 
-$yfeed_items = rex_sql::factory()->getArray('SELECT * FROM rex_yfeed_item WHERE stream_id = :stream_id ORDER BY date DESC LIMIT 10', [":stream_id" => $stream_id]);
+$Feeds_items = rex_sql::factory()->getArray('SELECT * FROM rex_Feeds_item WHERE stream_id = :stream_id ORDER BY date DESC LIMIT 10', [":stream_id" => $stream_id]);
 
-# dump($yfeed_items); // Zum Debuggen ansehen
+# dump($Feeds_items); // Zum Debuggen ansehen
 
-foreach ($yfeed_items as $item) {
+foreach ($Feeds_items as $item) {
     echo strftime("%d. %B %Y", strtotime($item['date']));
     echo $item['content'];
     echo $item['url'];
@@ -55,15 +56,15 @@ foreach ($yfeed_items as $item) {
 }
 ```
 
-## YFeed erweitern
+## Feeds erweitern
 
-Um YFeed zu erweitern, kann man sich die Logik der von Haus aus mitgelieferten Feeds ansehen - hier am Beispiel "Twitter":
+Um Feeds zu erweitern, kann man sich die Logik der von Haus aus mitgelieferten Feeds ansehen - hier am Beispiel "Twitter":
 
-* In `/redaxo/src/addons/yfeed/pages/settings.twitter.php` wird die Einstellungsseite für das Hinterlegen von API-Keys u.a. Zugangsdaten für Twitter hinterlegt.
+* In `/redaxo/src/addons/Feeds/pages/settings.twitter.php` wird die Einstellungsseite für das Hinterlegen von API-Keys u.a. Zugangsdaten für Twitter hinterlegt.
 
-* In `/redaxo/src/addons/yfeed/lib/stream/twitter_user_timeline.php` wird die Logik für den Import der Tweets eines Users hinterlegt.
+* In `/redaxo/src/addons/Feeds/lib/stream/twitter_user_timeline.php` wird die Logik für den Import der Tweets eines Users hinterlegt.
 
-Diese lassen sich kopieren und bspw. im `project`-Addon anpassen. Zum Einhängen der Einstellungsseite in YFeed muss dann in der `package.yml` die Einstellungsseite registriert werden.
+Diese lassen sich kopieren und bspw. im `project`-Addon anpassen. Zum Einhängen der Einstellungsseite in Feeds muss dann in der `package.yml` die Einstellungsseite registriert werden.
 
 ## Facebook-Feeds
 
@@ -79,7 +80,7 @@ Stand 2019: Ist der Nutzer, der den Access-Token generiert, Administrator der Fa
 
 1.  Auf [developers.facebook.com](https://developers.facebook.com) einloggen und Facebook-App erzeugen, den Anweisungen folgen.
 2.  Wichtig: Die App soll sich nicht im Live-Modus, sondern noch im Entwickler-Modus befinden, sonst schlagen die nachfolgenden Aktionen fehl.
-3.  Den [Graph API Explorer](https://developers.facebook.com/tools/explorer/) aufrufen. Dort oben rechts jene App auswählen, die für YFeed verwendet werden soll.
+3.  Den [Graph API Explorer](https://developers.facebook.com/tools/explorer/) aufrufen. Dort oben rechts jene App auswählen, die für Feeds verwendet werden soll.
 4.  Das Auswahlfeld "Zugangsschlüssel anfordern" anklicken und darin entweder  
     A) "Seitenzugriffs-Schlüssel anfordern" wählen und den Anweisungen folgen oder  
     B) Bei bereits bestehender Zugriffsberechtigung die gewünschte Facebook-Page auswählen.
