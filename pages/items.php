@@ -29,7 +29,6 @@ if ('' == $func) {
     $query = 'SELECT
                 i.id,
                 s.namespace,
-                i.media,
                 s.type,
                 (CASE WHEN (i.title IS NULL or i.title = "")
                     THEN i.content
@@ -79,18 +78,9 @@ if ('' == $func) {
 
     $list->removeColumn('id');
     $list->removeColumn('url');
-    $list->removeColumn('type');
 
-    $list->setColumnLabel('namespace', $this->i18n('stream_namespace') . '/' . $this->i18n('stream_type'));
-    $list->setColumnFormat('namespace', 'custom', function ($params) {
-        /** @var rex_list $list */
-        $list = $params['list'];
-        $namespace = $list->getValue('namespace');
-        $type = $list->getValue('type');
-        $out = $namespace . '<br /><small>' . $type . '</small>';
-        $out = ($list->getValue('status')) ? '<p>' . $out . '</p>' : '<p style="opacity:.4">' . $out . '</p>';
-        return $out;
-    });
+    $list->setColumnLabel('namespace', $this->i18n('stream_namespace'));
+    $list->setColumnLabel('type', $this->i18n('stream_type'));
 
     $list->setColumnLabel('title', $this->i18n('item_title'));
     $list->setColumnFormat('title', 'custom', function ($params) {
@@ -99,17 +89,7 @@ if ('' == $func) {
         $title = $list->getValue('title');
         $title = rex_formatter::truncate($title, ['length' => 140]);
         $title .= ($list->getValue('url') != '') ? '<br /><small><a href="' . $list->getValue('url') . '" target="_blank">' . $list->getValue('url') . '</a></small>' : '';
-        $title = ($list->getValue('status')) ? '<p>' . $title . '</p>' : '<p style="opacity:.4">' . $title . '</p>';
         return $title;
-    });
-    
-    $list->setColumnLabel('media', $this->i18n('item_media'));
-    $list->setColumnFormat('media', 'custom', function ($params) {
-        /** @var rex_list $list */
-        $list = $params['list'];
-        $media = $list->getValue('media');
-        $media = ($media != '') ? '<div style="width:60px; height:60px; overflow:hidden; background: #333 url(\'' . $media . '\') center center no-repeat; background-size:contain; border: 1px solid #000' . ((!$list->getValue('status')) ? '; opacity:.4' : '') . '">&nbsp;</div>' : '';
-        return $media;
     });
 
     $list->setColumnLabel('status', $this->i18n('status'));
