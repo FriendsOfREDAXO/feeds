@@ -1,10 +1,10 @@
 # Feeds
 
-Ein REDAXO5-AddOn zum Abruf externer Feeds.
+Ein REDAXO5-AddOn zum Abruf externer Streams.
 
 ## Features
 
-* Abruf von Facebook-, Twitter-, YouTube-, Vimeo- und RSS-Feeds.
+* Abruf von Facebook-, Twitter-, YouTube-, Vimeo- und RSS-Streams.
 * Dauerhaftes Speichern der Beiträge in einer Datenbank-Tabelle
 * Nachträgliche Aktualisierung der Beiträge (z.B. nach einem Update / einer Korrektur)
 * Erweiterung um eigene Feed-Typen möglich, z.B. Google My Business o.a.
