@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the YFeed package.
+ * This file is part of the Feeds package.
  *
  * @author (c) Yakamara Media GmbH & Co. KG
  * @author thomas.blum@redaxo.org
@@ -12,18 +12,18 @@
 use PicoFeed\Parser\Item;
 use PicoFeed\Reader\Reader;
 
-class rex_yfeed_stream_rss extends rex_yfeed_stream_abstract
+class rex_feeds_stream_rss extends rex_feeds_stream_abstract
 {
     public function getTypeName()
     {
-        return rex_i18n::msg('yfeed_rss_feed');
+        return rex_i18n::msg('feeds_rss_feed');
     }
 
     public function getTypeParams()
     {
         return [
             [
-                'label' => rex_i18n::msg('yfeed_rss_url'),
+                'label' => rex_i18n::msg('feeds_rss_url'),
                 'name' => 'url',
                 'type' => 'string',
             ],
@@ -47,7 +47,7 @@ class rex_yfeed_stream_rss extends rex_yfeed_stream_abstract
 
         /** @var Item $rssItem */
         foreach ($feed->getItems() as $rssItem) {
-            $item = new rex_yfeed_item($this->streamId, $rssItem->getId());
+            $item = new rex_feeds_item($this->streamId, $rssItem->getId());
             $item->setTitle($rssItem->getTitle());
             $item->setContentRaw($rssItem->getContent());
 

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the YFeed package.
+ * This file is part of the Feeds package.
  *
  * @author (c) Yakamara Media GmbH & Co. KG
  * @author thomas.blum@redaxo.org
@@ -10,47 +10,47 @@
  * file that was distributed with this source code.
  */
 
-class rex_yfeed_stream_facebook_feed extends rex_yfeed_stream_abstract
+class rex_feeds_stream_facebook_feed extends rex_feeds_stream_abstract
 {
     public function getTypeName()
     {
-        return rex_i18n::msg('yfeed_facebook_feed');
+        return rex_i18n::msg('feeds_facebook_feed');
     }
 
     public function getTypeParams()
     {
         return [
             [
-                'label' => rex_i18n::msg('yfeed_facebook_profile_id'),
+                'label' => rex_i18n::msg('feeds_facebook_profile_id'),
                 'name' => 'profile_id',
                 'type' => 'string',
             ],
             [
-                'label' => rex_i18n::msg('yfeed_facebook_token'),
+                'label' => rex_i18n::msg('feeds_facebook_token'),
                 'name' => 'token',
                 'type' => 'string',
-                'notice' => rex_i18n::msg('yfeed_facebook_token_note')
+                'notice' => rex_i18n::msg('feeds_facebook_token_note')
             ],
             [
-                'label' => rex_i18n::msg('yfeed_facebook_result_type'),
+                'label' => rex_i18n::msg('feeds_facebook_result_type'),
                 'name' => 'result_type',
                 'type' => 'select',
                 'options' => [
-                    'feed' => rex_i18n::msg('yfeed_facebook_result_type_feed'),
-                    'posts' => rex_i18n::msg('yfeed_facebook_result_type_posts'),
-                    'tagged' => rex_i18n::msg('yfeed_facebook_result_type_tagged'),
+                    'feed' => rex_i18n::msg('feeds_facebook_result_type_feed'),
+                    'posts' => rex_i18n::msg('feeds_facebook_result_type_posts'),
+                    'tagged' => rex_i18n::msg('feeds_facebook_result_type_tagged'),
                 ],
                 'default' => 'feed',
             ],
             [
-                'label' => rex_i18n::msg('yfeed_facebook_count'),
+                'label' => rex_i18n::msg('feeds_facebook_count'),
                 'name' => 'count',
                 'type' => 'select',
                 'options' => [5 => 5, 10 => 10, 15 => 15, 20 => 20, 30 => 30, 50 => 50, 75 => 75, 100 => 100],
                 'default' => 10,
             ],
             [	
-                'label' => rex_i18n::msg('yfeed_facebook_api_version'),	
+                'label' => rex_i18n::msg('feeds_facebook_api_version'),	
                 'name' => 'api_version',	
                 'type' => 'select',	
                 'options' => ["v3.2" => "3.2", "v3.1" => "3.1", "v3.0" => "3.0", "v2.12" => "2.12"],	
@@ -75,7 +75,7 @@ class rex_yfeed_stream_facebook_feed extends rex_yfeed_stream_abstract
 
         /** @var Facebook\GraphNodes\GraphNode $facebookItem */
         foreach ($items as $facebookItem) {
-            $item = new rex_yfeed_item($this->streamId, $facebookItem->getField('id'));
+            $item = new rex_feeds_item($this->streamId, $facebookItem->getField('id'));
             $item->setTitle($facebookItem->getField('story'));
             $item->setContentRaw($facebookItem->getField('message'));
             $item->setContent(strip_tags($facebookItem->getField('message')));
@@ -180,8 +180,8 @@ class rex_yfeed_stream_facebook_feed extends rex_yfeed_stream_abstract
 
         if (!$facebook) {
             $credentials = [
-                'app_id' => rex_config::get('yfeed', 'facebook_app_id'),
-                'app_secret' => rex_config::get('yfeed', 'facebook_app_secret'),
+                'app_id' => rex_config::get('feeds', 'facebook_app_id'),
+                'app_secret' => rex_config::get('feeds', 'facebook_app_secret'),
                 'default_graph_version' => $this->typeParams['api_version'],
             ];
             $facebook = new Facebook\Facebook($credentials);
@@ -189,7 +189,7 @@ class rex_yfeed_stream_facebook_feed extends rex_yfeed_stream_abstract
                 $this->checkAccessToken($facebook);
                 $facebook->setDefaultAccessToken($this->typeParams['token']);
             } else {
-                $facebook->setDefaultAccessToken(rex_config::get('yfeed', 'facebook_app_id').'|'.rex_config::get('yfeed', 'facebook_app_secret'));
+                $facebook->setDefaultAccessToken(rex_config::get('feeds', 'facebook_app_id').'|'.rex_config::get('feeds', 'facebook_app_secret'));
             }
         }
 
@@ -222,7 +222,7 @@ class rex_yfeed_stream_facebook_feed extends rex_yfeed_stream_abstract
 
         $this->typeParams['token'] = (string) $newToken;
         rex_sql::factory()
-            ->setTable(rex_yfeed_stream::table())
+            ->setTable(rex_feeds_stream::table())
             ->setWhere('id = :id', ['id' => $this->streamId])
             ->setArrayValue('type_params', $this->typeParams)
             ->update();

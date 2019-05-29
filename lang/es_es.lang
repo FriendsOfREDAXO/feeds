@@ -1,127 +1,127 @@
-yfeed = YFeed
-yfeed_add = añadir
-yfeed_edit = editar
-yfeed_delete = borrar
-yfeed_delete_question = Realmente eliminar?
+feeds = Feeds
+feeds_add = añadir
+feeds_edit = editar
+feeds_delete = borrar
+feeds_delete_question = Realmente eliminar?
 
 
 
-yfeed_items = Mensajes
-yfeed_item_author = Autor
-yfeed_item_content = Contenido
-yfeed_item_content_raw = Contenido (sin procesar / sin filtrar)
-yfeed_item_date = Fecha
-yfeed_item_edit = Editar entrada
-yfeed_item_language = Código de idioma / idioma
-yfeed_item_media = Media
-yfeed_item_raw = Datos enteros como Json
-yfeed_item_title = Título
-yfeed_item_url = Url
-yfeed_item_uid = Id
+feeds_items = Mensajes
+feeds_item_author = Autor
+feeds_item_content = Contenido
+feeds_item_content_raw = Contenido (sin procesar / sin filtrar)
+feeds_item_date = Fecha
+feeds_item_edit = Editar entrada
+feeds_item_language = Código de idioma / idioma
+feeds_item_media = Media
+feeds_item_raw = Datos enteros como Json
+feeds_item_title = Título
+feeds_item_url = Url
+feeds_item_uid = Id
 
-yfeed_item_status_online = En línea
-yfeed_item_status_offline = Desconectado
-yfeed_item_status_saved = El estado ha sido guardado.
+feeds_item_status_online = En línea
+feeds_item_status_offline = Desconectado
+feeds_item_status_saved = El estado ha sido guardado.
 
-yfeed_settings = Ajustes
-yfeed_settings_saved = La configuración ha sido guardada.
+feeds_settings = Ajustes
+feeds_settings_saved = La configuración ha sido guardada.
 
-yfeed_streams = Corrientes
-yfeed_stream_add = Agregar secuencia
-yfeed_stream_edit = Editar secuencia
-yfeed_stream_delete = Eliminar transmisión
-yfeed_stream_delete_question = ¿Eliminar realmente la transmisión, incluidas todas las entradas relacionadas?
-yfeed_stream_deleted = La secuencia ha sido eliminada.
-yfeed_stream_fetch = Recuperar secuencia
-yfeed_stream_fetched = Se buscó la secuencia y las entradas se guardaron ({0} se agregó; {1} se actualizó; {2} no se actualizó y fue editado por un usuario).
-yfeed_stream_general = General
-yfeed_stream_image = Imagen
-yfeed_stream_namespace = Espacio de nombres
-yfeed_stream_namespace_error = El espacio de nombre no puede estar vacío y solo puede contener letras minúsculas y el guión bajo.
-yfeed_stream_namespace_notice = Asignar nombre único. Con el espacio de nombres puede filtrar la consulta SQL.
-yfeed_stream_select_type = Seleccionar tipos
-yfeed_stream_title = Título
-yfeed_stream_type = Tipo
-yfeed_stream_url = URL
-yfeed_stream_status_activated = Habilitado
-yfeed_stream_status_deactivated = Deshabilitado
-yfeed_stream_status_saved = El estado ha sido guardado.
-
-
-yfeed_cronjob = YFeed: Obtener feeds
-
-yfeed_media_manager_effect = Archivo: Leer de YFeed (si *.yfeed)
-
-yfeed_facebook = Facebook
-yfeed_facebook_app_id = ID de la aplicación
-yfeed_facebook_app_secret = App Secret
-yfeed_facebook_app_title = Título de la aplicación
-yfeed_facebook_app_title_note = opcional
-yfeed_facebook_settings = Aplicación de Facebook
-yfeed_facebook_feed = Feed de Facebook
-yfeed_facebook_profile_id = ID de usuario o ID de página
-yfeed_facebook_token = Token de acceso
-yfeed_facebook_token_note = Opcional (requerido para entradas no públicas)
-yfeed_facebook_count = Cantidad de entradas
-yfeed_facebook_api_version = Versión de la API
-yfeed_facebook_result_type = Resultado
-yfeed_facebook_result_type_feed = Todas las entradas
-yfeed_facebook_result_type_posts = Solo entradas propias
-yfeed_facebook_result_type_tagged = Solo entradas extranjeras
-
-yfeed_rss = RSS
-yfeed_rss_feed = RSS Feed
-yfeed_rss_url = Url
-
-yfeed_twitter = Twitter
-yfeed_twitter_consumer_key = Clave de la API de Twitter (clave del consumidor)
-yfeed_twitter_consumer_secret = Twitter API secret (secret del consumidor)
-yfeed_twitter_count = Cantidad de tweets
-yfeed_twitter_entries = Mensajes
-yfeed_twitter_exclude_replies = Excluir respuestas
-yfeed_twitter_oauth_token = Token de acceso a Twitter
-yfeed_twitter_oauth_token_secret = Twitter Token secreto de acceso
-yfeed_twitter_result_type = Resultado
-yfeed_twitter_result_type_mixed = Obtenga los últimos y más populares tweets
-yfeed_twitter_result_type_recent = Obtenga solo los últimos tweets
-yfeed_twitter_result_type_popular = Obtenga solo los tweets más populares
-yfeed_twitter_screen_name = Nombre de usuario
-yfeed_twitter_settings = Ajustes
-
-yfeed_twitter_user_timeline = Twitter :: Tweets del usuario
-
-yfeed_twitter_hashtag = Twitter :: hashtag
-yfeed_twitter_hashtag_q = Hashtag
-yfeed_twitter_hashtag_with_prefix = Ingrese el hashtag con #
-
-yfeed_google = Google
-yfeed_google_settings = Ajustes
-yfeed_google_key = Clave Google Api
-
-yfeed_youtube_channel = Youtube :: Canal
-yfeed_youtube_channel_id = ID de canal
-yfeed_youtube_count = Cantidad de entradas
-
-yfeed_youtube_playlist = Youtube :: Lista de reproducción
-yfeed_youtube_playlist_id = Lista de reproducción ID
-
-yfeed_instagram = Instagram
-yfeed_instagram_settings = Ajustes
-yfeed_instagram_access_token = Token de acceso
-
-yfeed_instagram_tag = Instagram :: Tag
-yfeed_instagram_tag_name = Nombre de etiqueta
-yfeed_instagram_tag_without_prefix = Ingrese Tag sin #
-yfeed_instagram_count = Cantidad de entradas
-
-yfeed_instagram_user = Instagram :: Usuario
-yfeed_instagram_username = Nombre de usuario / ID de usuario
-yfeed_instagram_username_notice = Al usar la API oficial (token de acceso depositado), se debe usar la ID de usuario, de lo contrario, el nombre de usuario.
-
-yfeed_vimeo_pro_user = Vimeo Pro :: Vídeos de un usuario profesional
-yfeed_vimeo_user_id = ID de usuario
-yfeed_vimeo_access_token = Token de acceso
-yfeed_vimeo_client_secret = Secreto del cliente
+feeds_streams = Corrientes
+feeds_stream_add = Agregar secuencia
+feeds_stream_edit = Editar secuencia
+feeds_stream_delete = Eliminar transmisión
+feeds_stream_delete_question = ¿Eliminar realmente la transmisión, incluidas todas las entradas relacionadas?
+feeds_stream_deleted = La secuencia ha sido eliminada.
+feeds_stream_fetch = Recuperar secuencia
+feeds_stream_fetched = Se buscó la secuencia y las entradas se guardaron ({0} se agregó; {1} se actualizó; {2} no se actualizó y fue editado por un usuario).
+feeds_stream_general = General
+feeds_stream_image = Imagen
+feeds_stream_namespace = Espacio de nombres
+feeds_stream_namespace_error = El espacio de nombre no puede estar vacío y solo puede contener letras minúsculas y el guión bajo.
+feeds_stream_namespace_notice = Asignar nombre único. Con el espacio de nombres puede filtrar la consulta SQL.
+feeds_stream_select_type = Seleccionar tipos
+feeds_stream_title = Título
+feeds_stream_type = Tipo
+feeds_stream_url = URL
+feeds_stream_status_activated = Habilitado
+feeds_stream_status_deactivated = Deshabilitado
+feeds_stream_status_saved = El estado ha sido guardado.
 
 
-yfeed_help = Ayuda
+feeds_cronjob = Feeds: Obtener feeds
+
+feeds_media_manager_effect = Archivo: Leer de Feeds (si *.feeds)
+
+feeds_facebook = Facebook
+feeds_facebook_app_id = ID de la aplicación
+feeds_facebook_app_secret = App Secret
+feeds_facebook_app_title = Título de la aplicación
+feeds_facebook_app_title_note = opcional
+feeds_facebook_settings = Aplicación de Facebook
+feeds_facebook_feed = Feed de Facebook
+feeds_facebook_profile_id = ID de usuario o ID de página
+feeds_facebook_token = Token de acceso
+feeds_facebook_token_note = Opcional (requerido para entradas no públicas)
+feeds_facebook_count = Cantidad de entradas
+feeds_facebook_api_version = Versión de la API
+feeds_facebook_result_type = Resultado
+feeds_facebook_result_type_feed = Todas las entradas
+feeds_facebook_result_type_posts = Solo entradas propias
+feeds_facebook_result_type_tagged = Solo entradas extranjeras
+
+feeds_rss = RSS
+feeds_rss_feed = RSS Feed
+feeds_rss_url = Url
+
+feeds_twitter = Twitter
+feeds_twitter_consumer_key = Clave de la API de Twitter (clave del consumidor)
+feeds_twitter_consumer_secret = Twitter API secret (secret del consumidor)
+feeds_twitter_count = Cantidad de tweets
+feeds_twitter_entries = Mensajes
+feeds_twitter_exclude_replies = Excluir respuestas
+feeds_twitter_oauth_token = Token de acceso a Twitter
+feeds_twitter_oauth_token_secret = Twitter Token secreto de acceso
+feeds_twitter_result_type = Resultado
+feeds_twitter_result_type_mixed = Obtenga los últimos y más populares tweets
+feeds_twitter_result_type_recent = Obtenga solo los últimos tweets
+feeds_twitter_result_type_popular = Obtenga solo los tweets más populares
+feeds_twitter_screen_name = Nombre de usuario
+feeds_twitter_settings = Ajustes
+
+feeds_twitter_user_timeline = Twitter :: Tweets del usuario
+
+feeds_twitter_hashtag = Twitter :: hashtag
+feeds_twitter_hashtag_q = Hashtag
+feeds_twitter_hashtag_with_prefix = Ingrese el hashtag con #
+
+feeds_google = Google
+feeds_google_settings = Ajustes
+feeds_google_key = Clave Google Api
+
+feeds_youtube_channel = Youtube :: Canal
+feeds_youtube_channel_id = ID de canal
+feeds_youtube_count = Cantidad de entradas
+
+feeds_youtube_playlist = Youtube :: Lista de reproducción
+feeds_youtube_playlist_id = Lista de reproducción ID
+
+feeds_instagram = Instagram
+feeds_instagram_settings = Ajustes
+feeds_instagram_access_token = Token de acceso
+
+feeds_instagram_tag = Instagram :: Tag
+feeds_instagram_tag_name = Nombre de etiqueta
+feeds_instagram_tag_without_prefix = Ingrese Tag sin #
+feeds_instagram_count = Cantidad de entradas
+
+feeds_instagram_user = Instagram :: Usuario
+feeds_instagram_username = Nombre de usuario / ID de usuario
+feeds_instagram_username_notice = Al usar la API oficial (token de acceso depositado), se debe usar la ID de usuario, de lo contrario, el nombre de usuario.
+
+feeds_vimeo_pro_user = Vimeo Pro :: Vídeos de un usuario profesional
+feeds_vimeo_user_id = ID de usuario
+feeds_vimeo_access_token = Token de acceso
+feeds_vimeo_client_secret = Secreto del cliente
+
+
+feeds_help = Ayuda

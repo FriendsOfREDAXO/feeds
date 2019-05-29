@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the YFeed package.
+ * This file is part of the Feeds package.
  *
  * @author (c) Yakamara Media GmbH & Co. KG
  * @author thomas.blum@redaxo.org
@@ -16,7 +16,7 @@ $id = rex_request('id', 'integer');
 if ($func == 'setstatus') {
     $status = (rex_request('oldstatus', 'int') + 1) % 2;
     rex_sql::factory()
-        ->setTable(rex_yfeed_stream::table())
+        ->setTable(rex_feeds_stream::table())
         ->setWhere('id = :id', ['id' => $id])
         ->setValue('status', $status)
         ->addGlobalUpdateFields()
@@ -26,7 +26,7 @@ if ($func == 'setstatus') {
 }
 
 if ('fetch' === $func) {
-    $stream = rex_yfeed_stream::get($id);
+    $stream = rex_feeds_stream::get($id);
     $stream->fetch();
     echo rex_view::success($this->i18n('stream_fetched', $stream->getAddedCount(), $stream->getUpdateCount(), $stream->getChangedByUserCount()));
     $func = '';
@@ -34,7 +34,7 @@ if ('fetch' === $func) {
 
 if ('delete' === $func) {
     rex_sql::factory()
-        ->setTable(rex_yfeed_stream::table())
+        ->setTable(rex_feeds_stream::table())
         ->setWhere('id = ?', [$id])
         ->delete();
     echo rex_view::success($this->i18n('stream_deleted'));
@@ -42,7 +42,7 @@ if ('delete' === $func) {
 }
 
 if ('' == $func) {
-    $query = 'SELECT `id`, `namespace`, `type`, `title`, `status` FROM ' . rex_yfeed_stream::table() . ' ORDER BY `type`, `namespace`';
+    $query = 'SELECT `id`, `namespace`, `type`, `title`, `status` FROM ' . rex_feeds_stream::table() . ' ORDER BY `type`, `namespace`';
     $list = rex_list::factory($query);
     $list->addTableAttribute('class', 'table-striped');
 
@@ -118,11 +118,11 @@ if ('' == $func) {
 
     echo $content;
 } else {
-    $streams = rex_yfeed_stream::getSupportedStreams();
+    $streams = rex_feeds_stream::getSupportedStreams();
 
     $title = $func == 'edit' ? $this->i18n('stream_edit') : $this->i18n('stream_add');
 
-    $form = rex_form::factory(rex_yfeed_stream::table(), '', 'id = ' . $id, 'post', false);
+    $form = rex_form::factory(rex_feeds_stream::table(), '', 'id = ' . $id, 'post', false);
     $form->addParam('id', $id);
     $form->setApplyUrl(rex_url::currentBackendPage());
     $form->setEditMode($func == 'edit');
@@ -186,7 +186,7 @@ if ('' == $func) {
     $fieldContainer->setActive($field->getValue());
 
     foreach ($streams as $streamType => $streamClass) {
-        /** @var rex_yfeed_stream_abstract $stream */
+        /** @var rex_feeds_stream_abstract $stream */
         $stream = new $streamClass();
 
         $fieldSelect->addOption($stream->getTypeName(), $streamType);
@@ -213,7 +213,7 @@ if ('' == $func) {
                     $type = 'text';
                     $field = $fieldContainer->addGroupedField($group, $type, $name, $value, $attributes);
                     $field->setLabel($param['label']);
-                    $field->setAttribute('id', "yfeed $name $type");
+                    $field->setAttribute('id', "feeds $name $type");
                     $field->setAttribute('disabled', 'true');
                     if (!empty($param['notice'])) {
                         $field->setNotice($param['notice']);
@@ -230,7 +230,7 @@ if ('' == $func) {
                     /** @var rex_form_select_element $field */
                     $field = $fieldContainer->addGroupedField($group, $type, $name, $value, $attributes);
                     $field->setLabel($param['label']);
-                    $field->setAttribute('id', "yfeed $name $type");
+                    $field->setAttribute('id', "feeds $name $type");
                     $field->setAttribute('disabled', 'true');
                     if (!empty($param['notice'])) {
                         $field->setNotice($param['notice']);
@@ -252,7 +252,7 @@ if ('' == $func) {
                     $type = $param['type'];
                     $field = $fieldContainer->addGroupedField($group, $type, $name, $value, $attributes);
                     $field->setLabel($param['label']);
-                    $field->setAttribute('id', "yfeed $name $type");
+                    $field->setAttribute('id', "feeds $name $type");
                     $field->setAttribute('disabled', 'true');
                     if (!empty($param['notice'])) {
                         $field->setNotice($param['notice']);

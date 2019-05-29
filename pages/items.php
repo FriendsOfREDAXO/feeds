@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the YFeed package.
+ * This file is part of the Feeds package.
  *
  * @author (c) Yakamara Media GmbH & Co. KG
  * @author thomas.blum@redaxo.org
@@ -16,7 +16,7 @@ $id = rex_request('id', 'integer');
 if ($func == 'setstatus') {
     $status = (rex_request('oldstatus', 'int') + 1) % 2;
     rex_sql::factory()
-        ->setTable(rex_yfeed_item::table())
+        ->setTable(rex_feeds_item::table())
         ->setWhere('id = :id', ['id' => $id])
         ->setValue('status', $status)
         ->addGlobalUpdateFields()
@@ -38,9 +38,9 @@ if ('' == $func) {
                 i.url,
                 i.status
             FROM
-                ' . rex_yfeed_item::table() . ' AS i
+                ' . rex_feeds_item::table() . ' AS i
                 LEFT JOIN
-                    ' . rex_yfeed_stream::table() . ' AS s
+                    ' . rex_feeds_stream::table() . ' AS s
                     ON  i.stream_id = s.id
             ORDER BY i.date DESC, id DESC
             ';
@@ -141,7 +141,7 @@ if ('' == $func) {
 } else {
     $title = $func == 'edit' ? $this->i18n('item_edit') : $this->i18n('item_add');
 
-    $form = rex_form::factory(rex_yfeed_item::table(), '', 'id = ' . $id, 'post', false);
+    $form = rex_form::factory(rex_feeds_item::table(), '', 'id = ' . $id, 'post', false);
     $form->addParam('id', $id);
     $form->setApplyUrl(rex_url::currentBackendPage());
     $form->setEditMode($func == 'edit');

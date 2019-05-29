@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the YFeed package.
+ * This file is part of the Feeds package.
  *
  * @author (c) Yakamara Media GmbH & Co. KG
  * @author thomas.blum@redaxo.org
@@ -10,7 +10,7 @@
  * file that was distributed with this source code.
  */
 
-abstract class rex_yfeed_stream_abstract
+abstract class rex_feeds_stream_abstract
 {
     protected $typeParams = [];
     protected $streamId;
@@ -37,18 +37,18 @@ abstract class rex_yfeed_stream_abstract
     }
 
 	/**
-	 * Get in YFeed database stored items belonging to this stream orderd by date.
+	 * Get in Feeds database stored items belonging to this stream orderd by date.
 	 * @param int $number Number of items to be returned
-	 * @return \rex_yfeed_item[] Array with item objects
+	 * @return \rex_feeds_item[] Array with item objects
 	 */
 	public function getPreloadedItems($number = 5)
 	{
 		$items = [];
 		$result = rex_sql::factory();
-		$result->setQuery('SELECT id FROM '. rex::getTablePrefix() .'yfeed_item WHERE stream_id = '. $this->streamId .' ORDER BY updatedate DESC LIMIT 0, '. $number .';');
+		$result->setQuery('SELECT id FROM '. rex::getTablePrefix() .'feeds_item WHERE stream_id = '. $this->streamId .' ORDER BY updatedate DESC LIMIT 0, '. $number .';');
 
 		for ($i = 0; $i < $result->getRows(); $i++) {
-			$item = rex_yfeed_item::get($result->getValue('id'));
+			$item = rex_feeds_item::get($result->getValue('id'));
 			if($item != null) {
 				$items[] = $item;
 			}
@@ -98,7 +98,7 @@ abstract class rex_yfeed_stream_abstract
 
     abstract public function fetch();
 
-    protected function updateCount(rex_yfeed_item $item)
+    protected function updateCount(rex_feeds_item $item)
     {
         if ($item->changedByUser()) {
             ++$this->countNotUpdatedChangedByUser;

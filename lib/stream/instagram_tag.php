@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the YFeed package.
+ * This file is part of the Feeds package.
  *
  * @author (c) Yakamara Media GmbH & Co. KG
  * @author thomas.blum@redaxo.org
@@ -13,24 +13,24 @@
 use Instagram\Instagram;
 use InstagramScraper\Instagram as InstagramScraper;
 
-class rex_yfeed_stream_instagram_tag extends rex_yfeed_stream_instagram_abstract
+class rex_feeds_stream_instagram_tag extends rex_feeds_stream_instagram_abstract
 {
     public function getTypeName()
     {
-        return rex_i18n::msg('yfeed_instagram_tag');
+        return rex_i18n::msg('feeds_instagram_tag');
     }
 
     public function getTypeParams()
     {
         return [
             [
-                'label' => rex_i18n::msg('yfeed_instagram_tag_name'),
+                'label' => rex_i18n::msg('feeds_instagram_tag_name'),
                 'name' => 'tag',
                 'type' => 'string',
-                'notice' => rex_i18n::msg('yfeed_instagram_tag_without_prefix'),
+                'notice' => rex_i18n::msg('feeds_instagram_tag_without_prefix'),
             ],
             [
-                'label' => rex_i18n::msg('yfeed_instagram_count'),
+                'label' => rex_i18n::msg('feeds_instagram_count'),
                 'name' => 'count',
                 'type' => 'select',
                 'options' => [5 => 5, 10 => 10, 15 => 15, 20 => 20, 30 => 30, 50 => 50, 75 => 75, 100 => 100],

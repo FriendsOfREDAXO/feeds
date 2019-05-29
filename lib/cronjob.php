@@ -1,10 +1,10 @@
 <?php
 
-class rex_cronjob_yfeed extends rex_cronjob
+class rex_cronjob_feeds extends rex_cronjob
 {
     public function execute()
     {
-        $streams = rex_yfeed_stream::getAllActivated();
+        $streams = rex_feeds_stream::getAllActivated();
         $errors = [];
         $countAdded = 0;
         $countUpdated = 0;
@@ -34,6 +34,6 @@ class rex_cronjob_yfeed extends rex_cronjob
 
     public function getTypeName()
     {
-        return rex_addon::get('yfeed')->i18n('yfeed_cronjob');
+        return rex_addon::get('feeds')->i18n('feeds_cronjob');
     }
 }

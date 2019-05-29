@@ -1,129 +1,129 @@
-yfeed = YFeed
-yfeed_add = hinzufügen
-yfeed_edit = bearbeiten
-yfeed_delete = löschen
-yfeed_delete_question = Wirklich löschen?
+feeds = Feeds
+feeds_add = hinzufügen
+feeds_edit = bearbeiten
+feeds_delete = löschen
+feeds_delete_question = Wirklich löschen?
 
 
 
-yfeed_items = Einträge
-yfeed_item_author = Autor
-yfeed_item_content = Inhalt
-yfeed_item_content_raw = Inhalt (unverarbeitet / ungefiltert)
-yfeed_item_date = Datum
-yfeed_item_edit = Eintrag bearbeiten
-yfeed_item_language = Sprache / Sprachkürzel
-yfeed_item_media = Medium
-yfeed_item_raw = Gesamte Daten als Json
-yfeed_item_title = Titel
-yfeed_item_url = Url
-yfeed_item_uid = Id
-yfeed_item_type = Facebook Type
-yfeed_item_mediasource = MediaSource
+feeds_items = Einträge
+feeds_item_author = Autor
+feeds_item_content = Inhalt
+feeds_item_content_raw = Inhalt (unverarbeitet / ungefiltert)
+feeds_item_date = Datum
+feeds_item_edit = Eintrag bearbeiten
+feeds_item_language = Sprache / Sprachkürzel
+feeds_item_media = Medium
+feeds_item_raw = Gesamte Daten als Json
+feeds_item_title = Titel
+feeds_item_url = Url
+feeds_item_uid = Id
+feeds_item_type = Facebook Type
+feeds_item_mediasource = MediaSource
 
-yfeed_item_status_online = Online
-yfeed_item_status_offline = Offline
-yfeed_item_status_saved = Der Status wurde gespeichert.
+feeds_item_status_online = Online
+feeds_item_status_offline = Offline
+feeds_item_status_saved = Der Status wurde gespeichert.
 
-yfeed_settings = Einstellungen
-yfeed_settings_saved = Einstellungen wurden gespeichert.
+feeds_settings = Einstellungen
+feeds_settings_saved = Einstellungen wurden gespeichert.
 
-yfeed_streams = Streams
-yfeed_stream_add = Stream hinzufügen
-yfeed_stream_edit = Stream bearbeiten
-yfeed_stream_delete = Stream löschen
-yfeed_stream_delete_question = Stream wirklich inkl. aller zugehörigen Einträge löschen?
-yfeed_stream_deleted = Der Stream wurde gelöscht.
-yfeed_stream_fetch = Stream abrufen
-yfeed_stream_fetched = Der Stream wurde abgerufen und die Einträge gespeichert ({0} hinzugefügt; {1} aktualisiert; {2} nicht aktualisert, da von einem Benutzer bearbeitet).
-yfeed_stream_general = Allgemeines
-yfeed_stream_image = Bild
-yfeed_stream_namespace = Namespace
-yfeed_stream_namespace_error = Der Namespace darf nicht leer sein und darf nur Kleinbuchstaben und den Unterstrich beinhalten.
-yfeed_stream_namespace_notice = Eindeutigen Namen vergeben. Mit dem Namespace kann man die SQL-Abfrage filtern.
-yfeed_stream_select_type = Typen auswählen
-yfeed_stream_title = Titel
-yfeed_stream_type = Typ
-yfeed_stream_url = URL
-yfeed_stream_status_activated = Aktiviert
-yfeed_stream_status_deactivated = Deaktiviert
-yfeed_stream_status_saved = Der Status wurde gespeichert.
-
-
-yfeed_cronjob = YFeed: Feeds abrufen
-
-yfeed_media_manager_effect = Datei: Aus YFeed einlesen (wenn *.yfeed)
-
-yfeed_facebook = Facebook
-yfeed_facebook_app_id = App Id
-yfeed_facebook_app_secret = App Secret
-yfeed_facebook_app_title = Titel der App
-yfeed_facebook_app_title_note = optional
-yfeed_facebook_settings = Facebook App
-yfeed_facebook_feed = Facebook Feed
-yfeed_facebook_profile_id = User ID oder Page ID
-yfeed_facebook_token = Access Token
-yfeed_facebook_token_note = Optional (erforderlich für nicht allgemein öffentliche Einträge)
-yfeed_facebook_count = Anzahl der Einträge
-yfeed_facebook_api_version = API-Version
-yfeed_facebook_result_type = Ergebnis
-yfeed_facebook_result_type_feed = Alle Einträge
-yfeed_facebook_result_type_posts = Nur eigene Einträge
-yfeed_facebook_result_type_tagged = Nur fremde Einträge
-
-yfeed_rss = RSS
-yfeed_rss_feed = RSS Feed
-yfeed_rss_url = Url
-
-yfeed_twitter = Twitter
-yfeed_twitter_consumer_key = Twitter API key (Consumer Key)
-yfeed_twitter_consumer_secret = Twitter API secret (Consumer Secret)
-yfeed_twitter_count = Anzahl der Tweets
-yfeed_twitter_entries = Einträge
-yfeed_twitter_exclude_replies = Antworten ausschließen
-yfeed_twitter_oauth_token = Twitter Access token
-yfeed_twitter_oauth_token_secret = Twitter Access token secret
-yfeed_twitter_result_type = Ergebnis
-yfeed_twitter_result_type_mixed = Hole die neuesten und beliebtesten Tweets
-yfeed_twitter_result_type_recent = Hole nur die neuesten Tweets
-yfeed_twitter_result_type_popular = Hole nur die beliebtesten Tweets
-yfeed_twitter_screen_name = Benutzername
-yfeed_twitter_settings = Einstellungen
-
-yfeed_twitter_user_timeline = Twitter :: Tweets vom Benutzer
-
-yfeed_twitter_hashtag = Twitter :: Hashtag
-yfeed_twitter_hashtag_q = Hashtag
-yfeed_twitter_hashtag_with_prefix = Hashtag mit # eingeben
-
-yfeed_google = Google
-yfeed_google_settings = Einstellungen
-yfeed_google_key = Google Api-Key
-
-yfeed_youtube_channel = Youtube :: Channel
-yfeed_youtube_channel_id = Channel-ID
-yfeed_youtube_count = Anzahl der Einträge
-
-yfeed_youtube_playlist = Youtube :: Playlist
-yfeed_youtube_playlist_id = Playlist-ID
-
-yfeed_instagram = Instagram
-yfeed_instagram_settings = Einstellungen
-yfeed_instagram_access_token = Access Token
-
-yfeed_instagram_tag = Instagram :: Tag
-yfeed_instagram_tag_name = Tagname
-yfeed_instagram_tag_without_prefix = Tag ohne # eingeben
-yfeed_instagram_count = Anzahl der Einträge
-
-yfeed_instagram_user = Instagram :: Benutzer
-yfeed_instagram_username = Benutzername / Benutzer-ID
-yfeed_instagram_username_notice = Bei Nutzung der offiziellen API (Access Token hinterlegt) muss die Benutzer-ID genutzt werden, ansonsten der Benutzername.
-
-yfeed_vimeo_pro_user = Vimeo Pro :: Videos eines Pro-Users
-yfeed_vimeo_user_id = User-ID
-yfeed_vimeo_access_token = Access Token
-yfeed_vimeo_client_secret = Client Secret
+feeds_streams = Streams
+feeds_stream_add = Stream hinzufügen
+feeds_stream_edit = Stream bearbeiten
+feeds_stream_delete = Stream löschen
+feeds_stream_delete_question = Stream wirklich inkl. aller zugehörigen Einträge löschen?
+feeds_stream_deleted = Der Stream wurde gelöscht.
+feeds_stream_fetch = Stream abrufen
+feeds_stream_fetched = Der Stream wurde abgerufen und die Einträge gespeichert ({0} hinzugefügt; {1} aktualisiert; {2} nicht aktualisert, da von einem Benutzer bearbeitet).
+feeds_stream_general = Allgemeines
+feeds_stream_image = Bild
+feeds_stream_namespace = Namespace
+feeds_stream_namespace_error = Der Namespace darf nicht leer sein und darf nur Kleinbuchstaben und den Unterstrich beinhalten.
+feeds_stream_namespace_notice = Eindeutigen Namen vergeben. Mit dem Namespace kann man die SQL-Abfrage filtern.
+feeds_stream_select_type = Typen auswählen
+feeds_stream_title = Titel
+feeds_stream_type = Typ
+feeds_stream_url = URL
+feeds_stream_status_activated = Aktiviert
+feeds_stream_status_deactivated = Deaktiviert
+feeds_stream_status_saved = Der Status wurde gespeichert.
 
 
-yfeed_help = Hilfe
+feeds_cronjob = Feeds: Feeds abrufen
+
+feeds_media_manager_effect = Datei: Aus Feeds einlesen (wenn *.feeds)
+
+feeds_facebook = Facebook
+feeds_facebook_app_id = App Id
+feeds_facebook_app_secret = App Secret
+feeds_facebook_app_title = Titel der App
+feeds_facebook_app_title_note = optional
+feeds_facebook_settings = Facebook App
+feeds_facebook_feed = Facebook Feed
+feeds_facebook_profile_id = User ID oder Page ID
+feeds_facebook_token = Access Token
+feeds_facebook_token_note = Optional (erforderlich für nicht allgemein öffentliche Einträge)
+feeds_facebook_count = Anzahl der Einträge
+feeds_facebook_api_version = API-Version
+feeds_facebook_result_type = Ergebnis
+feeds_facebook_result_type_feed = Alle Einträge
+feeds_facebook_result_type_posts = Nur eigene Einträge
+feeds_facebook_result_type_tagged = Nur fremde Einträge
+
+feeds_rss = RSS
+feeds_rss_feed = RSS Feed
+feeds_rss_url = Url
+
+feeds_twitter = Twitter
+feeds_twitter_consumer_key = Twitter API key (Consumer Key)
+feeds_twitter_consumer_secret = Twitter API secret (Consumer Secret)
+feeds_twitter_count = Anzahl der Tweets
+feeds_twitter_entries = Einträge
+feeds_twitter_exclude_replies = Antworten ausschließen
+feeds_twitter_oauth_token = Twitter Access token
+feeds_twitter_oauth_token_secret = Twitter Access token secret
+feeds_twitter_result_type = Ergebnis
+feeds_twitter_result_type_mixed = Hole die neuesten und beliebtesten Tweets
+feeds_twitter_result_type_recent = Hole nur die neuesten Tweets
+feeds_twitter_result_type_popular = Hole nur die beliebtesten Tweets
+feeds_twitter_screen_name = Benutzername
+feeds_twitter_settings = Einstellungen
+
+feeds_twitter_user_timeline = Twitter :: Tweets vom Benutzer
+
+feeds_twitter_hashtag = Twitter :: Hashtag
+feeds_twitter_hashtag_q = Hashtag
+feeds_twitter_hashtag_with_prefix = Hashtag mit # eingeben
+
+feeds_google = Google
+feeds_google_settings = Einstellungen
+feeds_google_key = Google Api-Key
+
+feeds_youtube_channel = Youtube :: Channel
+feeds_youtube_channel_id = Channel-ID
+feeds_youtube_count = Anzahl der Einträge
+
+feeds_youtube_playlist = Youtube :: Playlist
+feeds_youtube_playlist_id = Playlist-ID
+
+feeds_instagram = Instagram
+feeds_instagram_settings = Einstellungen
+feeds_instagram_access_token = Access Token
+
+feeds_instagram_tag = Instagram :: Tag
+feeds_instagram_tag_name = Tagname
+feeds_instagram_tag_without_prefix = Tag ohne # eingeben
+feeds_instagram_count = Anzahl der Einträge
+
+feeds_instagram_user = Instagram :: Benutzer
+feeds_instagram_username = Benutzername / Benutzer-ID
+feeds_instagram_username_notice = Bei Nutzung der offiziellen API (Access Token hinterlegt) muss die Benutzer-ID genutzt werden, ansonsten der Benutzername.
+
+feeds_vimeo_pro_user = Vimeo Pro :: Videos eines Pro-Users
+feeds_vimeo_user_id = User-ID
+feeds_vimeo_access_token = Access Token
+feeds_vimeo_client_secret = Client Secret
+
+
+feeds_help = Hilfe

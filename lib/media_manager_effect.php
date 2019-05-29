@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the YFeed package.
+ * This file is part of the Feeds package.
  *
  * @author (c) Yakamara Media GmbH & Co. KG
  * @author thomas.blum@redaxo.org
@@ -10,20 +10,20 @@
  * file that was distributed with this source code.
  */
 
-class rex_effect_yfeed extends rex_effect_abstract
+class rex_effect_feeds extends rex_effect_abstract
 {
     public function execute()
     {
         $filename = rex_media_manager::getMediaFile();
 
-        if (!preg_match('/^(\d+)\.yfeed$/', $filename, $match)) {
+        if (!preg_match('/^(\d+)\.feeds$/', $filename, $match)) {
             return;
         }
 
         $id = $match[1];
 
         $sql = rex_sql::factory()
-            ->setTable(rex_yfeed_item::table())
+            ->setTable(rex_feeds_item::table())
             ->setWhere(['id' => $id, 'status' => 1])
             ->select('media');
 
@@ -54,6 +54,6 @@ class rex_effect_yfeed extends rex_effect_abstract
 
     public function getName()
     {
-        return rex_i18n::msg('yfeed_media_manager_effect');
+        return rex_i18n::msg('feeds_media_manager_effect');
     }
 }

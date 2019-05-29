@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the YFeed package.
+ * This file is part of the Feeds package.
  *
  * @author (c) Yakamara Media GmbH & Co. KG
  * @author thomas.blum@redaxo.org
@@ -15,11 +15,11 @@ use Instagram\Media;
 use InstagramScraper\Instagram as InstagramScraper;
 use InstagramScraper\Model\Media as ScapedMedia;
 
-abstract class rex_yfeed_stream_instagram_abstract extends rex_yfeed_stream_abstract
+abstract class rex_feeds_stream_instagram_abstract extends rex_feeds_stream_abstract
 {
     public function fetch()
     {
-        $accessToken = rex_config::get('yfeed', 'instagram_access_token');
+        $accessToken = rex_config::get('feeds', 'instagram_access_token');
 
         if ($accessToken) {
             $this->fetchOfficialApi($accessToken);
@@ -50,7 +50,7 @@ abstract class rex_yfeed_stream_instagram_abstract extends rex_yfeed_stream_abst
         $instagramItems = $this->fetchItemsFromOfficialApi($instagram);
 
         foreach ($instagramItems as $instagramItem) {
-            $item = new rex_yfeed_item($this->streamId, $instagramItem->getId());
+            $item = new rex_feeds_item($this->streamId, $instagramItem->getId());
             $item->setTitle($instagramItem->getCaption());
 
             $item->setUrl($instagramItem->getLink());
@@ -76,7 +76,7 @@ abstract class rex_yfeed_stream_instagram_abstract extends rex_yfeed_stream_abst
         $owners = [];
 
         foreach ($instagramItems as $instagramItem) {
-            $item = new rex_yfeed_item($this->streamId, $instagramItem->getId());
+            $item = new rex_feeds_item($this->streamId, $instagramItem->getId());
             $item->setTitle($instagramItem->getCaption() ?: null);
 
             $item->setUrl($instagramItem->getLink());

@@ -1,10 +1,10 @@
 <?php
 
 /**
- * yfeed.
+ * feeds.
 */
 
-rex_sql_table::get(rex::getTable('yfeed_stream'))
+rex_sql_table::get(rex::getTable('feeds_stream'))
     ->ensurePrimaryIdColumn()
     ->ensureColumn(new rex_sql_column('namespace', 'varchar(255)'))
     ->ensureColumn(new rex_sql_column('type', 'varchar(255)'))
@@ -20,9 +20,9 @@ rex_sql_table::get(rex::getTable('yfeed_stream'))
     ->ensureColumn(new rex_sql_column('updatedate', 'datetime'))
     ->ensure();
 
-$fk = new rex_sql_foreign_key("stream_id", rex::getTable('yfeed_stream'), ["stream_id" => "id"], $onUpdate = rex_sql_foreign_key::CASCADE , $onDelete = rex_sql_foreign_key::CASCADE );
+$fk = new rex_sql_foreign_key("stream_id", rex::getTable('feeds_stream'), ["stream_id" => "id"], $onUpdate = rex_sql_foreign_key::CASCADE , $onDelete = rex_sql_foreign_key::CASCADE );
 
-rex_sql_table::get(rex::getTable('yfeed_item'))
+rex_sql_table::get(rex::getTable('feeds_item'))
     ->ensurePrimaryIdColumn()
     ->ensureColumn(new rex_sql_column('stream_id', 'int(10) unsigned'))
     ->ensureColumn(new rex_sql_column('uid', 'varchar(255)'))
@@ -49,6 +49,6 @@ rex_sql_table::get(rex::getTable('yfeed_item'))
 
 //CHANGE content to utf8mb4_unicode_ci to display Emoti
 $c = rex_sql::factory();
-$c->setQuery('ALTER TABLE `' . rex::getTable('yfeed_item') . '` CHANGE `content` `content` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
+$c->setQuery('ALTER TABLE `' . rex::getTable('feeds_item') . '` CHANGE `content` `content` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
 
 ?>

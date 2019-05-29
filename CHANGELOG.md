@@ -20,7 +20,7 @@ Version 1.2.1 – 05.01.2018
 ### Bugfixes
 
 * Instagram: Abruf über inoffizielle API (ohne Access Token) funktionierte nicht mehr
-* Media-Manager-Effekt: Teilweise wurden auch Dateinamen als YFeed-Datei gewertet, die nicht dem Schema `x.yfeed` entsprachen
+* Media-Manager-Effekt: Teilweise wurden auch Dateinamen als Feeds-Datei gewertet, die nicht dem Schema `x.feeds` entsprachen
 
 
 Version 1.2 – 08.11.2017

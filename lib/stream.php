@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the YFeed package.
+ * This file is part of the Feeds package.
  *
  * @author (c) Yakamara Media GmbH & Co. KG
  * @author thomas.blum@redaxo.org
@@ -10,14 +10,14 @@
  * file that was distributed with this source code.
  */
 
-class rex_yfeed_stream
+class rex_feeds_stream
 {
     private static $streams = [];
 
     /**
      * @param int $id
      *
-     * @return rex_yfeed_stream_abstract|null
+     * @return rex_feeds_stream_abstract|null
      */
     public static function get($id)
     {
@@ -33,35 +33,35 @@ class rex_yfeed_stream
     }
 
     /**
-     * @return rex_yfeed_stream_abstract[]
+     * @return rex_feeds_stream_abstract[]
      */
     public static function getAllActivated()
     {
         $sql = rex_sql::factory();
         $data = $sql->getArray('SELECT * FROM ' . self::table() . ' WHERE `status` = 1');
 
-        return array_map('rex_yfeed_stream::create', $data);
+        return array_map('rex_feeds_stream::create', $data);
     }
 
     /**
      * @param array $data
      *
-     * @return rex_yfeed_stream_abstract
+     * @return rex_feeds_stream_abstract
      * @throws rex_exception
      */
     public static function create(array $data)
     {
         if (empty($data['type'])) {
-            throw new rex_exception('Unexpected yfeed stream type');
+            throw new rex_exception('Unexpected feeds stream type');
         }
 
         $type = $data['type'];
         $streams = self::getSupportedStreams();
         if (!isset($streams[$type])) {
-            throw new rex_exception('The yfeed stream type is not supported');
+            throw new rex_exception('The feeds stream type is not supported');
         }
 
-        /** @var rex_yfeed_stream_abstract $stream */
+        /** @var rex_feeds_stream_abstract $stream */
         $stream = new $streams[$type]();
         if (isset($data['type_params'])) {
             $stream->setTypeParams(json_decode($data['type_params'], true));
@@ -76,7 +76,7 @@ class rex_yfeed_stream
 
     public static function table()
     {
-        return rex::getTable('yfeed_stream');
+        return rex::getTable('feeds_stream');
     }
 
     public static function getSupportedStreams()
@@ -91,7 +91,7 @@ class rex_yfeed_stream
         if ($files) {
             foreach ($files as $file) {
                 $type = substr(basename($file), 0, -4);
-                self::$streams[$type] = 'rex_yfeed_stream_'.$type;
+                self::$streams[$type] = 'rex_feeds_stream_'.$type;
             }
         }
         $loaded = true;
@@ -101,7 +101,7 @@ class rex_yfeed_stream
 
     public static function addStream($class, $type = null)
     {
-        $type = $type ?: str_replace(['rex_', 'yfeed_', 'stream_'], '', $class);
+        $type = $type ?: str_replace(['rex_', 'feeds_', 'stream_'], '', $class);
         self::$streams[$type] = $class;
     }
 }

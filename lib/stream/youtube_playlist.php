@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the YFeed package.
+ * This file is part of the Feeds package.
  *
  * @author (c) Yakamara Media GmbH & Co. KG
  * @author thomas.blum@redaxo.org
@@ -12,23 +12,23 @@
 
 use Madcoda\Youtube\Youtube;
 
-class rex_yfeed_stream_youtube_playlist extends rex_yfeed_stream_abstract
+class rex_feeds_stream_youtube_playlist extends rex_feeds_stream_abstract
 {
     public function getTypeName()
     {
-        return rex_i18n::msg('yfeed_youtube_playlist');
+        return rex_i18n::msg('feeds_youtube_playlist');
     }
 
     public function getTypeParams()
     {
         return [
             [
-                'label' => rex_i18n::msg('yfeed_youtube_playlist_id'),
+                'label' => rex_i18n::msg('feeds_youtube_playlist_id'),
                 'name' => 'playlist_id',
                 'type' => 'string',
             ],
             [
-                'label' => rex_i18n::msg('yfeed_youtube_count'),
+                'label' => rex_i18n::msg('feeds_youtube_count'),
                 'name' => 'count',
                 'type' => 'select',
                 'options' => [5 => 5, 10 => 10, 15 => 15, 20 => 20, 30 => 30, 50 => 50],
@@ -41,14 +41,14 @@ class rex_yfeed_stream_youtube_playlist extends rex_yfeed_stream_abstract
     {
         $argSeparator = ini_set('arg_separator.output', '&');
 
-        $youtube = new Youtube(['key' => rex_config::get('yfeed', 'google_key')]);
+        $youtube = new Youtube(['key' => rex_config::get('feeds', 'google_key')]);
 
         $videos = $youtube->getPlaylistItemsByPlaylistId($this->getPlaylistId($youtube), $this->typeParams['count']);
 
         ini_set('arg_separator.output', $argSeparator);
 
         foreach ($videos as $video) {
-            $item = new rex_yfeed_item($this->streamId, $video->contentDetails->videoId);
+            $item = new rex_feeds_item($this->streamId, $video->contentDetails->videoId);
 
             $item->setTitle($video->snippet->title);
             $item->setContentRaw($video->snippet->description);

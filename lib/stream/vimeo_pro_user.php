@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the YFeed package.
+ * This file is part of the Feeds package.
  *
  * @author (c) Yakamara Media GmbH & Co. KG
  * @author thomas.blum@redaxo.org
@@ -12,28 +12,28 @@
 
 use Vimeo\Vimeo;
 
-class rex_yfeed_stream_vimeo_pro_user extends rex_yfeed_stream_abstract
+class rex_feeds_stream_vimeo_pro_user extends rex_feeds_stream_abstract
 {
     public function getTypeName()
     {
-        return rex_i18n::msg('yfeed_vimeo_pro_user');
+        return rex_i18n::msg('feeds_vimeo_pro_user');
     }
 
     public function getTypeParams()
     {
         return [
             [
-                'label' => rex_i18n::msg('yfeed_vimeo_user_id'),
+                'label' => rex_i18n::msg('feeds_vimeo_user_id'),
                 'name' => 'client_id',
                 'type' => 'string',
             ],
             [
-                'label' => rex_i18n::msg('yfeed_vimeo_access_token'),
+                'label' => rex_i18n::msg('feeds_vimeo_access_token'),
                 'name' => 'access_token',
                 'type' => 'string',
             ],
             [
-                'label' => rex_i18n::msg('yfeed_vimeo_client_secret'),
+                'label' => rex_i18n::msg('feeds_vimeo_client_secret'),
                 'name' => 'client_secret',
                 'type' => 'string',
             ],
@@ -57,7 +57,7 @@ class rex_yfeed_stream_vimeo_pro_user extends rex_yfeed_stream_abstract
         foreach ($videos as $video) {
             $uri = $video['uri'];
             $uri = str_replace("/videos/", "", $uri);
-            $item = new rex_yfeed_item($this->streamId, $uri);
+            $item = new rex_feeds_item($this->streamId, $uri);
             
             $item->setTitle($video['name']);
                 

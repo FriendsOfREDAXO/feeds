@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the YFeed package.
+ * This file is part of the Feeds package.
  *
  * @author (c) Yakamara Media GmbH & Co. KG
  * @author thomas.blum@redaxo.org
@@ -11,9 +11,9 @@
  */
 
 if (rex_addon::get('cronjob')->isAvailable()) {
-    rex_cronjob_manager::registerType(rex_cronjob_yfeed::class);
+    rex_cronjob_manager::registerType(rex_cronjob_feeds::class);
 }
 
 if (rex_addon::get('media_manager')->isAvailable()) {
-    rex_media_manager::addEffect(rex_effect_yfeed::class);
+    rex_media_manager::addEffect(rex_effect_feeds::class);
 }

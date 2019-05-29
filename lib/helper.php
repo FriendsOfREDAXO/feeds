@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the YFeed package.
+ * This file is part of the Feeds package.
  *
  * @author (c) Yakamara Media GmbH & Co. KG
  * @author thomas.blum@redaxo.org
@@ -10,7 +10,7 @@
  * file that was distributed with this source code.
  */
 
-class rex_yfeed_helper
+class rex_feeds_helper
 {
     /**
      * Generates the data uri for a remote resource

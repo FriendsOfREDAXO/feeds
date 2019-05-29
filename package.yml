@@ -1,11 +1,11 @@
-package: yfeed
-version: '1.4.0-dev'
+package: feeds
+version: '1.0.0-dev'
 author: Gregor Harlan, Thomas Blum
 supportpage: www.redaxo.org/de/forum/
 
 page:
-    title: 'translate:yfeed'
-    perm: yfeed[]
+    title: 'translate:feeds'
+    perm: feeds[]
     pjax: true
     icon: rex-icon fa-rss
     subpages:

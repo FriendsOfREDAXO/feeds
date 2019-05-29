@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the YFeed package.
+ * This file is part of the Feeds package.
  *
  * @author (c) Yakamara Media GmbH & Co. KG
  * @author thomas.blum@redaxo.org
@@ -10,7 +10,7 @@
  * file that was distributed with this source code.
  */
 
-class rex_yfeed_item
+class rex_feeds_item
 {
     private $streamId;
     private $uid;
@@ -74,38 +74,38 @@ class rex_yfeed_item
 
     public static function table()
     {
-        return rex::getTable('yfeed_item');
+        return rex::getTable('feeds_item');
     }
 
 	/**
 	 * Read object stored in database
-	 * @param rex_yfeed_item $rex_yfeed_item
-	 * @return rex_yfeed_item YFeed item or null if not found
+	 * @param rex_feeds_item $rex_feeds_item
+	 * @return rex_feeds_item Feeds item or null if not found
 	 */
 	public static function get($id)
 	{
-		$rex_yfeed_item = new rex_yfeed_item();
-		$rex_yfeed_item->primaryId = $id;
+		$rex_feeds_item = new rex_feeds_item();
+		$rex_feeds_item->primaryId = $id;
 
 		$sql = rex_sql::factory();
 		$sql->setQuery('SELECT * FROM ' . self::table() . ' WHERE `id` = ' . $id);
 
 		if ($sql->getRows()) {
-			$rex_yfeed_item->changedByUser = $sql->getValue('changed_by_user') == '1' ? TRUE : FALSE;
-			$rex_yfeed_item->exists = $sql->getValue('changed_by_user') == '1' ? FALSE : TRUE;
-			$rex_yfeed_item->streamId = $sql->getValue('stream_id');
-			$rex_yfeed_item->uid = $sql->getValue('uid');
-			$rex_yfeed_item->title = $sql->getValue('title');
-			$rex_yfeed_item->content = $sql->getValue('content');
-			$rex_yfeed_item->contentRaw = $sql->getValue('content_raw');
-			$rex_yfeed_item->url = $sql->getValue('url');
-			$rex_yfeed_item->date = $sql->getValue('date');
-			$rex_yfeed_item->author = $sql->getValue('author');
-			$rex_yfeed_item->language = $sql->getValue('language');
-			$rex_yfeed_item->media = $sql->getValue('media');
-			$rex_yfeed_item->raw = $sql->getValue('raw');
-			$rex_yfeed_item->status = $sql->getValue('changed_by_user') == '1' ? TRUE : FALSE;
-			return $rex_yfeed_item;
+			$rex_feeds_item->changedByUser = $sql->getValue('changed_by_user') == '1' ? TRUE : FALSE;
+			$rex_feeds_item->exists = $sql->getValue('changed_by_user') == '1' ? FALSE : TRUE;
+			$rex_feeds_item->streamId = $sql->getValue('stream_id');
+			$rex_feeds_item->uid = $sql->getValue('uid');
+			$rex_feeds_item->title = $sql->getValue('title');
+			$rex_feeds_item->content = $sql->getValue('content');
+			$rex_feeds_item->contentRaw = $sql->getValue('content_raw');
+			$rex_feeds_item->url = $sql->getValue('url');
+			$rex_feeds_item->date = $sql->getValue('date');
+			$rex_feeds_item->author = $sql->getValue('author');
+			$rex_feeds_item->language = $sql->getValue('language');
+			$rex_feeds_item->media = $sql->getValue('media');
+			$rex_feeds_item->raw = $sql->getValue('raw');
+			$rex_feeds_item->status = $sql->getValue('changed_by_user') == '1' ? TRUE : FALSE;
+			return $rex_feeds_item;
 		}
 		else {
 			return null;
@@ -244,7 +244,7 @@ class rex_yfeed_item
 
     public function setMedia($url)
     {
-        $this->media = rex_yfeed_helper::getDataUri($url);
+        $this->media = rex_feeds_helper::getDataUri($url);
     }
 
     public function setMediaSource($value)
