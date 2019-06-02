@@ -1,7 +1,7 @@
 package: feeds
 version: '1.0.0-beta3'
-author: Gregor Harlan, Thomas Blum
-supportpage: www.redaxo.org/de/forum/
+author: Friends Of REDAXO
+supportpage: https://github.com/FriendsOfREDAXO/feeds
 
 page:
     title: 'translate:feeds'
