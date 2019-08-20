@@ -18,6 +18,8 @@ feeds_item_raw = Datos enteros como Json
 feeds_item_title = Título
 feeds_item_url = Url
 feeds_item_uid = Id
+feeds_item_type = Tipo de Facebook
+feeds_item_mediasource = Fuente de medios
 
 feeds_item_status_online = En línea
 feeds_item_status_offline = Desconectado
