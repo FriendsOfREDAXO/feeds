@@ -40,7 +40,7 @@ class rex_feeds_stream_instagram_user extends rex_feeds_stream_instagram_abstrac
 
     protected function fetchItemsFromOfficialApi(Instagram $instagram)
     {
-        if ((preg_match('/^\d+$/', $this->typeParams['user']) || $this->typeParams['user']) =='self') {
+        if ((preg_match('/^\d+$/', $this->typeParams['user']) || $this->typeParams['user'] =='self') {
             $user = $instagram->getUser($this->typeParams['user']);
         } else {
             $user = $instagram->getUserByUsername($this->typeParams['user']);
