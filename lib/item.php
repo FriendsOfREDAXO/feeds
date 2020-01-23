@@ -203,6 +203,23 @@ class rex_feeds_item
     }
 
     /**
+     * Get media manager url.
+     * @param string $type Media Manager type
+     */
+    public function getMediaUrl(string $type, bool $escape = true): ?string
+    {
+        if (!rex_addon::get('media_manager')->isAvailable()) {
+            throw new rex_exception(__CLASS__.'::getMediaUrl() can be used only when media_manager is activated.');
+        }
+
+        if (!$this->media) {
+            return null;
+        }
+
+        return rex_media_manager::getUrl($type, $this->primaryId.'.feeds', $this->date->getTimestamp(), $escape);
+    }
+
+    /**
      * Get raw data.
      * @return string JSON encoded raw data
      */
