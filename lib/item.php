@@ -100,7 +100,7 @@ class rex_feeds_item
             $rex_feeds_item->content = $sql->getValue('content');
             $rex_feeds_item->contentRaw = $sql->getValue('content_raw');
             $rex_feeds_item->url = $sql->getValue('url');
-            $rex_feeds_item->date = $sql->getValue('date');
+            $rex_feeds_item->date = new DateTimeImmutable($sql->getValue('date'));
             $rex_feeds_item->author = $sql->getValue('author');
             $rex_feeds_item->username = $sql->getValue('username');
             $rex_feeds_item->language = $sql->getValue('language');
