@@ -25,6 +25,7 @@ rex_sql_table::get(rex::getTable('feeds_stream'))
 ->ensureColumn(new rex_sql_column('updateuser', 'varchar(255)'))
 ->ensureColumn(new rex_sql_column('createdate', 'datetime'))
 ->ensureColumn(new rex_sql_column('updatedate', 'datetime'))
+->removeForeignKey('rex_feeds_stream_ibfk_1')
 ->ensure();
 
     rex_sql_table::get(rex::getTable('feeds_item'))
