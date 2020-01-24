@@ -160,9 +160,19 @@ class rex_feeds_item
 
     /**
      * Get date (format: Y-m-d H:i:s)
-     * @return DateTimeInterface Date
+     * @return string Date
+     * @deprecated use `getDateTime` instead
      */
     public function getDate()
+    {
+        return $this->date->format('Y-m-d H:i:s');
+    }
+
+    /**
+     * Get datetime object
+     * @return DateTimeInterface Date
+     */
+    public function getDateTime()
     {
         return $this->date;
     }
