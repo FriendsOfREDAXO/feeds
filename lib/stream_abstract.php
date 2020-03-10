@@ -40,11 +40,11 @@ abstract class rex_feeds_stream_abstract
 	 * @param int $number Number of items to be returned
 	 * @return \rex_feeds_item[] Array with item objects
 	 */
-	public function getPreloadedItems($number = 5)
+	public function getPreloadedItems($number = 5, $orderBy = 'updatedate')
 	{
 		$items = [];
 		$result = rex_sql::factory();
-		$result->setQuery('SELECT id FROM '. rex::getTablePrefix() .'feeds_item WHERE stream_id = '. $this->streamId .' ORDER BY date DESC LIMIT 0, '. $number .';');
+		$result->setQuery('SELECT id FROM '. rex::getTablePrefix() .'feeds_item WHERE stream_id = '. $this->streamId .' ORDER BY '.$orderBy.' DESC LIMIT 0, '. $number .';');
 
 		for ($i = 0; $i < $result->getRows(); $i++) {
 			$item = rex_feeds_item::get($result->getValue('id'));
