@@ -77,7 +77,7 @@ $stream = rex_feeds_stream::get($stream_id);
 $items = $stream->getPreloadedItems(); // Standard gibt 5 Einträge zurück, sonst gewünschte Anzahl übergeben
     foreach($items as $item) {
         print '<a href="'. $item->getUrl() .'" title="'. $stream->getTitle() .'">';
-        print '<img src="index.php?rex_media_type='. $media_manager_type .'&rex_media_file='. $item->getId() .'.feeds"  alt="'. $item->getTitle() .'" title="'. $item->getTitle() .'">'; 
+        print '<img src="index.php?rex_media_type='. $media_manager_type .'&rex_media_file='. $item->getId() .'.feeds"  alt="'. rex_escape($item->getTitle()) .'" title="'. rex_escape($item->getTitle()) .'">'; 
         print '</a>';
     }
 ```
