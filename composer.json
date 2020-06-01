@@ -1,10 +1,10 @@
 {
     "require": {
-        "nicolus/picofeed": "^0.1.40",
+        "nicolus/picofeed": "^0.1.42",
         "ricardoper/twitteroauth": "^2.1.6",
         "facebook/graph-sdk": "^5.4.4",
         "madcoda/php-youtube-api": "^1.2",
-        "vimeo/vimeo-api": "^1.2.3",
+        "vimeo/vimeo-api": "^2.0",
         "php-instagram-api/php-instagram-api": "dev-master",
         "raiym/instagram-php-scraper": "^0.8"
     }

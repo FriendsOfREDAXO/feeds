@@ -4,12 +4,15 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticIniteb1ce641d1557886c42ebe508456feb9
+class ComposerStaticInit7ea7ff7b3e58df3ced7efd1c34e0d21a
 {
     public static $files = array (
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
-        'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
+        '25072dd6e2470089de65ae7bf11d3109' => __DIR__ . '/..' . '/symfony/polyfill-php72/bootstrap.php',
+        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
+        'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
+        'f598d06aa772fa33d905e87be6398fb1' => __DIR__ . '/..' . '/symfony/polyfill-intl-idn/bootstrap.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         'c65d09b6820da036953a371c8c73a9b1' => __DIR__ . '/..' . '/facebook/graph-sdk/src/Facebook/polyfills.php',
     );
@@ -31,6 +34,12 @@ class ComposerStaticIniteb1ce641d1557886c42ebe508456feb9
         'T' => 
         array (
             'TwitterOAuth\\' => 13,
+        ),
+        'S' => 
+        array (
+            'Symfony\\Polyfill\\Php72\\' => 23,
+            'Symfony\\Polyfill\\Mbstring\\' => 26,
+            'Symfony\\Polyfill\\Intl\\Idn\\' => 26,
         ),
         'P' => 
         array (
@@ -83,6 +92,18 @@ class ComposerStaticIniteb1ce641d1557886c42ebe508456feb9
         'TwitterOAuth\\' => 
         array (
             0 => __DIR__ . '/..' . '/ricardoper/twitteroauth/src',
+        ),
+        'Symfony\\Polyfill\\Php72\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-php72',
+        ),
+        'Symfony\\Polyfill\\Mbstring\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
+        ),
+        'Symfony\\Polyfill\\Intl\\Idn\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-intl-idn',
         ),
         'Psr\\Log\\' => 
         array (
@@ -161,10 +182,10 @@ class ComposerStaticIniteb1ce641d1557886c42ebe508456feb9
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticIniteb1ce641d1557886c42ebe508456feb9::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticIniteb1ce641d1557886c42ebe508456feb9::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticIniteb1ce641d1557886c42ebe508456feb9::$prefixesPsr0;
-            $loader->classMap = ComposerStaticIniteb1ce641d1557886c42ebe508456feb9::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit7ea7ff7b3e58df3ced7efd1c34e0d21a::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit7ea7ff7b3e58df3ced7efd1c34e0d21a::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit7ea7ff7b3e58df3ced7efd1c34e0d21a::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit7ea7ff7b3e58df3ced7efd1c34e0d21a::$classMap;
 
         }, null, ClassLoader::class);
     }
