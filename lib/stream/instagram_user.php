@@ -51,6 +51,6 @@ class rex_feeds_stream_instagram_user extends rex_feeds_stream_instagram_abstrac
 
     protected function fetchItemsFromFrontendApi(InstagramScraper $instagram)
     {
-        return $instagram->getMedias($this->typeParams['user'], $this->typeParams['count']);
+        return $instagram->getMediasByUserId($this->typeParams['user'], $this->typeParams['count']);
     }
 }

@@ -86,23 +86,23 @@ abstract class rex_feeds_stream_instagram_abstract extends rex_feeds_stream_abst
                 $item->setMedia($image);
             }
 
-            $owner = $instagramItem->getOwner();
-            if (!$owner->getFullName()) {
-                if (isset($owners[$instagramItem->getOwnerId()])) {
-                    $owner = $owners[$instagramItem->getOwnerId()];
-                    $instagramItem['owner'] = $owner;
-                } else {
-                    $itemWithAuthor = $instagram->getMediaByUrl($instagramItem->getLink());
-                    $owner = $itemWithAuthor->getOwner();
-                    if ($owner->getFullName()) {
-                        $instagramItem['owner'] = $owner;
-                        $owners[$instagramItem->getOwnerId()] = $owner;
-                    }
-                }
-            }
-
-            $item->setAuthor($owner->getFullName() ?: null);
-            $item->setUsername($owner->getUsername());
+//            $owner = $instagramItem->getOwner();
+//            if (!$owner->getFullName()) {
+//                if (isset($owners[$instagramItem->getOwnerId()])) {
+//                    $owner = $owners[$instagramItem->getOwnerId()];
+//                    $instagramItem['owner'] = $owner;
+//                } else {
+//                    $itemWithAuthor = $instagram->getMediaByUrl($instagramItem->getLink());
+//                    $owner = $itemWithAuthor->getOwner();
+//                    if ($owner->getFullName()) {
+//                        $instagramItem['owner'] = $owner;
+//                        $owners[$instagramItem->getOwnerId()] = $owner;
+//                    }
+//                }
+//            }
+//
+//            $item->setAuthor($owner->getFullName() ?: null);
+//            $item->setUsername($owner->getUsername());
 
             $item->setRaw($instagramItem);
 
