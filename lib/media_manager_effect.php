@@ -13,7 +13,7 @@ class rex_effect_feeds extends rex_effect_abstract
 {
     public function execute()
     {
-        $filename = rex_media_manager::getMediaFile();
+        $filename = $this->media->getMediaFilename();
 
         if (preg_match('/^(\d+)\.feeds$/', $filename, $match) || preg_match('/^(\d+)\.yfeed$/', $filename, $match) ) {}
         else { 
