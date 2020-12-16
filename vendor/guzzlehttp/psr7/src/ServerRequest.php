@@ -79,10 +79,8 @@ class ServerRequest extends Request implements ServerRequestInterface
      * Return an UploadedFile instance array.
      *
      * @param array $files A array which respect $_FILES structure
-     *
-     * @return array
-     *
      * @throws InvalidArgumentException for unrecognized values
+     * @return array
      */
     public static function normalizeFiles(array $files)
     {

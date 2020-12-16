@@ -1,5 +1,4 @@
 <?php
-
 namespace GuzzleHttp\Psr7;
 
 use Psr\Http\Message\StreamInterface;
@@ -52,7 +51,7 @@ class PumpStream implements StreamInterface
     public function __toString()
     {
         try {
-            return Utils::copyToString($this);
+            return copy_to_string($this);
         } catch (\Exception $e) {
             return '';
         }
@@ -67,8 +66,6 @@ class PumpStream implements StreamInterface
     {
         $this->tellPos = false;
         $this->source = null;
-
-        return null;
     }
 
     public function getSize()

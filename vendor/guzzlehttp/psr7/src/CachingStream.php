@@ -1,5 +1,4 @@
 <?php
-
 namespace GuzzleHttp\Psr7;
 
 use Psr\Http\Message\StreamInterface;
@@ -132,7 +131,7 @@ class CachingStream implements StreamInterface
     private function cacheEntireStream()
     {
         $target = new FnStream(['write' => 'strlen']);
-        Utils::copyToStream($this, $target);
+        copy_to_stream($this, $target);
 
         return $this->tell();
     }

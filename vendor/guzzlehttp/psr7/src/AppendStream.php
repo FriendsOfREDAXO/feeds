@@ -1,5 +1,4 @@
 <?php
-
 namespace GuzzleHttp\Psr7;
 
 use Psr\Http\Message\StreamInterface;
@@ -62,7 +61,7 @@ class AppendStream implements StreamInterface
 
     public function getContents()
     {
-        return Utils::copyToString($this);
+        return copy_to_string($this);
     }
 
     /**
@@ -99,8 +98,6 @@ class AppendStream implements StreamInterface
         }
 
         $this->streams = [];
-
-        return null;
     }
 
     public function tell()

@@ -1,11 +1,9 @@
 <?php
-use Phpfastcache\Helper\Psr16Adapter;
-
 require __DIR__ . '/../vendor/autoload.php';
 
 // If account is public you can query Instagram without auth
 
-$instagram = new \InstagramScraper\Instagram(new \GuzzleHttp\Client());
+$instagram = new \InstagramScraper\Instagram();
 $medias = $instagram->getMedias('kevin', 25);
 
 // Let's look at $media
@@ -30,6 +28,6 @@ echo "Profile pic url: {$account->getProfilePicUrl()}\n";
 
 
 // If account private you should be subscribed and after auth it will be available
-$instagram = \InstagramScraper\Instagram::withCredentials(new \GuzzleHttp\Client(), 'username', 'password', new Psr16Adapter('Files'));
+$instagram = \InstagramScraper\Instagram::withCredentials('username', 'password', 'path/to/cache/folder');
 $instagram->login();
 $medias = $instagram->getMedias('private_account', 100);

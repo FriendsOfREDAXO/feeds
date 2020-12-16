@@ -126,7 +126,7 @@ class Client
      *
      * @var string
      */
-    protected $user_agent = 'PicoFeed (https://github.com/nicolus/picoFeed)';
+    protected $user_agent = 'PicoFeed (https://github.com/miniflux/picoFeed)';
 
     /**
      * Real URL used (can be changed after a HTTP redirect).
@@ -184,35 +184,7 @@ class Client
      */
     public function doRequest()
     {
-        $opts = [
-            'timeout' => $this->timeout,
-            'allow_redirects' => ['max' => $this->max_redirects],
-            'headers' => ['User-Agent' => $this->user_agent],
-            'curl' => $this->additional_curl_options,
-        ];
-        if (strlen($this->last_modified)) {
-            $opts['headers']['If-Modified-Since'] = $this->last_modified;
-        }
-        if (strlen($this->etag)) {
-            $opts['headers']['If-None-Match'] = $this->etag;
-        }
-        if (strlen($this->username)) {
-            $opts['auth'] = ['username' => $this->username, 'password' => (string) $this->password];
-        }
-        if (strlen($this->proxy_hostname)) {
-            // Proxies are assumed to be plain HTTP proxies because this is what PicoFeed historically assumed
-            $proxy = "http://";
-            if (strlen($this->proxy_username)) {
-                $proxy .= rawurlencode($this->proxy_username);
-                if (strlen($this->proxy_password)) {
-                    $proxy .= ":" . rawurlencode($this->proxy_password);
-                }
-                $proxy .= "@";
-            }
-            $proxy .= $this->proxy_hostname . ":" . $this->proxy_port;
-            $opts['proxy'] = $proxy; 
-        }
-        return $this->httpClient->get($this->url, $opts);
+        return $this->httpClient->get($this->url);
     }
 
     public function __construct(ClientInterface $httpClient = null)
@@ -287,8 +259,8 @@ class Client
             $this->is_modified = false;
         } elseif ($response->getStatusCode() == 200) {
             $this->is_modified = $this->hasBeenModified($response, $this->etag, $this->last_modified);
-            $this->etag = $response->getHeader('ETag')[0] ?? '';
-            $this->last_modified = $response->getHeader('Last-Modified')[0] ?? '';
+            $this->etag = $response->getHeader('ETag')[0] ?? null;
+            $this->last_modified = $response->getHeader('Last-Modified')[0] ?? null;
         }
 
         if ($this->is_modified === false) {

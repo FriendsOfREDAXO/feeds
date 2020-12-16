@@ -1,5 +1,4 @@
 <?php
-
 namespace GuzzleHttp\Psr7;
 
 use Psr\Http\Message\StreamInterface;
@@ -53,7 +52,7 @@ trait StreamDecoratorTrait
 
     public function getContents()
     {
-        return Utils::copyToString($this);
+        return copy_to_string($this);
     }
 
     /**
@@ -141,7 +140,6 @@ trait StreamDecoratorTrait
      * Implement in subclasses to dynamically create streams when requested.
      *
      * @return StreamInterface
-     *
      * @throws \BadMethodCallException
      */
     protected function createStream()

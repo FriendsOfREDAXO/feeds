@@ -2,6 +2,7 @@
 
 namespace InstagramScraper\Model;
 
+
 class Like extends AbstractModel
 {
     /**
@@ -15,16 +16,6 @@ class Like extends AbstractModel
     protected $username;
 
     /**
-     * @var Fullname
-     */
-    protected $fullName;
-
-    /**
-     * @var Picture
-     */
-    protected $profilePicUrl;
-
-    /**
      * @return mixed
      */
     public function getId()
@@ -33,27 +24,11 @@ class Like extends AbstractModel
     }
 
     /**
-     * @return string
+     * @return mixed
      */
     public function getUserName()
     {
         return $this->username;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFullName()
-    {
-        return $this->fullName;
-    }
-
-    /**
-     * @return string
-     */
-    public function getProfilePicUrl()
-    {
-        return $this->profilePicUrl;
     }
 
     /**
@@ -68,12 +43,6 @@ class Like extends AbstractModel
                 break;
             case 'username':
                 $this->username = $value;
-                break;
-            case 'full_name':
-                $this->fullName = $value;
-                break;
-            case 'profile_pic_url':
-                $this->profilePicUrl = $value;
                 break;
         }
     }

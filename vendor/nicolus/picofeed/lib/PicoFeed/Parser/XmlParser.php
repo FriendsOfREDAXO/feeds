@@ -4,8 +4,8 @@ namespace PicoFeed\Parser;
 
 use DOMDocument;
 use SimpleXMLElement;
-use Laminas\Xml\Exception\RuntimeException;
-use Laminas\Xml\Security;
+use ZendXml\Exception\RuntimeException;
+use ZendXml\Security;
 
 /**
  * XML parser class.
@@ -17,8 +17,6 @@ use Laminas\Xml\Security;
  */
 class XmlParser
 {
-    protected static $errors = [];
-
     /**
      * Get a SimpleXmlElement instance or return false.
      *
@@ -57,7 +55,7 @@ class XmlParser
     }
 
     /**
-     * Small wrapper around LaminasXml to turn their exceptions into PicoFeed exceptions
+     * Small wrapper around ZendXml to turn their exceptions into PicoFeed exceptions
      *
      * @static
      * @access private
@@ -91,7 +89,6 @@ class XmlParser
             return $dom;
         }
 
-        self::$errors = [];
         libxml_use_internal_errors(true);
 
         if (version_compare(PHP_VERSION, '5.4.0', '>=')) {
@@ -99,16 +96,6 @@ class XmlParser
         } else {
             $dom->loadHTML($input);
         }
-
-        foreach (libxml_get_errors() as $error) {
-            self::$errors[] = sprintf('XML error: %s (Line: %d - Column: %d - Code: %d)',
-                $error->message,
-                $error->line,
-                $error->column,
-                $error->code
-            );
-        }
-        libxml_use_internal_errors(false);
 
         return $dom;
     }
@@ -136,7 +123,18 @@ class XmlParser
      */
     public static function getErrors()
     {
-        return implode(', ', self::$errors);
+        $errors = array();
+
+        foreach (libxml_get_errors() as $error) {
+            $errors[] = sprintf('XML error: %s (Line: %d - Column: %d - Code: %d)',
+                $error->message,
+                $error->line,
+                $error->column,
+                $error->code
+            );
+        }
+
+        return implode(', ', $errors);
     }
 
     /**

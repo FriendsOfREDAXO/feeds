@@ -8,17 +8,25 @@ class ComposerStaticInit7ea7ff7b3e58df3ced7efd1c34e0d21a
 {
     public static $files = array (
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
-        'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
         '25072dd6e2470089de65ae7bf11d3109' => __DIR__ . '/..' . '/symfony/polyfill-php72/bootstrap.php',
-        'e69f7f6ee287b969198c3c9d6777bd38' => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer/bootstrap.php',
+        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
+        'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
         'f598d06aa772fa33d905e87be6398fb1' => __DIR__ . '/..' . '/symfony/polyfill-intl-idn/bootstrap.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
-        '7e9bd612cc444b3eed788ebbe46263a0' => __DIR__ . '/..' . '/laminas/laminas-zendframework-bridge/src/autoload.php',
         'c65d09b6820da036953a371c8c73a9b1' => __DIR__ . '/..' . '/facebook/graph-sdk/src/Facebook/polyfills.php',
     );
 
     public static $prefixLengthsPsr4 = array (
+        'p' => 
+        array (
+            'phpssdb\\' => 8,
+            'phpFastCache\\' => 13,
+        ),
+        'Z' => 
+        array (
+            'ZendXml\\' => 8,
+        ),
         'V' => 
         array (
             'Vimeo\\' => 6,
@@ -30,24 +38,19 @@ class ComposerStaticInit7ea7ff7b3e58df3ced7efd1c34e0d21a
         'S' => 
         array (
             'Symfony\\Polyfill\\Php72\\' => 23,
-            'Symfony\\Polyfill\\Intl\\Normalizer\\' => 33,
+            'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Polyfill\\Intl\\Idn\\' => 26,
         ),
         'P' => 
         array (
-            'Psr\\SimpleCache\\' => 16,
             'Psr\\Log\\' => 8,
             'Psr\\Http\\Message\\' => 17,
-            'Psr\\Http\\Client\\' => 16,
+            'Psr\\Cache\\' => 10,
+            'Predis\\' => 7,
         ),
         'M' => 
         array (
             'Madcoda\\Youtube\\' => 16,
-        ),
-        'L' => 
-        array (
-            'Laminas\\ZendFrameworkBridge\\' => 28,
-            'Laminas\\Xml\\' => 12,
         ),
         'K' => 
         array (
@@ -70,6 +73,18 @@ class ComposerStaticInit7ea7ff7b3e58df3ced7efd1c34e0d21a
     );
 
     public static $prefixDirsPsr4 = array (
+        'phpssdb\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpfastcache/phpssdb/src/phpssdb',
+        ),
+        'phpFastCache\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpfastcache/phpfastcache/src/phpFastCache',
+        ),
+        'ZendXml\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zendframework/zendxml/src',
+        ),
         'Vimeo\\' => 
         array (
             0 => __DIR__ . '/..' . '/vimeo/vimeo-api/src/Vimeo',
@@ -82,17 +97,13 @@ class ComposerStaticInit7ea7ff7b3e58df3ced7efd1c34e0d21a
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-php72',
         ),
-        'Symfony\\Polyfill\\Intl\\Normalizer\\' => 
+        'Symfony\\Polyfill\\Mbstring\\' => 
         array (
-            0 => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer',
+            0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
         ),
         'Symfony\\Polyfill\\Intl\\Idn\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-intl-idn',
-        ),
-        'Psr\\SimpleCache\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/psr/simple-cache/src',
         ),
         'Psr\\Log\\' => 
         array (
@@ -102,21 +113,17 @@ class ComposerStaticInit7ea7ff7b3e58df3ced7efd1c34e0d21a
         array (
             0 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
-        'Psr\\Http\\Client\\' => 
+        'Psr\\Cache\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-client/src',
+            0 => __DIR__ . '/..' . '/psr/cache/src',
+        ),
+        'Predis\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/predis/predis/src',
         ),
         'Madcoda\\Youtube\\' => 
         array (
             0 => __DIR__ . '/..' . '/madcoda/php-youtube-api/src',
-        ),
-        'Laminas\\ZendFrameworkBridge\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/laminas/laminas-zendframework-bridge/src',
-        ),
-        'Laminas\\Xml\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/laminas/laminas-xml/src',
         ),
         'Kevinrob\\GuzzleCache\\' => 
         array (
@@ -145,6 +152,13 @@ class ComposerStaticInit7ea7ff7b3e58df3ced7efd1c34e0d21a
     );
 
     public static $prefixesPsr0 = array (
+        'U' => 
+        array (
+            'Unirest\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/mashape/unirest-php/src',
+            ),
+        ),
         'P' => 
         array (
             'PicoFeed' => 
@@ -163,7 +177,6 @@ class ComposerStaticInit7ea7ff7b3e58df3ced7efd1c34e0d21a
 
     public static $classMap = array (
         'Madcoda\\compat' => __DIR__ . '/..' . '/madcoda/php-youtube-api/src/compat.php',
-        'Normalizer' => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer/Resources/stubs/Normalizer.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

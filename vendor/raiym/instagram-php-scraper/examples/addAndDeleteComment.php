@@ -1,10 +1,9 @@
 <?php
 use InstagramScraper\Exception\InstagramException;
-use Phpfastcache\Helper\Psr16Adapter;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$instagram = \InstagramScraper\Instagram::withCredentials(new \GuzzleHttp\Client(), 'username', 'password', new Psr16Adapter('Files'));
+$instagram = \InstagramScraper\Instagram::withCredentials('username', 'password', '/path/to/cache/folder');
 $instagram->login();
 
 try {
@@ -13,7 +12,7 @@ try {
     $comment = $instagram->addComment($mediaId, 'Text 1');
     // replied to comment
     $instagram->addComment($mediaId, 'Text 2', $comment);
-
+    
     $instagram->deleteComment($mediaId, $comment);
 } catch (InstagramException $ex) {
     echo $ex->getMessage();

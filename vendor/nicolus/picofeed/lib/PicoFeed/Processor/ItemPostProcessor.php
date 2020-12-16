@@ -19,7 +19,7 @@ class ItemPostProcessor extends Base
      * List of processors
      *
      * @access private
-     * @var ItemProcessorInterface[]
+     * @var array
      */
     private $processors = array();
 

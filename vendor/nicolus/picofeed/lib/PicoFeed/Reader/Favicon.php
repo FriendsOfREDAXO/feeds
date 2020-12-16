@@ -3,7 +3,7 @@
 namespace PicoFeed\Reader;
 
 use DOMXPath;
-use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\BadResponseException;
 use PicoFeed\Base;
 use PicoFeed\Client\Client;
 use PicoFeed\Client\ClientException;
@@ -156,17 +156,15 @@ class Favicon extends Base
 
                 if ($this->content !== '') {
                     return $icon_link;
+                } elseif ($favicon_link !== '') {
+                    return $this->find($website_link);
                 }
-            } catch (RequestException $e) {
-                continue;
+            } catch (\Exception $e) {
+                return $this->find($website_link);
             }
         }
 
-        if ($favicon_link !== '') {
-            return $this->find($website_link);
-        } else {
-            return '';
-        }
+        return '';
     }
 
     /**

@@ -1,5 +1,4 @@
 <?php
-
 namespace GuzzleHttp\Psr7;
 
 use Psr\Http\Message\StreamInterface;
@@ -72,7 +71,7 @@ class MultipartStream implements StreamInterface
         }
 
         // Add the trailing boundary with CRLF
-        $stream->addStream(Utils::streamFor("--{$this->boundary}--\r\n"));
+        $stream->addStream(stream_for("--{$this->boundary}--\r\n"));
 
         return $stream;
     }
@@ -85,7 +84,7 @@ class MultipartStream implements StreamInterface
             }
         }
 
-        $element['contents'] = Utils::streamFor($element['contents']);
+        $element['contents'] = stream_for($element['contents']);
 
         if (empty($element['filename'])) {
             $uri = $element['contents']->getMetadata('uri');
@@ -101,9 +100,9 @@ class MultipartStream implements StreamInterface
             isset($element['headers']) ? $element['headers'] : []
         );
 
-        $stream->addStream(Utils::streamFor($this->getHeaders($headers)));
+        $stream->addStream(stream_for($this->getHeaders($headers)));
         $stream->addStream($body);
-        $stream->addStream(Utils::streamFor("\r\n"));
+        $stream->addStream(stream_for("\r\n"));
     }
 
     /**
@@ -132,7 +131,7 @@ class MultipartStream implements StreamInterface
         // Set a default Content-Type if one was not supplied
         $type = $this->getHeader($headers, 'content-type');
         if (!$type && ($filename === '0' || $filename)) {
-            if ($type = MimeType::fromFilename($filename)) {
+            if ($type = mimetype_from_filename($filename)) {
                 $headers['Content-Type'] = $type;
             }
         }

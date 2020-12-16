@@ -45,7 +45,7 @@ abstract class rex_feeds_stream_instagram_abstract extends rex_feeds_stream_abst
 
     private function fetchOfficialApi($accessToken)
     {
-        $instagram      = new Instagram($accessToken);
+        $instagram = new Instagram($accessToken);
         $instagramItems = $this->fetchItemsFromOfficialApi($instagram);
 
         foreach ($instagramItems as $instagramItem) {
@@ -59,8 +59,7 @@ abstract class rex_feeds_stream_instagram_abstract extends rex_feeds_stream_abst
                 $item->setMedia($image->url);
             }
 
-            $item->setAuthor($instagramItem->getUser()
-                ->getFullName());
+            $item->setAuthor($instagramItem->getUser()->getFullName());
             $item->setRaw($instagramItem);
 
             $this->updateCount($item);
@@ -70,7 +69,7 @@ abstract class rex_feeds_stream_instagram_abstract extends rex_feeds_stream_abst
 
     private function fetchFrontendApi()
     {
-        $instagram      = new InstagramScraper(new GuzzleHttp\Client());
+        $instagram = new InstagramScraper();
         $instagramItems = $this->fetchItemsFromFrontendApi($instagram);
 
         $owners = [];
@@ -80,12 +79,30 @@ abstract class rex_feeds_stream_instagram_abstract extends rex_feeds_stream_abst
             $item->setTitle($instagramItem->getCaption() ?: null);
 
             $item->setUrl($instagramItem->getLink());
-            $item->setDate(new DateTime('@' . $instagramItem->getCreatedTime()));
+            $item->setDate(new DateTime('@'.$instagramItem->getCreatedTime()));
 
             $image = $instagramItem->getImageHighResolutionUrl() ?: $instagramItem->getImageStandardResolutionUrl();
             if ($image) {
                 $item->setMedia($image);
             }
+
+//            $owner = $instagramItem->getOwner();
+//            if (!$owner->getFullName()) {
+//                if (isset($owners[$instagramItem->getOwnerId()])) {
+//                    $owner = $owners[$instagramItem->getOwnerId()];
+//                    $instagramItem['owner'] = $owner;
+//                } else {
+//                    $itemWithAuthor = $instagram->getMediaByUrl($instagramItem->getLink());
+//                    $owner = $itemWithAuthor->getOwner();
+//                    if ($owner->getFullName()) {
+//                        $instagramItem['owner'] = $owner;
+//                        $owners[$instagramItem->getOwnerId()] = $owner;
+//                    }
+//                }
+//            }
+//
+//            $item->setAuthor($owner->getFullName() ?: null);
+//            $item->setUsername($owner->getUsername());
 
             $item->setRaw($instagramItem);
 
@@ -93,5 +110,6 @@ abstract class rex_feeds_stream_instagram_abstract extends rex_feeds_stream_abst
             $item->save();
         }
         self::registerExtensionPoint($this->streamId);
+
     }
 }

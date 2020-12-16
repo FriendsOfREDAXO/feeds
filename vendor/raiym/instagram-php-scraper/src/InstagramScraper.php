@@ -11,8 +11,6 @@ require_once __DIR__ . '/InstagramScraper/Model/Comment.php';
 require_once __DIR__ . '/InstagramScraper/Model/Location.php';
 require_once __DIR__ . '/InstagramScraper/Model/Media.php';
 require_once __DIR__ . '/InstagramScraper/Model/Tag.php';
-require_once __DIR__ . '/InstagramScraper/Model/Highlight.php';
 require_once __DIR__ . '/InstagramScraper/Exception/InstagramException.php';
 require_once __DIR__ . '/InstagramScraper/Exception/InstagramAuthException.php';
 require_once __DIR__ . '/InstagramScraper/Exception/InstagramNotFoundException.php';
-require_once __DIR__ . '/InstagramScraper/Exception/InstagramAgeRestrictedException.php';

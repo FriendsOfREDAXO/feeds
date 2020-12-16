@@ -1,5 +1,4 @@
 <?php
-
 namespace GuzzleHttp\Psr7;
 
 use Psr\Http\Message\StreamInterface;
@@ -18,7 +17,7 @@ trait MessageTrait
     /** @var string */
     private $protocol = '1.1';
 
-    /** @var StreamInterface|null */
+    /** @var StreamInterface */
     private $stream;
 
     public function getProtocolVersion()
@@ -118,7 +117,7 @@ trait MessageTrait
     public function getBody()
     {
         if (!$this->stream) {
-            $this->stream = Utils::streamFor('');
+            $this->stream = stream_for('');
         }
 
         return $this->stream;
@@ -195,7 +194,7 @@ trait MessageTrait
             }
 
             return trim((string) $value, " \t");
-        }, array_values($values));
+        }, $values);
     }
 
     private function assertHeader($header)
