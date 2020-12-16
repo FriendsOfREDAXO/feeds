@@ -6,7 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Unirest\\' => array($vendorDir . '/mashape/unirest-php/src'),
     'PicoFeed' => array($vendorDir . '/nicolus/picofeed/lib'),
     'Instagram' => array($vendorDir . '/php-instagram-api/php-instagram-api'),
 );

@@ -96,6 +96,11 @@ class Media extends AbstractModel
     protected $videoStandardResolutionUrl = '';
 
     /**
+     * @var integer
+     */
+    protected $videoDuration = '';
+
+    /**
      * @var string
      */
     protected $videoLowBandwidthUrl = '';
@@ -131,6 +136,11 @@ class Media extends AbstractModel
     protected $locationName = '';
 
     /**
+     * @var bool
+     */
+    protected $commentsDisabled = false;
+
+    /**
      * @var string
      */
     protected $commentsCount = 0;
@@ -164,6 +174,16 @@ class Media extends AbstractModel
      * @var string
      */
     protected $locationSlug;
+
+    /**
+     * @var string
+     */
+    protected $altText;
+
+    /**
+     * @var string
+     */
+    protected $locationAddressJson;
 
     /**
      * @param string $code
@@ -206,7 +226,7 @@ class Media extends AbstractModel
         while ($id > 0) {
             $remainder = $id % 64;
             $id = ($id - $remainder) / 64;
-            $code = $alphabet{$remainder} . $code;
+            $code = $alphabet[$remainder] . $code;
         };
         return $code;
     }
@@ -342,6 +362,14 @@ class Media extends AbstractModel
     }
 
     /**
+     * @return integer
+     */
+    public function getVideoDuration()
+    {
+        return $this->videoDuration;
+    }
+
+    /**
      * @return string
      */
     public function getVideoLowBandwidthUrl()
@@ -387,6 +415,14 @@ class Media extends AbstractModel
     public function getLocationName()
     {
         return $this->locationName;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getCommentsDisabled()
+    {
+        return $this->commentsDisabled;
     }
 
     /**
@@ -444,6 +480,27 @@ class Media extends AbstractModel
     {
         return $this->locationSlug;
     }
+    /**
+     * @return string
+     */
+    public function getAltText()
+    {
+        return $this->altText;
+    }
+    /**
+     * @return string
+     */
+    public function getLocationAddressJson()
+    {
+        return $this->locationAddressJson;
+    }
+    /**
+     * @return mixed
+     */
+    public function getLocationAddress()
+    {
+        return json_decode($this->locationAddressJson);
+    }
 
     /**
      * @param $value
@@ -467,6 +524,9 @@ class Media extends AbstractModel
                 break;
             case 'link':
                 $this->link = $value;
+                break;
+            case 'comments_disabled':
+                $this->commentsDisabled = $value;
                 break;
             case 'comments':
                 $this->commentsCount = $arr[$prop]['count'];
@@ -519,6 +579,9 @@ class Media extends AbstractModel
             case 'caption':
                 $this->caption = $arr[$prop];
                 break;
+            case 'accessibility_caption':
+                $this->altText = $value;
+                break;
             case 'video_views':
                 $this->videoViews = $value;
                 $this->type = static::TYPE_VIDEO;
@@ -527,6 +590,9 @@ class Media extends AbstractModel
                 $this->videoLowResolutionUrl = $arr[$prop]['low_resolution']['url'];
                 $this->videoStandardResolutionUrl = $arr[$prop]['standard_resolution']['url'];
                 $this->videoLowBandwidthUrl = $arr[$prop]['low_bandwidth']['url'];
+                break;
+            case 'video_duration':
+                $this->videoDuration = $arr[$prop];
                 break;
             case 'video_resources':
                 foreach ($value as $video) {
@@ -539,9 +605,12 @@ class Media extends AbstractModel
                 }
                 break;
             case 'location':
-                $this->locationId = $arr[$prop]['id'];
-                $this->locationName = $arr[$prop]['name'];
-                $this->locationSlug = $arr[$prop]['slug'];
+                if(isset($arr[$prop])) {
+                    $this->locationId = $arr[$prop]['id'] ? $arr[$prop]['id'] : null;
+                    $this->locationName = $arr[$prop]['name'] ? $arr[$prop]['name'] : null;
+                    $this->locationSlug = $arr[$prop]['slug'] ? $arr[$prop]['slug'] : null;
+                    $this->locationAddressJson = isset($arr[$prop]['address_json']) ? $arr[$prop]['address_json'] : null;
+                }
                 break;
             case 'user':
                 $this->owner = Account::create($arr[$prop]);
@@ -632,9 +701,9 @@ class Media extends AbstractModel
                 $this->createdTime = (int)$value;
                 break;
             case '__typename':
-                if ($value == 'GraphImage') {
+                if ($value == 'GraphImage' || $value == 'GraphStoryImage') {
                     $this->type = static::TYPE_IMAGE;
-                } else if ($value == 'GraphVideo') {
+                } else if ($value == 'GraphVideo' || $value == 'GraphStoryVideo') {
                     $this->type = static::TYPE_VIDEO;
                 } else if ($value == 'GraphSidecar') {
                     $this->type = static::TYPE_SIDECAR;

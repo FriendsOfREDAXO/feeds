@@ -19,7 +19,7 @@
         "ext-xml": "*",
         "ext-libxml": "*",
         "ext-SimpleXML": "*",
-        "zendframework/zendxml": "^1.0",
+        "laminas/laminas-xml": "^1.0",
         "guzzlehttp/guzzle": "~6.0",
         "kevinrob/guzzle-cache-middleware": "^2.1",
         "psr/log": "^1.0"
@@ -28,7 +28,8 @@
         "phpdocumentor/reflection-docblock": "2.0.4",
         "php-coveralls/php-coveralls": "^2.1",
         "phpunit/phpunit" : "^7.0.0",
-        "monolog/monolog": "^1.23"
+        "monolog/monolog": "^1.23",
+        "blastcloud/guzzler": "^1.5"
     },
     "suggest": {
         "ext-curl": "PicoFeed will use cURL if present",
