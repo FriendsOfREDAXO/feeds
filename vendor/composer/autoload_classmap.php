@@ -7,4 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Madcoda\\compat' => $vendorDir . '/madcoda/php-youtube-api/src/compat.php',
+    'Normalizer' => $vendorDir . '/symfony/polyfill-intl-normalizer/Resources/stubs/Normalizer.php',
 );

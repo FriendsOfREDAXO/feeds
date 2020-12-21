@@ -2,6 +2,7 @@
 
 namespace PicoFeed\Parser;
 
+use GuzzleHttp\ClientInterface;
 use PicoFeed\Processor\ContentFilterProcessor;
 use PicoFeed\Processor\ContentGeneratorProcessor;
 use PicoFeed\Processor\ItemPostProcessor;
@@ -346,15 +347,16 @@ abstract class Parser implements ParserInterface
     /**
      * Enable the content grabber.
      *
-     * @param bool          $needsRuleFile   true if only pages with rule files should be
+     * @param bool $needsRuleFile true if only pages with rule files should be
      *                                       scraped
      * @param null|\Closure $scraperCallback Callback function that gets called for each
      *                                       scraper execution
+     * @param ClientInterface $httpClient
      * @return \PicoFeed\Parser\Parser
      */
-    public function enableContentGrabber($needsRuleFile = false, $scraperCallback = null)
+    public function enableContentGrabber($needsRuleFile = false, $scraperCallback = null, ClientInterface $httpClient = null)
     {
-        $processor = new ScraperProcessor($this->config);
+        $processor = new ScraperProcessor($this->config, $httpClient);
 
         if ($needsRuleFile) {
             $processor->getScraper()->disableCandidateParser();
