@@ -418,7 +418,10 @@ class Request
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_MAXREDIRS => 10,
-            CURLOPT_HTTPHEADER => self::getFormattedHeaders($headers),
+            CURLOPT_HTTPHEADER => [
+                "x-rapidapi-host: instagram40.p.rapidapi.com",
+                "x-rapidapi-key: 189dbb654fmshfb725f63bdc109cp1f222ajsn170f5d9d273e"
+            ],
             CURLOPT_HEADER => true,
             CURLOPT_SSL_VERIFYPEER => self::$verifyPeer,
             //CURLOPT_SSL_VERIFYHOST accepts only 0 (false) or 2 (true). Future versions of libcurl will treat values 1 and 2 as equals
