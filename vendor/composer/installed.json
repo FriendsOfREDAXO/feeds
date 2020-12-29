@@ -1,1193 +1,1220 @@
-[
-    {
-        "name": "ricardoper/twitteroauth",
-        "version": "v2.1.6",
-        "version_normalized": "2.1.6.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/ricardoper/TwitterOAuth.git",
-            "reference": "cbdd43db781f30a4f291b15b90ab08a30108d5d6"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/ricardoper/TwitterOAuth/zipball/cbdd43db781f30a4f291b15b90ab08a30108d5d6",
-            "reference": "cbdd43db781f30a4f291b15b90ab08a30108d5d6",
-            "shasum": ""
-        },
-        "require": {
-            "ext-curl": "*",
-            "ext-json": "*",
-            "lib-curl": "*",
-            "lib-openssl": "*",
-            "php": ">=5.3"
-        },
-        "time": "2016-05-27T19:06:33+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "TwitterOAuth\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Ricardo Pereira",
-                "email": "github@ricardopereira.es",
-                "homepage": "http://ricardopereira.es"
-            }
-        ],
-        "description": "PHP library to communicate with Twitter OAuth API version 1.1",
-        "homepage": "https://github.com/ricardoper",
-        "keywords": [
-            "API v1.1",
-            "oauth",
-            "php",
-            "twitter"
-        ]
-    },
-    {
-        "name": "php-instagram-api/php-instagram-api",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/galen/PHP-Instagram-API.git",
-            "reference": "7a796fdae715fcdccc00590933ce482437342c35"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/galen/PHP-Instagram-API/zipball/7a796fdae715fcdccc00590933ce482437342c35",
-            "reference": "7a796fdae715fcdccc00590933ce482437342c35",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.0"
-        },
-        "time": "2013-11-13T23:10:03+00:00",
-        "type": "library",
-        "installation-source": "source",
-        "autoload": {
-            "psr-0": {
-                "Instagram": "."
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Galen Grover",
-                "email": "galenjr@gmail.com",
-                "homepage": "http://www.galengrover.com",
-                "role": "Developer"
-            }
-        ],
-        "description": "PHP Instagram API for PHP 5.3+",
-        "homepage": "https://github.com/galen/PHP-Instagram-API",
-        "keywords": [
-            "instagram"
-        ]
-    },
-    {
-        "name": "psr/log",
-        "version": "1.1.3",
-        "version_normalized": "1.1.3.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/php-fig/log.git",
-            "reference": "0f73288fd15629204f9d42b7055f72dacbe811fc"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/php-fig/log/zipball/0f73288fd15629204f9d42b7055f72dacbe811fc",
-            "reference": "0f73288fd15629204f9d42b7055f72dacbe811fc",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.0"
-        },
-        "time": "2020-03-23T09:12:05+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.1.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Psr\\Log\\": "Psr/Log/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "PHP-FIG",
-                "homepage": "http://www.php-fig.org/"
-            }
-        ],
-        "description": "Common interface for logging libraries",
-        "homepage": "https://github.com/php-fig/log",
-        "keywords": [
-            "log",
-            "psr",
-            "psr-3"
-        ]
-    },
-    {
-        "name": "kevinrob/guzzle-cache-middleware",
-        "version": "v2.1.1",
-        "version_normalized": "2.1.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/Kevinrob/guzzle-cache-middleware.git",
-            "reference": "6952064f7747756b0be7b4c234c0fd7535ea4c8c"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/Kevinrob/guzzle-cache-middleware/zipball/6952064f7747756b0be7b4c234c0fd7535ea4c8c",
-            "reference": "6952064f7747756b0be7b4c234c0fd7535ea4c8c",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.5.0"
-        },
-        "require-dev": {
-            "cache/array-adapter": "^0.4",
-            "doctrine/cache": "^1.0",
-            "guzzlehttp/guzzle": "^6.0",
-            "illuminate/cache": "^5.0",
-            "league/flysystem": "^1.0",
-            "phpunit/phpunit": "^4.0 || ^5.0",
-            "psr/cache": "^1.0"
-        },
-        "suggest": {
-            "doctrine/cache": "This library have a lot of ready-to-use cache storage (to be use with Kevinrob\\GuzzleCache\\Storage\\DoctrineCacheStorage)",
-            "guzzlehttp/guzzle": "For using this library. It was created for Guzzle6. (but you can use it with any PSR-7 HTTP Client)",
-            "laravel/framework": "To be use with Kevinrob\\GuzzleCache\\Storage\\LaravelCacheStorage",
-            "league/flysystem": "To be use with Kevinrob\\GuzzleCache\\Storage\\FlysystemStorage",
-            "psr/cache": "To be use with Kevinrob\\GuzzleCache\\Storage\\Psr6CacheStorage"
-        },
-        "time": "2017-08-17T12:23:43+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Kevinrob\\GuzzleCache\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Kevin Robatel",
-                "email": "kevinrob2@gmail.com",
-                "homepage": "https://github.com/Kevinrob"
-            }
-        ],
-        "description": "A HTTP/1.1 Cache for Guzzle 6. It's a simple Middleware to be added in the HandlerStack. (RFC 7234)",
-        "homepage": "https://github.com/Kevinrob/guzzle-cache-middleware",
-        "keywords": [
-            "Etag",
-            "Flysystem",
-            "Guzzle",
-            "cache",
-            "cache-control",
-            "doctrine",
-            "expiration",
-            "guzzle6",
-            "handler",
-            "http",
-            "http 1.1",
-            "middleware",
-            "performance",
-            "php",
-            "promise",
-            "psr6",
-            "psr7",
-            "rfc7234",
-            "validation"
-        ]
-    },
-    {
-        "name": "ralouphie/getallheaders",
-        "version": "3.0.3",
-        "version_normalized": "3.0.3.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/ralouphie/getallheaders.git",
-            "reference": "120b605dfeb996808c31b6477290a714d356e822"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/ralouphie/getallheaders/zipball/120b605dfeb996808c31b6477290a714d356e822",
-            "reference": "120b605dfeb996808c31b6477290a714d356e822",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.6"
-        },
-        "require-dev": {
-            "php-coveralls/php-coveralls": "^2.1",
-            "phpunit/phpunit": "^5 || ^6.5"
-        },
-        "time": "2019-03-08T08:55:37+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "files": [
-                "src/getallheaders.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Ralph Khattar",
-                "email": "ralph.khattar@gmail.com"
-            }
-        ],
-        "description": "A polyfill for getallheaders."
-    },
-    {
-        "name": "psr/http-message",
-        "version": "1.0.1",
-        "version_normalized": "1.0.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/php-fig/http-message.git",
-            "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/php-fig/http-message/zipball/f6561bf28d520154e4b0ec72be95418abe6d9363",
-            "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.0"
-        },
-        "time": "2016-08-06T14:39:51+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.0.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Psr\\Http\\Message\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "PHP-FIG",
-                "homepage": "http://www.php-fig.org/"
-            }
-        ],
-        "description": "Common interface for HTTP messages",
-        "homepage": "https://github.com/php-fig/http-message",
-        "keywords": [
-            "http",
-            "http-message",
-            "psr",
-            "psr-7",
-            "request",
-            "response"
-        ]
-    },
-    {
-        "name": "facebook/graph-sdk",
-        "version": "5.7.0",
-        "version_normalized": "5.7.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/facebook/php-graph-sdk.git",
-            "reference": "2d8250638b33d73e7a87add65f47fabf91f8ad9b"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/facebook/php-graph-sdk/zipball/2d8250638b33d73e7a87add65f47fabf91f8ad9b",
-            "reference": "2d8250638b33d73e7a87add65f47fabf91f8ad9b",
-            "shasum": ""
-        },
-        "require": {
-            "php": "^5.4|^7.0"
-        },
-        "require-dev": {
-            "guzzlehttp/guzzle": "~5.0",
-            "mockery/mockery": "~0.8",
-            "phpunit/phpunit": "~4.0"
-        },
-        "suggest": {
-            "guzzlehttp/guzzle": "Allows for implementation of the Guzzle HTTP client",
-            "paragonie/random_compat": "Provides a better CSPRNG option in PHP 5"
-        },
-        "time": "2018-12-11T22:56:31+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "5.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Facebook\\": "src/Facebook/"
+{
+    "packages": [
+        {
+            "name": "facebook/graph-sdk",
+            "version": "5.7.0",
+            "version_normalized": "5.7.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/facebook/php-graph-sdk.git",
+                "reference": "2d8250638b33d73e7a87add65f47fabf91f8ad9b"
             },
-            "files": [
-                "src/Facebook/polyfills.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "Facebook Platform"
-        ],
-        "authors": [
-            {
-                "name": "Facebook",
-                "homepage": "https://github.com/facebook/php-graph-sdk/contributors"
-            }
-        ],
-        "description": "Facebook SDK for PHP",
-        "homepage": "https://github.com/facebook/php-graph-sdk",
-        "keywords": [
-            "facebook",
-            "sdk"
-        ]
-    },
-    {
-        "name": "madcoda/php-youtube-api",
-        "version": "v1.2.4",
-        "version_normalized": "1.2.4.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/madcoda/php-youtube-api.git",
-            "reference": "886e3aa1789cd19ad0c7add239bd2967f3b5ad4d"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/madcoda/php-youtube-api/zipball/886e3aa1789cd19ad0c7add239bd2967f3b5ad4d",
-            "reference": "886e3aa1789cd19ad0c7add239bd2967f3b5ad4d",
-            "shasum": ""
-        },
-        "require": {
-            "ext-curl": "*",
-            "php": ">=5.3"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "^4.5 || ^5.0.5"
-        },
-        "time": "2017-04-13T09:47:50+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Madcoda\\Youtube\\": "src"
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/facebook/php-graph-sdk/zipball/2d8250638b33d73e7a87add65f47fabf91f8ad9b",
+                "reference": "2d8250638b33d73e7a87add65f47fabf91f8ad9b",
+                "shasum": ""
             },
-            "classmap": [
-                "src/compat.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Madcoda",
-                "email": "jason@madcoda.com"
-            }
-        ],
-        "description": "PHP wrapper for the Youtube Data API v3",
-        "keywords": [
-            "api",
-            "madcoda",
-            "video",
-            "youtube"
-        ]
-    },
-    {
-        "name": "vimeo/vimeo-api",
-        "version": "2.0.5",
-        "version_normalized": "2.0.5.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/vimeo/vimeo.php.git",
-            "reference": "fe9b1aa22036da8768111cfda1902b23e516460e"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/vimeo/vimeo.php/zipball/fe9b1aa22036da8768111cfda1902b23e516460e",
-            "reference": "fe9b1aa22036da8768111cfda1902b23e516460e",
-            "shasum": ""
-        },
-        "require": {
-            "ext-curl": "*",
-            "ext-json": "*",
-            "php": ">=5.3.0"
-        },
-        "require-dev": {
-            "php-coveralls/php-coveralls": "^1.0",
-            "phpunit/phpunit": "^4.8 || ^6.5"
-        },
-        "time": "2018-08-27T13:36:11+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Vimeo\\": "src/Vimeo"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "Apache-2.0"
-        ],
-        "authors": [
-            {
-                "name": "Vimeo",
-                "homepage": "http://vimeo.com"
-            }
-        ],
-        "description": "Official PHP library for the Vimeo API.",
-        "homepage": "https://github.com/vimeo/vimeo.php",
-        "keywords": [
-            "video",
-            "vimeo"
-        ]
-    },
-    {
-        "name": "guzzlehttp/psr7",
-        "version": "1.7.0",
-        "version_normalized": "1.7.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/guzzle/psr7.git",
-            "reference": "53330f47520498c0ae1f61f7e2c90f55690c06a3"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/guzzle/psr7/zipball/53330f47520498c0ae1f61f7e2c90f55690c06a3",
-            "reference": "53330f47520498c0ae1f61f7e2c90f55690c06a3",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.4.0",
-            "psr/http-message": "~1.0",
-            "ralouphie/getallheaders": "^2.0.5 || ^3.0.0"
-        },
-        "provide": {
-            "psr/http-message-implementation": "1.0"
-        },
-        "require-dev": {
-            "ext-zlib": "*",
-            "phpunit/phpunit": "~4.8.36 || ^5.7.27 || ^6.5.14 || ^7.5.20 || ^8.5.8 || ^9.3.10"
-        },
-        "suggest": {
-            "laminas/laminas-httphandlerrunner": "Emit PSR-7 responses"
-        },
-        "time": "2020-09-30T07:37:11+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.7-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "GuzzleHttp\\Psr7\\": "src/"
+            "require": {
+                "php": "^5.4|^7.0"
             },
-            "files": [
-                "src/functions_include.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Michael Dowling",
-                "email": "mtdowling@gmail.com",
-                "homepage": "https://github.com/mtdowling"
+            "require-dev": {
+                "guzzlehttp/guzzle": "~5.0",
+                "mockery/mockery": "~0.8",
+                "phpunit/phpunit": "~4.0"
             },
-            {
-                "name": "Tobias Schultze",
-                "homepage": "https://github.com/Tobion"
-            }
-        ],
-        "description": "PSR-7 message implementation that also provides common utility methods",
-        "keywords": [
-            "http",
-            "message",
-            "psr-7",
-            "request",
-            "response",
-            "stream",
-            "uri",
-            "url"
-        ]
-    },
-    {
-        "name": "psr/http-client",
-        "version": "1.0.1",
-        "version_normalized": "1.0.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/php-fig/http-client.git",
-            "reference": "2dfb5f6c5eff0e91e20e913f8c5452ed95b86621"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/php-fig/http-client/zipball/2dfb5f6c5eff0e91e20e913f8c5452ed95b86621",
-            "reference": "2dfb5f6c5eff0e91e20e913f8c5452ed95b86621",
-            "shasum": ""
-        },
-        "require": {
-            "php": "^7.0 || ^8.0",
-            "psr/http-message": "^1.0"
-        },
-        "time": "2020-06-29T06:28:15+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.0.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Psr\\Http\\Client\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "PHP-FIG",
-                "homepage": "http://www.php-fig.org/"
-            }
-        ],
-        "description": "Common interface for HTTP clients",
-        "homepage": "https://github.com/php-fig/http-client",
-        "keywords": [
-            "http",
-            "http-client",
-            "psr",
-            "psr-18"
-        ]
-    },
-    {
-        "name": "psr/simple-cache",
-        "version": "1.0.1",
-        "version_normalized": "1.0.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/php-fig/simple-cache.git",
-            "reference": "408d5eafb83c57f6365a3ca330ff23aa4a5fa39b"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/php-fig/simple-cache/zipball/408d5eafb83c57f6365a3ca330ff23aa4a5fa39b",
-            "reference": "408d5eafb83c57f6365a3ca330ff23aa4a5fa39b",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.0"
-        },
-        "time": "2017-10-23T01:57:42+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.0.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Psr\\SimpleCache\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "PHP-FIG",
-                "homepage": "http://www.php-fig.org/"
-            }
-        ],
-        "description": "Common interfaces for simple caching",
-        "keywords": [
-            "cache",
-            "caching",
-            "psr",
-            "psr-16",
-            "simple-cache"
-        ]
-    },
-    {
-        "name": "raiym/instagram-php-scraper",
-        "version": "v0.10.0",
-        "version_normalized": "0.10.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/postaddictme/instagram-php-scraper.git",
-            "reference": "b265382663e639015b650875685ddc6c8d541b1e"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/postaddictme/instagram-php-scraper/zipball/b265382663e639015b650875685ddc6c8d541b1e",
-            "reference": "b265382663e639015b650875685ddc6c8d541b1e",
-            "shasum": ""
-        },
-        "require": {
-            "ext-curl": "*",
-            "ext-json": "*",
-            "guzzlehttp/psr7": "^1.7",
-            "php": ">=7.2",
-            "psr/http-client": "~1.0",
-            "psr/simple-cache": "~1.0"
-        },
-        "require-dev": {
-            "guzzlehttp/guzzle": "^7.2",
-            "phpfastcache/phpfastcache": "^7.1",
-            "phpunit/phpunit": "^7.0"
-        },
-        "time": "2020-10-22T16:18:10+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "InstagramScraper\\": "src/InstagramScraper/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "raiym",
-                "email": "r.kapishev@gmail.com"
-            }
-        ],
-        "description": "Instagram PHP Scraper. Get account information, photos and videos without any authorization",
-        "homepage": "https://github.com/raiym/instagram-php-scraper",
-        "keywords": [
-            "instagram",
-            "scraper"
-        ]
-    },
-    {
-        "name": "guzzlehttp/promises",
-        "version": "1.4.0",
-        "version_normalized": "1.4.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/guzzle/promises.git",
-            "reference": "60d379c243457e073cff02bc323a2a86cb355631"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/guzzle/promises/zipball/60d379c243457e073cff02bc323a2a86cb355631",
-            "reference": "60d379c243457e073cff02bc323a2a86cb355631",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.5"
-        },
-        "require-dev": {
-            "symfony/phpunit-bridge": "^4.4 || ^5.1"
-        },
-        "time": "2020-09-30T07:37:28+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.4-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "GuzzleHttp\\Promise\\": "src/"
+            "suggest": {
+                "guzzlehttp/guzzle": "Allows for implementation of the Guzzle HTTP client",
+                "paragonie/random_compat": "Provides a better CSPRNG option in PHP 5"
             },
-            "files": [
-                "src/functions_include.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Michael Dowling",
-                "email": "mtdowling@gmail.com",
-                "homepage": "https://github.com/mtdowling"
-            }
-        ],
-        "description": "Guzzle promises library",
-        "keywords": [
-            "promise"
-        ]
-    },
-    {
-        "name": "symfony/polyfill-intl-normalizer",
-        "version": "v1.20.0",
-        "version_normalized": "1.20.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/symfony/polyfill-intl-normalizer.git",
-            "reference": "727d1096295d807c309fb01a851577302394c897"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/symfony/polyfill-intl-normalizer/zipball/727d1096295d807c309fb01a851577302394c897",
-            "reference": "727d1096295d807c309fb01a851577302394c897",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=7.1"
-        },
-        "suggest": {
-            "ext-intl": "For best performance"
-        },
-        "time": "2020-10-23T14:02:19+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-main": "1.20-dev"
+            "time": "2018-12-11T22:56:31+00:00",
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.x-dev"
+                }
             },
-            "thanks": {
-                "name": "symfony/polyfill",
-                "url": "https://github.com/symfony/polyfill"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Symfony\\Polyfill\\Intl\\Normalizer\\": ""
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Facebook\\": "src/Facebook/"
+                },
+                "files": [
+                    "src/Facebook/polyfills.php"
+                ]
             },
-            "files": [
-                "bootstrap.php"
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Facebook Platform"
             ],
-            "classmap": [
-                "Resources/stubs"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Nicolas Grekas",
-                "email": "p@tchwork.com"
-            },
-            {
-                "name": "Symfony Community",
-                "homepage": "https://symfony.com/contributors"
-            }
-        ],
-        "description": "Symfony polyfill for intl's Normalizer class and related functions",
-        "homepage": "https://symfony.com",
-        "keywords": [
-            "compatibility",
-            "intl",
-            "normalizer",
-            "polyfill",
-            "portable",
-            "shim"
-        ]
-    },
-    {
-        "name": "guzzlehttp/guzzle",
-        "version": "6.5.5",
-        "version_normalized": "6.5.5.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/guzzle/guzzle.git",
-            "reference": "9d4290de1cfd701f38099ef7e183b64b4b7b0c5e"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/guzzle/guzzle/zipball/9d4290de1cfd701f38099ef7e183b64b4b7b0c5e",
-            "reference": "9d4290de1cfd701f38099ef7e183b64b4b7b0c5e",
-            "shasum": ""
-        },
-        "require": {
-            "ext-json": "*",
-            "guzzlehttp/promises": "^1.0",
-            "guzzlehttp/psr7": "^1.6.1",
-            "php": ">=5.5",
-            "symfony/polyfill-intl-idn": "^1.17.0"
-        },
-        "require-dev": {
-            "ext-curl": "*",
-            "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.4 || ^7.0",
-            "psr/log": "^1.1"
-        },
-        "suggest": {
-            "psr/log": "Required for using the Log middleware"
-        },
-        "time": "2020-06-16T21:01:06+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "6.5-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "GuzzleHttp\\": "src/"
-            },
-            "files": [
-                "src/functions_include.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Michael Dowling",
-                "email": "mtdowling@gmail.com",
-                "homepage": "https://github.com/mtdowling"
-            }
-        ],
-        "description": "Guzzle is a PHP HTTP client library",
-        "homepage": "http://guzzlephp.org/",
-        "keywords": [
-            "client",
-            "curl",
-            "framework",
-            "http",
-            "http client",
-            "rest",
-            "web service"
-        ]
-    },
-    {
-        "name": "laminas/laminas-zendframework-bridge",
-        "version": "1.1.1",
-        "version_normalized": "1.1.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/laminas/laminas-zendframework-bridge.git",
-            "reference": "6ede70583e101030bcace4dcddd648f760ddf642"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/laminas/laminas-zendframework-bridge/zipball/6ede70583e101030bcace4dcddd648f760ddf642",
-            "reference": "6ede70583e101030bcace4dcddd648f760ddf642",
-            "shasum": ""
-        },
-        "require": {
-            "php": "^5.6 || ^7.0 || ^8.0"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "^5.7 || ^6.5 || ^7.5 || ^8.1 || ^9.3",
-            "squizlabs/php_codesniffer": "^3.5"
-        },
-        "time": "2020-09-14T14:23:00+00:00",
-        "type": "library",
-        "extra": {
-            "laminas": {
-                "module": "Laminas\\ZendFrameworkBridge"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "files": [
-                "src/autoload.php"
+            "authors": [
+                {
+                    "name": "Facebook",
+                    "homepage": "https://github.com/facebook/php-graph-sdk/contributors"
+                }
             ],
-            "psr-4": {
-                "Laminas\\ZendFrameworkBridge\\": "src//"
-            }
+            "description": "Facebook SDK for PHP",
+            "homepage": "https://github.com/facebook/php-graph-sdk",
+            "keywords": [
+                "facebook",
+                "sdk"
+            ],
+            "install-path": "../facebook/graph-sdk"
         },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "description": "Alias legacy ZF class names to Laminas Project equivalents.",
-        "keywords": [
-            "ZendFramework",
-            "autoloading",
-            "laminas",
-            "zf"
-        ]
-    },
-    {
-        "name": "laminas/laminas-xml",
-        "version": "1.2.0",
-        "version_normalized": "1.2.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/laminas/laminas-xml.git",
-            "reference": "879cc66d1bba6a37705e98074f52a6960c220020"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/laminas/laminas-xml/zipball/879cc66d1bba6a37705e98074f52a6960c220020",
-            "reference": "879cc66d1bba6a37705e98074f52a6960c220020",
-            "shasum": ""
-        },
-        "require": {
-            "laminas/laminas-zendframework-bridge": "^1.0",
-            "php": "^5.6 || ^7.0"
-        },
-        "replace": {
-            "zendframework/zendxml": "self.version"
-        },
-        "require-dev": {
-            "laminas/laminas-coding-standard": "~1.0.0",
-            "phpunit/phpunit": "^5.7.27 || ^6.5.8 || ^7.1.4"
-        },
-        "time": "2019-12-31T18:05:42+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.2.x-dev",
-                "dev-develop": "1.3.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Laminas\\Xml\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "description": "Utility library for XML usage, best practices, and security in PHP",
-        "homepage": "https://laminas.dev",
-        "keywords": [
-            "laminas",
-            "security",
-            "xml"
-        ]
-    },
-    {
-        "name": "nicolus/picofeed",
-        "version": "0.1.43",
-        "version_normalized": "0.1.43.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/nicolus/picoFeed.git",
-            "reference": "e6bfe8d30009603702d1bff46a7abf8bfb25f8a8"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/nicolus/picoFeed/zipball/e6bfe8d30009603702d1bff46a7abf8bfb25f8a8",
-            "reference": "e6bfe8d30009603702d1bff46a7abf8bfb25f8a8",
-            "shasum": ""
-        },
-        "require": {
-            "ext-dom": "*",
-            "ext-iconv": "*",
-            "ext-libxml": "*",
-            "ext-simplexml": "*",
-            "ext-xml": "*",
-            "guzzlehttp/guzzle": "~6.0",
-            "kevinrob/guzzle-cache-middleware": "^2.1",
-            "laminas/laminas-xml": "^1.0",
-            "php": ">=7.1",
-            "psr/log": "^1.0"
-        },
-        "require-dev": {
-            "blastcloud/guzzler": "^1.5",
-            "monolog/monolog": "^1.23",
-            "php-coveralls/php-coveralls": "^2.1",
-            "phpdocumentor/reflection-docblock": "2.0.4",
-            "phpunit/phpunit": "^7.0.0"
-        },
-        "suggest": {
-            "ext-curl": "PicoFeed will use cURL if present",
-            "monolog/monolog": "You can set a monolog Logger to get debug information from PicoFeed"
-        },
-        "time": "2020-09-15T07:28:23+00:00",
-        "bin": [
-            "picofeed"
-        ],
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "PicoFeed": "lib/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Frédéric Guillot"
+        {
+            "name": "guzzlehttp/guzzle",
+            "version": "6.5.5",
+            "version_normalized": "6.5.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/guzzle.git",
+                "reference": "9d4290de1cfd701f38099ef7e183b64b4b7b0c5e"
             },
-            {
-                "name": "Nicolas Bailly"
-            }
-        ],
-        "description": "RSS/Atom parsing library",
-        "homepage": "https://github.com/nicolus/picoFeed"
-    },
-    {
-        "name": "symfony/polyfill-php72",
-        "version": "v1.20.0",
-        "version_normalized": "1.20.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/symfony/polyfill-php72.git",
-            "reference": "cede45fcdfabdd6043b3592e83678e42ec69e930"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/symfony/polyfill-php72/zipball/cede45fcdfabdd6043b3592e83678e42ec69e930",
-            "reference": "cede45fcdfabdd6043b3592e83678e42ec69e930",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=7.1"
-        },
-        "time": "2020-10-23T14:02:19+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-main": "1.20-dev"
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/9d4290de1cfd701f38099ef7e183b64b4b7b0c5e",
+                "reference": "9d4290de1cfd701f38099ef7e183b64b4b7b0c5e",
+                "shasum": ""
             },
-            "thanks": {
-                "name": "symfony/polyfill",
-                "url": "https://github.com/symfony/polyfill"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Symfony\\Polyfill\\Php72\\": ""
+            "require": {
+                "ext-json": "*",
+                "guzzlehttp/promises": "^1.0",
+                "guzzlehttp/psr7": "^1.6.1",
+                "php": ">=5.5",
+                "symfony/polyfill-intl-idn": "^1.17.0"
             },
-            "files": [
-                "bootstrap.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Nicolas Grekas",
-                "email": "p@tchwork.com"
+            "require-dev": {
+                "ext-curl": "*",
+                "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.4 || ^7.0",
+                "psr/log": "^1.1"
             },
-            {
-                "name": "Symfony Community",
-                "homepage": "https://symfony.com/contributors"
-            }
-        ],
-        "description": "Symfony polyfill backporting some PHP 7.2+ features to lower PHP versions",
-        "homepage": "https://symfony.com",
-        "keywords": [
-            "compatibility",
-            "polyfill",
-            "portable",
-            "shim"
-        ]
-    },
-    {
-        "name": "symfony/polyfill-intl-idn",
-        "version": "v1.20.0",
-        "version_normalized": "1.20.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/symfony/polyfill-intl-idn.git",
-            "reference": "3b75acd829741c768bc8b1f84eb33265e7cc5117"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/symfony/polyfill-intl-idn/zipball/3b75acd829741c768bc8b1f84eb33265e7cc5117",
-            "reference": "3b75acd829741c768bc8b1f84eb33265e7cc5117",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=7.1",
-            "symfony/polyfill-intl-normalizer": "^1.10",
-            "symfony/polyfill-php72": "^1.10"
-        },
-        "suggest": {
-            "ext-intl": "For best performance"
-        },
-        "time": "2020-10-23T14:02:19+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-main": "1.20-dev"
+            "suggest": {
+                "psr/log": "Required for using the Log middleware"
             },
-            "thanks": {
-                "name": "symfony/polyfill",
-                "url": "https://github.com/symfony/polyfill"
-            }
+            "time": "2020-06-16T21:01:06+00:00",
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "6.5-dev"
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "GuzzleHttp\\": "src/"
+                },
+                "files": [
+                    "src/functions_include.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                }
+            ],
+            "description": "Guzzle is a PHP HTTP client library",
+            "homepage": "http://guzzlephp.org/",
+            "keywords": [
+                "client",
+                "curl",
+                "framework",
+                "http",
+                "http client",
+                "rest",
+                "web service"
+            ],
+            "install-path": "../guzzlehttp/guzzle"
         },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Symfony\\Polyfill\\Intl\\Idn\\": ""
+        {
+            "name": "guzzlehttp/promises",
+            "version": "1.4.0",
+            "version_normalized": "1.4.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/promises.git",
+                "reference": "60d379c243457e073cff02bc323a2a86cb355631"
             },
-            "files": [
-                "bootstrap.php"
-            ]
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/promises/zipball/60d379c243457e073cff02bc323a2a86cb355631",
+                "reference": "60d379c243457e073cff02bc323a2a86cb355631",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "^4.4 || ^5.1"
+            },
+            "time": "2020-09-30T07:37:28+00:00",
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.4-dev"
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "GuzzleHttp\\Promise\\": "src/"
+                },
+                "files": [
+                    "src/functions_include.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                }
+            ],
+            "description": "Guzzle promises library",
+            "keywords": [
+                "promise"
+            ],
+            "install-path": "../guzzlehttp/promises"
         },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Laurent Bassin",
-                "email": "laurent@bassin.info"
+        {
+            "name": "guzzlehttp/psr7",
+            "version": "1.7.0",
+            "version_normalized": "1.7.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/psr7.git",
+                "reference": "53330f47520498c0ae1f61f7e2c90f55690c06a3"
             },
-            {
-                "name": "Trevor Rowbotham",
-                "email": "trevor.rowbotham@pm.me"
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/53330f47520498c0ae1f61f7e2c90f55690c06a3",
+                "reference": "53330f47520498c0ae1f61f7e2c90f55690c06a3",
+                "shasum": ""
             },
-            {
-                "name": "Symfony Community",
-                "homepage": "https://symfony.com/contributors"
-            }
-        ],
-        "description": "Symfony polyfill for intl's idn_to_ascii and idn_to_utf8 functions",
-        "homepage": "https://symfony.com",
-        "keywords": [
-            "compatibility",
-            "idn",
-            "intl",
-            "polyfill",
-            "portable",
-            "shim"
-        ]
-    }
-]
+            "require": {
+                "php": ">=5.4.0",
+                "psr/http-message": "~1.0",
+                "ralouphie/getallheaders": "^2.0.5 || ^3.0.0"
+            },
+            "provide": {
+                "psr/http-message-implementation": "1.0"
+            },
+            "require-dev": {
+                "ext-zlib": "*",
+                "phpunit/phpunit": "~4.8.36 || ^5.7.27 || ^6.5.14 || ^7.5.20 || ^8.5.8 || ^9.3.10"
+            },
+            "suggest": {
+                "laminas/laminas-httphandlerrunner": "Emit PSR-7 responses"
+            },
+            "time": "2020-09-30T07:37:11+00:00",
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.7-dev"
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "GuzzleHttp\\Psr7\\": "src/"
+                },
+                "files": [
+                    "src/functions_include.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                },
+                {
+                    "name": "Tobias Schultze",
+                    "homepage": "https://github.com/Tobion"
+                }
+            ],
+            "description": "PSR-7 message implementation that also provides common utility methods",
+            "keywords": [
+                "http",
+                "message",
+                "psr-7",
+                "request",
+                "response",
+                "stream",
+                "uri",
+                "url"
+            ],
+            "install-path": "../guzzlehttp/psr7"
+        },
+        {
+            "name": "kevinrob/guzzle-cache-middleware",
+            "version": "v2.1.1",
+            "version_normalized": "2.1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Kevinrob/guzzle-cache-middleware.git",
+                "reference": "6952064f7747756b0be7b4c234c0fd7535ea4c8c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Kevinrob/guzzle-cache-middleware/zipball/6952064f7747756b0be7b4c234c0fd7535ea4c8c",
+                "reference": "6952064f7747756b0be7b4c234c0fd7535ea4c8c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "cache/array-adapter": "^0.4",
+                "doctrine/cache": "^1.0",
+                "guzzlehttp/guzzle": "^6.0",
+                "illuminate/cache": "^5.0",
+                "league/flysystem": "^1.0",
+                "phpunit/phpunit": "^4.0 || ^5.0",
+                "psr/cache": "^1.0"
+            },
+            "suggest": {
+                "doctrine/cache": "This library have a lot of ready-to-use cache storage (to be use with Kevinrob\\GuzzleCache\\Storage\\DoctrineCacheStorage)",
+                "guzzlehttp/guzzle": "For using this library. It was created for Guzzle6. (but you can use it with any PSR-7 HTTP Client)",
+                "laravel/framework": "To be use with Kevinrob\\GuzzleCache\\Storage\\LaravelCacheStorage",
+                "league/flysystem": "To be use with Kevinrob\\GuzzleCache\\Storage\\FlysystemStorage",
+                "psr/cache": "To be use with Kevinrob\\GuzzleCache\\Storage\\Psr6CacheStorage"
+            },
+            "time": "2017-08-17T12:23:43+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Kevinrob\\GuzzleCache\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kevin Robatel",
+                    "email": "kevinrob2@gmail.com",
+                    "homepage": "https://github.com/Kevinrob"
+                }
+            ],
+            "description": "A HTTP/1.1 Cache for Guzzle 6. It's a simple Middleware to be added in the HandlerStack. (RFC 7234)",
+            "homepage": "https://github.com/Kevinrob/guzzle-cache-middleware",
+            "keywords": [
+                "Etag",
+                "Flysystem",
+                "Guzzle",
+                "cache",
+                "cache-control",
+                "doctrine",
+                "expiration",
+                "guzzle6",
+                "handler",
+                "http",
+                "http 1.1",
+                "middleware",
+                "performance",
+                "php",
+                "promise",
+                "psr6",
+                "psr7",
+                "rfc7234",
+                "validation"
+            ],
+            "install-path": "../kevinrob/guzzle-cache-middleware"
+        },
+        {
+            "name": "laminas/laminas-xml",
+            "version": "1.2.0",
+            "version_normalized": "1.2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laminas/laminas-xml.git",
+                "reference": "879cc66d1bba6a37705e98074f52a6960c220020"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laminas/laminas-xml/zipball/879cc66d1bba6a37705e98074f52a6960c220020",
+                "reference": "879cc66d1bba6a37705e98074f52a6960c220020",
+                "shasum": ""
+            },
+            "require": {
+                "laminas/laminas-zendframework-bridge": "^1.0",
+                "php": "^5.6 || ^7.0"
+            },
+            "replace": {
+                "zendframework/zendxml": "self.version"
+            },
+            "require-dev": {
+                "laminas/laminas-coding-standard": "~1.0.0",
+                "phpunit/phpunit": "^5.7.27 || ^6.5.8 || ^7.1.4"
+            },
+            "time": "2019-12-31T18:05:42+00:00",
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.2.x-dev",
+                    "dev-develop": "1.3.x-dev"
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Laminas\\Xml\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Utility library for XML usage, best practices, and security in PHP",
+            "homepage": "https://laminas.dev",
+            "keywords": [
+                "laminas",
+                "security",
+                "xml"
+            ],
+            "install-path": "../laminas/laminas-xml"
+        },
+        {
+            "name": "laminas/laminas-zendframework-bridge",
+            "version": "1.1.1",
+            "version_normalized": "1.1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laminas/laminas-zendframework-bridge.git",
+                "reference": "6ede70583e101030bcace4dcddd648f760ddf642"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laminas/laminas-zendframework-bridge/zipball/6ede70583e101030bcace4dcddd648f760ddf642",
+                "reference": "6ede70583e101030bcace4dcddd648f760ddf642",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.6 || ^7.0 || ^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.7 || ^6.5 || ^7.5 || ^8.1 || ^9.3",
+                "squizlabs/php_codesniffer": "^3.5"
+            },
+            "time": "2020-09-14T14:23:00+00:00",
+            "type": "library",
+            "extra": {
+                "laminas": {
+                    "module": "Laminas\\ZendFrameworkBridge"
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "files": [
+                    "src/autoload.php"
+                ],
+                "psr-4": {
+                    "Laminas\\ZendFrameworkBridge\\": "src//"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Alias legacy ZF class names to Laminas Project equivalents.",
+            "keywords": [
+                "ZendFramework",
+                "autoloading",
+                "laminas",
+                "zf"
+            ],
+            "install-path": "../laminas/laminas-zendframework-bridge"
+        },
+        {
+            "name": "madcoda/php-youtube-api",
+            "version": "v1.2.4",
+            "version_normalized": "1.2.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/madcoda/php-youtube-api.git",
+                "reference": "886e3aa1789cd19ad0c7add239bd2967f3b5ad4d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/madcoda/php-youtube-api/zipball/886e3aa1789cd19ad0c7add239bd2967f3b5ad4d",
+                "reference": "886e3aa1789cd19ad0c7add239bd2967f3b5ad4d",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.5 || ^5.0.5"
+            },
+            "time": "2017-04-13T09:47:50+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Madcoda\\Youtube\\": "src"
+                },
+                "classmap": [
+                    "src/compat.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Madcoda",
+                    "email": "jason@madcoda.com"
+                }
+            ],
+            "description": "PHP wrapper for the Youtube Data API v3",
+            "keywords": [
+                "api",
+                "madcoda",
+                "video",
+                "youtube"
+            ],
+            "install-path": "../madcoda/php-youtube-api"
+        },
+        {
+            "name": "mashape/unirest-php",
+            "version": "v3.0.4",
+            "version_normalized": "3.0.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Mashape/unirest-php.git",
+                "reference": "842c0f242dfaaf85f16b72e217bf7f7c19ab12cb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Mashape/unirest-php/zipball/842c0f242dfaaf85f16b72e217bf7f7c19ab12cb",
+                "reference": "842c0f242dfaaf85f16b72e217bf7f7c19ab12cb",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "codeclimate/php-test-reporter": "0.1.*",
+                "phpunit/phpunit": "~4.4"
+            },
+            "suggest": {
+                "ext-json": "Allows using JSON Bodies for sending and parsing requests"
+            },
+            "time": "2016-08-11T17:49:21+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-0": {
+                    "Unirest\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Unirest PHP",
+            "homepage": "https://github.com/Mashape/unirest-php",
+            "keywords": [
+                "client",
+                "curl",
+                "http",
+                "https",
+                "rest"
+            ],
+            "support": {
+                "email": "opensource@mashape.com",
+                "issues": "https://github.com/Mashape/unirest-php/issues",
+                "source": "https://github.com/Mashape/unirest-php/tree/master"
+            },
+            "install-path": "../mashape/unirest-php"
+        },
+        {
+            "name": "nicolus/picofeed",
+            "version": "0.1.43",
+            "version_normalized": "0.1.43.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nicolus/picoFeed.git",
+                "reference": "e6bfe8d30009603702d1bff46a7abf8bfb25f8a8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nicolus/picoFeed/zipball/e6bfe8d30009603702d1bff46a7abf8bfb25f8a8",
+                "reference": "e6bfe8d30009603702d1bff46a7abf8bfb25f8a8",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "ext-iconv": "*",
+                "ext-libxml": "*",
+                "ext-simplexml": "*",
+                "ext-xml": "*",
+                "guzzlehttp/guzzle": "~6.0",
+                "kevinrob/guzzle-cache-middleware": "^2.1",
+                "laminas/laminas-xml": "^1.0",
+                "php": ">=7.1",
+                "psr/log": "^1.0"
+            },
+            "require-dev": {
+                "blastcloud/guzzler": "^1.5",
+                "monolog/monolog": "^1.23",
+                "php-coveralls/php-coveralls": "^2.1",
+                "phpdocumentor/reflection-docblock": "2.0.4",
+                "phpunit/phpunit": "^7.0.0"
+            },
+            "suggest": {
+                "ext-curl": "PicoFeed will use cURL if present",
+                "monolog/monolog": "You can set a monolog Logger to get debug information from PicoFeed"
+            },
+            "time": "2020-09-15T07:28:23+00:00",
+            "bin": [
+                "picofeed"
+            ],
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-0": {
+                    "PicoFeed": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Frédéric Guillot"
+                },
+                {
+                    "name": "Nicolas Bailly"
+                }
+            ],
+            "description": "RSS/Atom parsing library",
+            "homepage": "https://github.com/nicolus/picoFeed",
+            "install-path": "../nicolus/picofeed"
+        },
+        {
+            "name": "php-instagram-api/php-instagram-api",
+            "version": "dev-master",
+            "version_normalized": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/galen/PHP-Instagram-API.git",
+                "reference": "7a796fdae715fcdccc00590933ce482437342c35"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/galen/PHP-Instagram-API/zipball/7a796fdae715fcdccc00590933ce482437342c35",
+                "reference": "7a796fdae715fcdccc00590933ce482437342c35",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "time": "2013-11-13T23:10:03+00:00",
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "Instagram": "."
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Galen Grover",
+                    "email": "galenjr@gmail.com",
+                    "homepage": "http://www.galengrover.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP Instagram API for PHP 5.3+",
+            "homepage": "https://github.com/galen/PHP-Instagram-API",
+            "keywords": [
+                "instagram"
+            ],
+            "install-path": "../php-instagram-api/php-instagram-api"
+        },
+        {
+            "name": "psr/http-message",
+            "version": "1.0.1",
+            "version_normalized": "1.0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/http-message.git",
+                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/http-message/zipball/f6561bf28d520154e4b0ec72be95418abe6d9363",
+                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "time": "2016-08-06T14:39:51+00:00",
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Http\\Message\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for HTTP messages",
+            "homepage": "https://github.com/php-fig/http-message",
+            "keywords": [
+                "http",
+                "http-message",
+                "psr",
+                "psr-7",
+                "request",
+                "response"
+            ],
+            "install-path": "../psr/http-message"
+        },
+        {
+            "name": "psr/log",
+            "version": "1.1.3",
+            "version_normalized": "1.1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/log.git",
+                "reference": "0f73288fd15629204f9d42b7055f72dacbe811fc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/0f73288fd15629204f9d42b7055f72dacbe811fc",
+                "reference": "0f73288fd15629204f9d42b7055f72dacbe811fc",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "time": "2020-03-23T09:12:05+00:00",
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1.x-dev"
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Log\\": "Psr/Log/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for logging libraries",
+            "homepage": "https://github.com/php-fig/log",
+            "keywords": [
+                "log",
+                "psr",
+                "psr-3"
+            ],
+            "install-path": "../psr/log"
+        },
+        {
+            "name": "psr/simple-cache",
+            "version": "1.0.1",
+            "version_normalized": "1.0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/simple-cache.git",
+                "reference": "408d5eafb83c57f6365a3ca330ff23aa4a5fa39b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/simple-cache/zipball/408d5eafb83c57f6365a3ca330ff23aa4a5fa39b",
+                "reference": "408d5eafb83c57f6365a3ca330ff23aa4a5fa39b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "time": "2017-10-23T01:57:42+00:00",
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Psr\\SimpleCache\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interfaces for simple caching",
+            "keywords": [
+                "cache",
+                "caching",
+                "psr",
+                "psr-16",
+                "simple-cache"
+            ],
+            "install-path": "../psr/simple-cache"
+        },
+        {
+            "name": "ralouphie/getallheaders",
+            "version": "3.0.3",
+            "version_normalized": "3.0.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ralouphie/getallheaders.git",
+                "reference": "120b605dfeb996808c31b6477290a714d356e822"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ralouphie/getallheaders/zipball/120b605dfeb996808c31b6477290a714d356e822",
+                "reference": "120b605dfeb996808c31b6477290a714d356e822",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "php-coveralls/php-coveralls": "^2.1",
+                "phpunit/phpunit": "^5 || ^6.5"
+            },
+            "time": "2019-03-08T08:55:37+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "files": [
+                    "src/getallheaders.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ralph Khattar",
+                    "email": "ralph.khattar@gmail.com"
+                }
+            ],
+            "description": "A polyfill for getallheaders.",
+            "install-path": "../ralouphie/getallheaders"
+        },
+        {
+            "name": "restyler/instagram-php-scraper",
+            "version": "v1.0.2",
+            "version_normalized": "1.0.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/restyler/instagram-php-scraper.git",
+                "reference": "860cab595891e34a8f5971c97b1ed6c96bf5be2a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/restyler/instagram-php-scraper/zipball/860cab595891e34a8f5971c97b1ed6c96bf5be2a",
+                "reference": "860cab595891e34a8f5971c97b1ed6c96bf5be2a",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "mashape/unirest-php": "3.0.*",
+                "php": ">=5.4.0",
+                "psr/simple-cache": "~1.0"
+            },
+            "require-dev": {
+                "phpfastcache/phpfastcache": "^7.1",
+                "phpunit/phpunit": "5.5.*"
+            },
+            "time": "2020-10-08T13:29:07+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "InstagramScraper\\": "src/InstagramScraper/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "restyler"
+                }
+            ],
+            "description": "Profixied Instagram PHP Scraper. Get account information, photos and videos without any authorization, via smart proxy balancer.",
+            "homepage": "https://github.com/restyler/instagram-php-scraper/tree/proxified",
+            "keywords": [
+                "instagram",
+                "scraper"
+            ],
+            "support": {
+                "source": "https://github.com/restyler/instagram-php-scraper/tree/v1.0.2"
+            },
+            "install-path": "../restyler/instagram-php-scraper"
+        },
+        {
+            "name": "ricardoper/twitteroauth",
+            "version": "v2.1.6",
+            "version_normalized": "2.1.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ricardoper/TwitterOAuth.git",
+                "reference": "cbdd43db781f30a4f291b15b90ab08a30108d5d6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ricardoper/TwitterOAuth/zipball/cbdd43db781f30a4f291b15b90ab08a30108d5d6",
+                "reference": "cbdd43db781f30a4f291b15b90ab08a30108d5d6",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "lib-curl": "*",
+                "lib-openssl": "*",
+                "php": ">=5.3"
+            },
+            "time": "2016-05-27T19:06:33+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "TwitterOAuth\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ricardo Pereira",
+                    "email": "github@ricardopereira.es",
+                    "homepage": "http://ricardopereira.es"
+                }
+            ],
+            "description": "PHP library to communicate with Twitter OAuth API version 1.1",
+            "homepage": "https://github.com/ricardoper",
+            "keywords": [
+                "API v1.1",
+                "oauth",
+                "php",
+                "twitter"
+            ],
+            "install-path": "../ricardoper/twitteroauth"
+        },
+        {
+            "name": "symfony/polyfill-intl-idn",
+            "version": "v1.20.0",
+            "version_normalized": "1.20.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-intl-idn.git",
+                "reference": "3b75acd829741c768bc8b1f84eb33265e7cc5117"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-intl-idn/zipball/3b75acd829741c768bc8b1f84eb33265e7cc5117",
+                "reference": "3b75acd829741c768bc8b1f84eb33265e7cc5117",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1",
+                "symfony/polyfill-intl-normalizer": "^1.10",
+                "symfony/polyfill-php72": "^1.10"
+            },
+            "suggest": {
+                "ext-intl": "For best performance"
+            },
+            "time": "2020-10-23T14:02:19+00:00",
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "1.20-dev"
+                },
+                "thanks": {
+                    "name": "symfony/polyfill",
+                    "url": "https://github.com/symfony/polyfill"
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Polyfill\\Intl\\Idn\\": ""
+                },
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Laurent Bassin",
+                    "email": "laurent@bassin.info"
+                },
+                {
+                    "name": "Trevor Rowbotham",
+                    "email": "trevor.rowbotham@pm.me"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony polyfill for intl's idn_to_ascii and idn_to_utf8 functions",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "idn",
+                "intl",
+                "polyfill",
+                "portable",
+                "shim"
+            ],
+            "install-path": "../symfony/polyfill-intl-idn"
+        },
+        {
+            "name": "symfony/polyfill-intl-normalizer",
+            "version": "v1.20.0",
+            "version_normalized": "1.20.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-intl-normalizer.git",
+                "reference": "727d1096295d807c309fb01a851577302394c897"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-intl-normalizer/zipball/727d1096295d807c309fb01a851577302394c897",
+                "reference": "727d1096295d807c309fb01a851577302394c897",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1"
+            },
+            "suggest": {
+                "ext-intl": "For best performance"
+            },
+            "time": "2020-10-23T14:02:19+00:00",
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "1.20-dev"
+                },
+                "thanks": {
+                    "name": "symfony/polyfill",
+                    "url": "https://github.com/symfony/polyfill"
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Polyfill\\Intl\\Normalizer\\": ""
+                },
+                "files": [
+                    "bootstrap.php"
+                ],
+                "classmap": [
+                    "Resources/stubs"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony polyfill for intl's Normalizer class and related functions",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "intl",
+                "normalizer",
+                "polyfill",
+                "portable",
+                "shim"
+            ],
+            "install-path": "../symfony/polyfill-intl-normalizer"
+        },
+        {
+            "name": "symfony/polyfill-php72",
+            "version": "v1.20.0",
+            "version_normalized": "1.20.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-php72.git",
+                "reference": "cede45fcdfabdd6043b3592e83678e42ec69e930"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-php72/zipball/cede45fcdfabdd6043b3592e83678e42ec69e930",
+                "reference": "cede45fcdfabdd6043b3592e83678e42ec69e930",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1"
+            },
+            "time": "2020-10-23T14:02:19+00:00",
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "1.20-dev"
+                },
+                "thanks": {
+                    "name": "symfony/polyfill",
+                    "url": "https://github.com/symfony/polyfill"
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Polyfill\\Php72\\": ""
+                },
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony polyfill backporting some PHP 7.2+ features to lower PHP versions",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "polyfill",
+                "portable",
+                "shim"
+            ],
+            "install-path": "../symfony/polyfill-php72"
+        },
+        {
+            "name": "vimeo/vimeo-api",
+            "version": "2.0.5",
+            "version_normalized": "2.0.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/vimeo/vimeo.php.git",
+                "reference": "fe9b1aa22036da8768111cfda1902b23e516460e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/vimeo/vimeo.php/zipball/fe9b1aa22036da8768111cfda1902b23e516460e",
+                "reference": "fe9b1aa22036da8768111cfda1902b23e516460e",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "php-coveralls/php-coveralls": "^1.0",
+                "phpunit/phpunit": "^4.8 || ^6.5"
+            },
+            "time": "2018-08-27T13:36:11+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Vimeo\\": "src/Vimeo"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Vimeo",
+                    "homepage": "http://vimeo.com"
+                }
+            ],
+            "description": "Official PHP library for the Vimeo API.",
+            "homepage": "https://github.com/vimeo/vimeo.php",
+            "keywords": [
+                "video",
+                "vimeo"
+            ],
+            "install-path": "../vimeo/vimeo-api"
+        }
+    ],
+    "dev": true,
+    "dev-package-names": []
+}

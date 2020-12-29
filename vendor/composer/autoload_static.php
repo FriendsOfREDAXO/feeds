@@ -8,10 +8,10 @@ class ComposerStaticInit7ea7ff7b3e58df3ced7efd1c34e0d21a
 {
     public static $files = array (
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
-        'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
         'e69f7f6ee287b969198c3c9d6777bd38' => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer/bootstrap.php',
         '25072dd6e2470089de65ae7bf11d3109' => __DIR__ . '/..' . '/symfony/polyfill-php72/bootstrap.php',
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
+        'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
         'f598d06aa772fa33d905e87be6398fb1' => __DIR__ . '/..' . '/symfony/polyfill-intl-idn/bootstrap.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         '7e9bd612cc444b3eed788ebbe46263a0' => __DIR__ . '/..' . '/laminas/laminas-zendframework-bridge/src/autoload.php',
@@ -38,7 +38,6 @@ class ComposerStaticInit7ea7ff7b3e58df3ced7efd1c34e0d21a
             'Psr\\SimpleCache\\' => 16,
             'Psr\\Log\\' => 8,
             'Psr\\Http\\Message\\' => 17,
-            'Psr\\Http\\Client\\' => 16,
         ),
         'M' => 
         array (
@@ -102,10 +101,6 @@ class ComposerStaticInit7ea7ff7b3e58df3ced7efd1c34e0d21a
         array (
             0 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
-        'Psr\\Http\\Client\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/psr/http-client/src',
-        ),
         'Madcoda\\Youtube\\' => 
         array (
             0 => __DIR__ . '/..' . '/madcoda/php-youtube-api/src',
@@ -124,7 +119,7 @@ class ComposerStaticInit7ea7ff7b3e58df3ced7efd1c34e0d21a
         ),
         'InstagramScraper\\' => 
         array (
-            0 => __DIR__ . '/..' . '/raiym/instagram-php-scraper/src/InstagramScraper',
+            0 => __DIR__ . '/..' . '/restyler/instagram-php-scraper/src/InstagramScraper',
         ),
         'GuzzleHttp\\Psr7\\' => 
         array (
@@ -145,6 +140,13 @@ class ComposerStaticInit7ea7ff7b3e58df3ced7efd1c34e0d21a
     );
 
     public static $prefixesPsr0 = array (
+        'U' => 
+        array (
+            'Unirest\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/mashape/unirest-php/src',
+            ),
+        ),
         'P' => 
         array (
             'PicoFeed' => 
@@ -162,6 +164,7 @@ class ComposerStaticInit7ea7ff7b3e58df3ced7efd1c34e0d21a
     );
 
     public static $classMap = array (
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Madcoda\\compat' => __DIR__ . '/..' . '/madcoda/php-youtube-api/src/compat.php',
         'Normalizer' => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer/Resources/stubs/Normalizer.php',
     );

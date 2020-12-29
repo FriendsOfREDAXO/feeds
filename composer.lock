@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a7e15f78c876317834c53202e82566c5",
+    "content-hash": "9f3895ce15178540de75c3fb26a97973",
     "packages": [
         {
             "name": "facebook/graph-sdk",
@@ -62,6 +62,10 @@
                 "facebook",
                 "sdk"
             ],
+            "support": {
+                "issues": "https://github.com/facebook/php-graph-sdk/issues",
+                "source": "https://github.com/facebook/php-graph-sdk/tree/5.7.0"
+            },
             "time": "2018-12-11T22:56:31+00:00"
         },
         {
@@ -129,6 +133,10 @@
                 "rest",
                 "web service"
             ],
+            "support": {
+                "issues": "https://github.com/guzzle/guzzle/issues",
+                "source": "https://github.com/guzzle/guzzle/tree/6.5"
+            },
             "time": "2020-06-16T21:01:06+00:00"
         },
         {
@@ -180,6 +188,10 @@
             "keywords": [
                 "promise"
             ],
+            "support": {
+                "issues": "https://github.com/guzzle/promises/issues",
+                "source": "https://github.com/guzzle/promises/tree/1.4.0"
+            },
             "time": "2020-09-30T07:37:28+00:00"
         },
         {
@@ -251,6 +263,10 @@
                 "uri",
                 "url"
             ],
+            "support": {
+                "issues": "https://github.com/guzzle/psr7/issues",
+                "source": "https://github.com/guzzle/psr7/tree/1.7.0"
+            },
             "time": "2020-09-30T07:37:11+00:00"
         },
         {
@@ -326,6 +342,10 @@
                 "rfc7234",
                 "validation"
             ],
+            "support": {
+                "issues": "https://github.com/Kevinrob/guzzle-cache-middleware/issues",
+                "source": "https://github.com/Kevinrob/guzzle-cache-middleware/tree/master"
+            },
             "time": "2017-08-17T12:23:43+00:00"
         },
         {
@@ -376,6 +396,14 @@
                 "security",
                 "xml"
             ],
+            "support": {
+                "chat": "https://laminas.dev/chat",
+                "docs": "https://docs.laminas.dev/laminas-xml/",
+                "forum": "https://discourse.laminas.dev",
+                "issues": "https://github.com/laminas/laminas-xml/issues",
+                "rss": "https://github.com/laminas/laminas-xml/releases.atom",
+                "source": "https://github.com/laminas/laminas-xml"
+            },
             "time": "2019-12-31T18:05:42+00:00"
         },
         {
@@ -423,6 +451,18 @@
                 "autoloading",
                 "laminas",
                 "zf"
+            ],
+            "support": {
+                "forum": "https://discourse.laminas.dev/",
+                "issues": "https://github.com/laminas/laminas-zendframework-bridge/issues",
+                "rss": "https://github.com/laminas/laminas-zendframework-bridge/releases.atom",
+                "source": "https://github.com/laminas/laminas-zendframework-bridge"
+            },
+            "funding": [
+                {
+                    "url": "https://funding.communitybridge.org/projects/laminas-project",
+                    "type": "community_bridge"
+                }
             ],
             "time": "2020-09-14T14:23:00+00:00"
         },
@@ -473,7 +513,63 @@
                 "video",
                 "youtube"
             ],
+            "support": {
+                "email": "jason@madcoda.com",
+                "issues": "https://github.com/madcoda/php-youtube-api/issues",
+                "source": "https://github.com/madcoda/php-youtube-api/tree/master"
+            },
             "time": "2017-04-13T09:47:50+00:00"
+        },
+        {
+            "name": "mashape/unirest-php",
+            "version": "v3.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Mashape/unirest-php.git",
+                "reference": "842c0f242dfaaf85f16b72e217bf7f7c19ab12cb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Mashape/unirest-php/zipball/842c0f242dfaaf85f16b72e217bf7f7c19ab12cb",
+                "reference": "842c0f242dfaaf85f16b72e217bf7f7c19ab12cb",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "codeclimate/php-test-reporter": "0.1.*",
+                "phpunit/phpunit": "~4.4"
+            },
+            "suggest": {
+                "ext-json": "Allows using JSON Bodies for sending and parsing requests"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Unirest\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Unirest PHP",
+            "homepage": "https://github.com/Mashape/unirest-php",
+            "keywords": [
+                "client",
+                "curl",
+                "http",
+                "https",
+                "rest"
+            ],
+            "support": {
+                "email": "opensource@mashape.com",
+                "issues": "https://github.com/Mashape/unirest-php/issues",
+                "source": "https://github.com/Mashape/unirest-php/tree/master"
+            },
+            "time": "2016-08-11T17:49:21+00:00"
         },
         {
             "name": "nicolus/picofeed",
@@ -535,6 +631,9 @@
             ],
             "description": "RSS/Atom parsing library",
             "homepage": "https://github.com/nicolus/picoFeed",
+            "support": {
+                "source": "https://github.com/nicolus/picoFeed/tree/0.1.43"
+            },
             "time": "2020-09-15T07:28:23+00:00"
         },
         {
@@ -554,6 +653,7 @@
             "require": {
                 "php": ">=5.3.0"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-0": {
@@ -577,56 +677,11 @@
             "keywords": [
                 "instagram"
             ],
+            "support": {
+                "issues": "https://github.com/galen/PHP-Instagram-API/issues",
+                "source": "https://github.com/galen/PHP-Instagram-API/tree/master"
+            },
             "time": "2013-11-13T23:10:03+00:00"
-        },
-        {
-            "name": "psr/http-client",
-            "version": "1.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-fig/http-client.git",
-                "reference": "2dfb5f6c5eff0e91e20e913f8c5452ed95b86621"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/http-client/zipball/2dfb5f6c5eff0e91e20e913f8c5452ed95b86621",
-                "reference": "2dfb5f6c5eff0e91e20e913f8c5452ed95b86621",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.0 || ^8.0",
-                "psr/http-message": "^1.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Psr\\Http\\Client\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "PHP-FIG",
-                    "homepage": "http://www.php-fig.org/"
-                }
-            ],
-            "description": "Common interface for HTTP clients",
-            "homepage": "https://github.com/php-fig/http-client",
-            "keywords": [
-                "http",
-                "http-client",
-                "psr",
-                "psr-18"
-            ],
-            "time": "2020-06-29T06:28:15+00:00"
         },
         {
             "name": "psr/http-message",
@@ -676,6 +731,9 @@
                 "request",
                 "response"
             ],
+            "support": {
+                "source": "https://github.com/php-fig/http-message/tree/master"
+            },
             "time": "2016-08-06T14:39:51+00:00"
         },
         {
@@ -723,6 +781,9 @@
                 "psr",
                 "psr-3"
             ],
+            "support": {
+                "source": "https://github.com/php-fig/log/tree/1.1.3"
+            },
             "time": "2020-03-23T09:12:05+00:00"
         },
         {
@@ -771,58 +832,10 @@
                 "psr-16",
                 "simple-cache"
             ],
+            "support": {
+                "source": "https://github.com/php-fig/simple-cache/tree/master"
+            },
             "time": "2017-10-23T01:57:42+00:00"
-        },
-        {
-            "name": "raiym/instagram-php-scraper",
-            "version": "v0.10.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/postaddictme/instagram-php-scraper.git",
-                "reference": "b265382663e639015b650875685ddc6c8d541b1e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/postaddictme/instagram-php-scraper/zipball/b265382663e639015b650875685ddc6c8d541b1e",
-                "reference": "b265382663e639015b650875685ddc6c8d541b1e",
-                "shasum": ""
-            },
-            "require": {
-                "ext-curl": "*",
-                "ext-json": "*",
-                "guzzlehttp/psr7": "^1.7",
-                "php": ">=7.2",
-                "psr/http-client": "~1.0",
-                "psr/simple-cache": "~1.0"
-            },
-            "require-dev": {
-                "guzzlehttp/guzzle": "^7.2",
-                "phpfastcache/phpfastcache": "^7.1",
-                "phpunit/phpunit": "^7.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "InstagramScraper\\": "src/InstagramScraper/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "raiym",
-                    "email": "r.kapishev@gmail.com"
-                }
-            ],
-            "description": "Instagram PHP Scraper. Get account information, photos and videos without any authorization",
-            "homepage": "https://github.com/raiym/instagram-php-scraper",
-            "keywords": [
-                "instagram",
-                "scraper"
-            ],
-            "time": "2020-10-22T16:18:10+00:00"
         },
         {
             "name": "ralouphie/getallheaders",
@@ -862,7 +875,62 @@
                 }
             ],
             "description": "A polyfill for getallheaders.",
+            "support": {
+                "issues": "https://github.com/ralouphie/getallheaders/issues",
+                "source": "https://github.com/ralouphie/getallheaders/tree/develop"
+            },
             "time": "2019-03-08T08:55:37+00:00"
+        },
+        {
+            "name": "restyler/instagram-php-scraper",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/restyler/instagram-php-scraper.git",
+                "reference": "860cab595891e34a8f5971c97b1ed6c96bf5be2a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/restyler/instagram-php-scraper/zipball/860cab595891e34a8f5971c97b1ed6c96bf5be2a",
+                "reference": "860cab595891e34a8f5971c97b1ed6c96bf5be2a",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "mashape/unirest-php": "3.0.*",
+                "php": ">=5.4.0",
+                "psr/simple-cache": "~1.0"
+            },
+            "require-dev": {
+                "phpfastcache/phpfastcache": "^7.1",
+                "phpunit/phpunit": "5.5.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "InstagramScraper\\": "src/InstagramScraper/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "restyler"
+                }
+            ],
+            "description": "Profixied Instagram PHP Scraper. Get account information, photos and videos without any authorization, via smart proxy balancer.",
+            "homepage": "https://github.com/restyler/instagram-php-scraper/tree/proxified",
+            "keywords": [
+                "instagram",
+                "scraper"
+            ],
+            "support": {
+                "source": "https://github.com/restyler/instagram-php-scraper/tree/v1.0.2"
+            },
+            "time": "2020-10-08T13:29:07+00:00"
         },
         {
             "name": "ricardoper/twitteroauth",
@@ -910,6 +978,10 @@
                 "php",
                 "twitter"
             ],
+            "support": {
+                "issues": "https://github.com/ricardoper/TwitterOAuth/issues",
+                "source": "https://github.com/ricardoper/TwitterOAuth/tree/v2"
+            },
             "time": "2016-05-27T19:06:33+00:00"
         },
         {
@@ -980,6 +1052,23 @@
                 "portable",
                 "shim"
             ],
+            "support": {
+                "source": "https://github.com/symfony/polyfill-intl-idn/tree/v1.20.0"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-10-23T14:02:19+00:00"
         },
         {
@@ -1047,6 +1136,23 @@
                 "portable",
                 "shim"
             ],
+            "support": {
+                "source": "https://github.com/symfony/polyfill-intl-normalizer/tree/v1.20.0"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-10-23T14:02:19+00:00"
         },
         {
@@ -1106,6 +1212,23 @@
                 "portable",
                 "shim"
             ],
+            "support": {
+                "source": "https://github.com/symfony/polyfill-php72/tree/v1.20.0"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-10-23T14:02:19+00:00"
         },
         {
@@ -1153,6 +1276,10 @@
                 "video",
                 "vimeo"
             ],
+            "support": {
+                "issues": "https://github.com/vimeo/vimeo.php/issues",
+                "source": "https://github.com/vimeo/vimeo.php/tree/master"
+            },
             "time": "2018-08-27T13:36:11+00:00"
         }
     ],
@@ -1165,5 +1292,6 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "2.0.0"
 }
