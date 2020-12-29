@@ -29,6 +29,11 @@ class rex_feeds_stream_instagram_user extends rex_feeds_stream_instagram_abstrac
                 'notice' => rex_i18n::msg('feeds_instagram_username_notice'),
             ],
             [
+                'label' => rex_i18n::msg('feeds_instagram_tag_rapidapi_key'),
+                'name' => 'rapidapi_key',
+                'type' => 'string',
+            ],
+            [
                 'label' => rex_i18n::msg('feeds_instagram_count'),
                 'name' => 'count',
                 'type' => 'select',
