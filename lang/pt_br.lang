@@ -110,6 +110,7 @@ feeds_instagram_access_token = Acessar Token
 feeds_instagram_tag =  Instagram :: Tag
 feeds_instagram_tag_name = Nome da Tag
 feeds_instagram_tag_without_prefix = Insira os nomes das Tags sem #
+feeds_instagram_tag_rapidapi_key = RapidApi Key
 feeds_instagram_count = Número de entradas
 
 feeds_instagram_user =  Instagram :: usuário

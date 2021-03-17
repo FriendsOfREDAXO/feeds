@@ -309,7 +309,7 @@ class Youtube
         $API_URL = $this->getApi('channels.list');
         $params = array(
             'forUsername' => $username,
-            'part' => 'id,snippet,contentDetails,statistics,invideoPromotion'
+            'part' => 'id,snippet,contentDetails,statistics'
         );
         if ($optionalParams) {
             $params = array_merge($params, $optionalParams);
@@ -329,7 +329,7 @@ class Youtube
         $API_URL = $this->getApi('channels.list');
         $params = array(
             'id' => $id,
-            'part' => 'id,snippet,contentDetails,statistics,invideoPromotion'
+            'part' => 'id,snippet,contentDetails,statistics'
         );
         if ($optionalParams) {
             $params = array_merge($params, $optionalParams);
@@ -348,7 +348,7 @@ class Youtube
         $API_URL = $this->getApi('channels.list');
         $params = array(
             'id' => implode(',', $ids),
-            'part' => 'id,snippet,contentDetails,statistics,invideoPromotion'
+            'part' => 'id,snippet,contentDetails,statistics'
         );
         if($optionalParams){
             $params = array_merge($params, $optionalParams);
@@ -442,7 +442,7 @@ class Youtube
      * @return array
      * @throws \Exception
      */
-    public function getActivitiesByChannelId($channelId)
+    public function getActivitiesByChannelId($channelId, $optionalParams = false)
     {
         if (empty($channelId)) {
             throw new \InvalidArgumentException('ChannelId must be supplied');
@@ -452,6 +452,9 @@ class Youtube
             'channelId' => $channelId,
             'part' => 'id, snippet, contentDetails'
         );
+        if ($optionalParams) {
+            $params = array_merge($params, $optionalParams);
+        }
         $apiData = $this->api_get($API_URL, $params);
         return $this->decodeList($apiData);
     }
@@ -580,7 +583,7 @@ class Youtube
         } else {
             $this->page_info = array(
                 'resultsPerPage' => $resObj->pageInfo->resultsPerPage,
-                'totalResults'   => $resObj->pageInfo->totalResults,
+                'totalResults'   => isset($resObj->pageInfo->totalResults) ? $resObj->pageInfo->totalResults : null,
                 'kind'           => $resObj->kind,
                 'etag'           => $resObj->etag,
                 'prevPageToken'     => null,

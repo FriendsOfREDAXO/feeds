@@ -88,7 +88,7 @@ class ScraperProcessor extends Base implements ItemProcessorInterface
     public function getScraper()
     {
         if ($this->scraper === null) {
-            $this->scraper = new Scraper($this->config);
+            $this->scraper = new Scraper($this->config, $this->httpClient);
         }
 
         return $this->scraper;
