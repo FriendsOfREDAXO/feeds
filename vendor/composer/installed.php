@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'cc9170076cc97cbbfdcf43f64b2e3008af5acdbb',
+    'reference' => 'ea561140a0340e660d3d2127c784ec6073b492fd',
     'name' => '__root__',
   ),
   'versions' => 
@@ -18,7 +18,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'cc9170076cc97cbbfdcf43f64b2e3008af5acdbb',
+      'reference' => 'ea561140a0340e660d3d2127c784ec6073b492fd',
     ),
     'facebook/graph-sdk' => 
     array (
@@ -40,12 +40,12 @@
     ),
     'guzzlehttp/promises' => 
     array (
-      'pretty_version' => '1.4.0',
-      'version' => '1.4.0.0',
+      'pretty_version' => '1.4.1',
+      'version' => '1.4.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => '60d379c243457e073cff02bc323a2a86cb355631',
+      'reference' => '8e7d04f1f6450fef59366c399cfad4b9383aa30d',
     ),
     'guzzlehttp/psr7' => 
     array (
@@ -85,12 +85,12 @@
     ),
     'madcoda/php-youtube-api' => 
     array (
-      'pretty_version' => 'v1.2.4',
-      'version' => '1.2.4.0',
+      'pretty_version' => 'v1.2.5',
+      'version' => '1.2.5.0',
       'aliases' => 
       array (
       ),
-      'reference' => '886e3aa1789cd19ad0c7add239bd2967f3b5ad4d',
+      'reference' => 'eac4b82e9f6d4377964e0e735aba59c51e42bd5e',
     ),
     'mashape/unirest-php' => 
     array (
@@ -183,30 +183,30 @@
     ),
     'symfony/polyfill-intl-idn' => 
     array (
-      'pretty_version' => 'v1.20.0',
-      'version' => '1.20.0.0',
+      'pretty_version' => 'v1.22.1',
+      'version' => '1.22.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => '3b75acd829741c768bc8b1f84eb33265e7cc5117',
+      'reference' => '2d63434d922daf7da8dd863e7907e67ee3031483',
     ),
     'symfony/polyfill-intl-normalizer' => 
     array (
-      'pretty_version' => 'v1.20.0',
-      'version' => '1.20.0.0',
+      'pretty_version' => 'v1.22.1',
+      'version' => '1.22.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => '727d1096295d807c309fb01a851577302394c897',
+      'reference' => '43a0283138253ed1d48d352ab6d0bdb3f809f248',
     ),
     'symfony/polyfill-php72' => 
     array (
-      'pretty_version' => 'v1.20.0',
-      'version' => '1.20.0.0',
+      'pretty_version' => 'v1.22.1',
+      'version' => '1.22.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'cede45fcdfabdd6043b3592e83678e42ec69e930',
+      'reference' => 'cc6e6f9b39fe8075b3dabfbaf5b5f645ae1340c9',
     ),
     'vimeo/vimeo-api' => 
     array (
