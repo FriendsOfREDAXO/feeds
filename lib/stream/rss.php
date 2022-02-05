@@ -57,6 +57,8 @@ class rex_feeds_stream_rss extends rex_feeds_stream_abstract
             $item->setLanguage($rssItem->getLanguage());
             if ($rssItem->getEnclosureUrl()) {
                 $item->setMedia($rssItem->getEnclosureUrl());
+            } elseif ($rssItem->getTag('media:content', 'url')) {
+                $item->setMedia($rssItem->getTag('media:content', 'url')[0]);
             }
             $item->setRaw($rssItem);
             
@@ -66,4 +68,3 @@ class rex_feeds_stream_rss extends rex_feeds_stream_abstract
         self::registerExtensionPoint($this->streamId);
     }
 }
-
