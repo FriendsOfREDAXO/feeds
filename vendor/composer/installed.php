@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '554f43c73c52312aed4f78a778c467718e4eb4d4',
+        'reference' => '84ea6f37754472996140f7907549d7ec4d2a3c7a',
         'name' => '__root__',
         'dev' => true,
     ),
@@ -16,7 +16,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '554f43c73c52312aed4f78a778c467718e4eb4d4',
+            'reference' => '84ea6f37754472996140f7907549d7ec4d2a3c7a',
             'dev_requirement' => false,
         ),
         'facebook/graph-sdk' => array(
@@ -29,12 +29,12 @@
             'dev_requirement' => false,
         ),
         'guzzlehttp/guzzle' => array(
-            'pretty_version' => '6.5.5',
-            'version' => '6.5.5.0',
+            'pretty_version' => '6.5.6',
+            'version' => '6.5.6.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../guzzlehttp/guzzle',
             'aliases' => array(),
-            'reference' => '9d4290de1cfd701f38099ef7e183b64b4b7b0c5e',
+            'reference' => 'f092dd734083473658de3ee4bef093ed77d2689c',
             'dev_requirement' => false,
         ),
         'guzzlehttp/promises' => array(
