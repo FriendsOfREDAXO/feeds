@@ -40,7 +40,7 @@ abstract class rex_feeds_stream_abstract
 	 * @param int $number Number of items to be returned
 	 * @return \rex_feeds_item[] Array with item objects
 	 */
-	public function getPreloadedItems($number = 5, $orderBy = 'updatedate')
+	public function getPreloadedItems($number = 5, $orderBy = 'date')
 	{
 		$items = [];
 		$result = rex_sql::factory();
