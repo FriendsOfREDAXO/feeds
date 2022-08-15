@@ -62,7 +62,7 @@ class rex_feeds_stream_facebook_feed extends rex_feeds_stream_abstract
     {
         $fb = $this->getFacebook();
 
-        $fields = 'id,permalink_url,from,story,message,link,created_time,attachments,type';
+        $fields = 'id,permalink_url,from,story,message,created_time,attachments,full_picture';
         $url = sprintf(
             '/%s/%s?locale=de&fields=%s&limit=%d',
             $this->typeParams['profile_id'],
@@ -88,6 +88,7 @@ class rex_feeds_stream_facebook_feed extends rex_feeds_stream_abstract
                 $item->setAuthor($name);
             }
 
+            $fullPicture = $facebookItem->getField('full_picture');
             $attachments = $facebookItem->getField('attachments');
 
             if ($attachments) {
@@ -158,6 +159,13 @@ class rex_feeds_stream_facebook_feed extends rex_feeds_stream_abstract
                                 break;
                             }
 
+                            break;
+                        case "share":
+
+                            if ($fullPicture) {
+                              $item->setMedia($fullPicture);
+                            }
+                            
                             break;
                     }
                 }
