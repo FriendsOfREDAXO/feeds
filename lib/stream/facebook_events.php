@@ -51,7 +51,7 @@ class rex_feeds_stream_facebook_events extends rex_feeds_stream_abstract
                         $item = new rex_feeds_item($this->streamId, $event->id);
                         $item->setTitle($event->name);
                         $item->setContent($event->description);
-                        $item->setUrl('https://www.facebook.de/events/' . $event->id);
+                        $item->setUrl('https://de-de.facebook.com/events/' . $event->id);
                         $item->setDate(new DateTime($event->start_time));
                         $item->setRaw(json_encode($event));
 
