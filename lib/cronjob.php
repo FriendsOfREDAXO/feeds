@@ -14,7 +14,7 @@ class rex_cronjob_feeds extends rex_cronjob
     {
         $streams = [];
         foreach (rex_feeds_stream::getAllActivated() as &$stream) {
-            if ($this->getParam('blacklist_streams') !== null && strpos($this->getParam('blacklist_streams'), get_class($stream)) === false) {
+            if (strpos($this->getParam('blacklist_streams'), get_class($stream)) === false) {
                 $streams[] = $stream;
             };
         }
