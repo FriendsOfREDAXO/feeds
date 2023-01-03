@@ -24,7 +24,7 @@ $content = '';
 $formElements = [];
 $n = [];
 $n['label'] = '<label for="consumer-token">' . $this->i18n('instagram_access_token') . '</label>';
-$n['field'] = '<input class="form-control" type="text" id="consumer-token" name="settings[instagram_access_token]" value="' . htmlspecialchars($this->getConfig('instagram_access_token')) . '" />';
+$n['field'] = '<input class="form-control" type="text" id="consumer-token" name="settings[instagram_access_token]" value="' . htmlspecialchars($this->getConfig('instagram_access_token') ?? '') . '" />';
 $formElements[] = $n;
 
 $fragment = new \rex_fragment();
