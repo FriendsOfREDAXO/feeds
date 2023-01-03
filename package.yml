@@ -1,5 +1,5 @@
 package: feeds
-version: '3.3.1'
+version: '3.3.2'
 author: Friends Of REDAXO
 supportpage: https://github.com/FriendsOfREDAXO/feeds
 
@@ -27,10 +27,10 @@ page:
             perm: admin[]
             pjax: false
             subPath: README.md
-            itemclass: pull-right 
+            itemclass: pull-right
 
 requires:
-    redaxo: '^5.7' 
+    redaxo: '^5.7'
     php:
         version: '>=7.1'
 
