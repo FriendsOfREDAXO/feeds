@@ -26,18 +26,18 @@ $content = '';
 $formElements = [];
 $n = [];
 $n['label'] = '<label for="facebook-app-title">' . $addon->i18n('facebook_app_title') . '</label>';
-$n['field'] = '<input class="form-control" type="text" id="facebook-app-title" name="settings[facebook_app_title]" value="' . htmlspecialchars($addon->getConfig('facebook_app_title')) . '" />';
+$n['field'] = '<input class="form-control" type="text" id="facebook-app-title" name="settings[facebook_app_title]" value="' . htmlspecialchars($addon->getConfig('facebook_app_title') ?? '') . '" />';
 $n['note'] = $addon->i18n('facebook_app_title_note');
 $formElements[] = $n;
 
 $n = [];
 $n['label'] = '<label for="facebook-app-id">' . $addon->i18n('facebook_app_id') . '</label>';
-$n['field'] = '<input class="form-control" type="text" id="facebook-app-id" name="settings[facebook_app_id]" value="' . htmlspecialchars($addon->getConfig('facebook_app_id')) . '" />';
+$n['field'] = '<input class="form-control" type="text" id="facebook-app-id" name="settings[facebook_app_id]" value="' . htmlspecialchars($addon->getConfig('facebook_app_id') ?? '') . '" />';
 $formElements[] = $n;
 
 $n = [];
 $n['label'] = '<label for="facebook-app-secret">' . $addon->i18n('facebook_app_secret') . '</label>';
-$n['field'] = '<input class="form-control" type="text" id="facebook-app-secret" name="settings[facebook_app_secret]" value="' . htmlspecialchars($addon->getConfig('facebook_app_secret')) . '" />';
+$n['field'] = '<input class="form-control" type="text" id="facebook-app-secret" name="settings[facebook_app_secret]" value="' . htmlspecialchars($addon->getConfig('facebook_app_secret') ?? '') . '" />';
 $formElements[] = $n;
 
 $fragment = new \rex_fragment();
