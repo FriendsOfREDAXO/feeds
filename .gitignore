@@ -1,2 +1,7 @@
 .DS_Store
 .definition
+vendor/composer/
+vendor/bin/
+test/
+bin/
+autoload*
