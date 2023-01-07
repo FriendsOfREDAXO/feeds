@@ -4,7 +4,7 @@
         "ricardoper/twitteroauth": "^2.1.6",
         "facebook/graph-sdk": "^5.4.4",
         "madcoda/php-youtube-api": "^1.2",
-        "vimeo/vimeo-api": "^2.0",
+        "vimeo/vimeo-api": "^3.0",
         "php-instagram-api/php-instagram-api": "dev-master",
         "raiym/instagram-php-scraper": "^0.12"
     }
