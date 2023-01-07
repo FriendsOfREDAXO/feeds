@@ -6,6 +6,6 @@
         "madcoda/php-youtube-api": "^1.2",
         "vimeo/vimeo-api": "^2.0",
         "php-instagram-api/php-instagram-api": "dev-master",
-        "raiym/instagram-php-scraper": "^0.8"
+        "raiym/instagram-php-scraper": "^0.12"
     }
 }
