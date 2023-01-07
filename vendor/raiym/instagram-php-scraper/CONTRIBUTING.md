@@ -1,1 +1,0 @@
-Add getPaginateMediasByLocationId Function
