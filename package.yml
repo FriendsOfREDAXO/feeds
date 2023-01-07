@@ -1,5 +1,5 @@
 package: feeds
-version: '3.3.2'
+version: '4.0.0-dev'
 author: Friends Of REDAXO
 supportpage: https://github.com/FriendsOfREDAXO/feeds
 
@@ -16,10 +16,6 @@ page:
         settings:
             title: 'translate:settings'
             subpages:
-                twitter:
-                    title: 'translate:twitter'
-                facebook:
-                    title: 'translate:facebook'
                 instagram:
                     title: 'translate:instagram'
         help:
@@ -30,11 +26,11 @@ page:
             itemclass: pull-right
 
 requires:
-    redaxo: '^5.7'
+    redaxo: '^5.14'
     php:
-        version: '>=7.1'
+        version: '>=8.0'
 
 conflicts:
     packages:
         yfeed: '<=1.3.0'
-        feeds: '<2.2.1'
+        feeds: '<4.0.0'
