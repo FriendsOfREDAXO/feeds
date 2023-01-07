@@ -6,25 +6,16 @@ Ein REDAXO5-AddOn zum Abruf externer Streams, vormals YFeed.
 
 ## Features
 
-* Abruf von Facebook-, Twitter-, YouTube-, Vimeo- und RSS-Streams.
+* Abruf von Instagram, YouTube-, Vimeo- und RSS-Streams.
 * Dauerhaftes Speichern der Beiträge in einer Datenbank-Tabelle
 * Nachträgliche Aktualisierung der Beiträge (z.B. nach einem Update / einer Korrektur)
-* Erweiterung um eigene Feed-Typen möglich, z.B. Google My Business o.a.
+* Erweiterung um eigene Feed-Typen möglich
 * Feeds können in Watson gesucht werden `feed suchbegriff`
 
 ## Installation
 
 1. Im REDAXO-Backend unter `Installer` abrufen und 
 2. anschließend unter `Hauptmenü` > `AddOns` installieren.
-
-## YFeed-Migration
-
-- Es sollte YFeed 1.3.0 installiert, sein damit eine Migration erfolgen kann. YFeed ggf. daher vorab aktualisieren. 
-- Zum Update zunächst Feeds 2.2.1 migrieren, anschließend lässt sich Feeds updaten.
-- Feeds importiert die Tabellen und Konfiguration von YFeed während der Installation. 
-- Die neu angelegten Tabellen lauten jetzt: TABLEPREFIX_`feeds_item` und TABLEPREFIX_`feeds_stream`, der Abruf in Modulen, AddOns oder Classes muss daher angepasst werden. 
-- Der Aufruf der Bilder mit der Endung `.yfeed` wird weiterhin unterstützt, in Zukunft jedoch `.feeds` verwenden.
-- Anschließend lässt sich Feeds auf die aktuelle Version updaten.
 
 ## Lizenz
 
@@ -46,7 +37,7 @@ Vendoren, siehe Vendors-Ordner des AddOns
 3. den Anweisungen der Stream-Einstellungen folgen und
 4. anschließend speichern.
 
-> **Hinweis:** Ggf. müssen zusätzlich in den Einstellungen von Feeds Zugangsdaten (bspw. API-Schlüssel) hinterlegt werden, bspw. bei Facebook, Twitter oder YouTube.
+> **Hinweis:** Ggf. müssen zusätzlich in den Einstellungen von Feeds Zugangsdaten (bspw. API-Schlüssel) hinterlegt werden, bspw. bei Vimeo und YouTube.
 
 ### Feed aktualisieren
 
@@ -116,30 +107,6 @@ Weitere Infos zu Extension Points in REDAXO unter https://www.redaxo.org/doku/ma
 
 > Tipp: Du hast Beispiele aus der Praxis für die Extension Points? Teile sie mit der REDAXO-Community! [Zum GitHub-Repository von Feeds](github.com/FriendsOfREDAXO/feeds/)
 
-## Facebook
-
-### Wann brauche ich ein Access Token für Facebook?
-
-Stand 2017: Bei Facebook Pages wird kein Access-Token benötigt, falls nur die öffentlich einsehbaren Einträge eingelesen werden sollen. Für Einräge mit eingeschränkter Sichtbarkeit wird ein User-Access Token oder Page-Access Token benötigt. Für Facebook User-Feeds wird ein User-Access-Token mit der Berechtigung `user_posts` benötigt.
-
-Stand 2019: Ist der Nutzer, der den Access-Token generiert, Administrator der Facebook-Seite, so ist kein zusätzlicher Freigabe-Prozess der Facebook-App erforderlich.
-
-### Wie erzeuge ich ein langlebigen Access-Token für Facebook?
-
-[Basierend auf diesem Eintrag von Stackoverflow: Long-lasting FB access-token for server to pull FB page info](https://stackoverflow.com/questions/12168452/long-lasting-fb-access-token-for-server-to-pull-fb-page-info/21927690#21927690)
-
-1.  Auf [developers.facebook.com](https://developers.facebook.com) einloggen und Facebook-App erzeugen, den Anweisungen folgen.
-2.  Wichtig: Die App soll sich nicht im Live-Modus, sondern noch im Entwickler-Modus befinden, sonst schlagen die nachfolgenden Aktionen fehl.
-3.  Den [Graph API Explorer](https://developers.facebook.com/tools/explorer/) aufrufen. Dort oben rechts jene App auswählen, die für Feeds verwendet werden soll.
-4.  Das Auswahlfeld "Zugangsschlüssel anfordern" anklicken und darin entweder  
-    A) "Seitenzugriffs-Schlüssel anfordern" wählen und den Anweisungen folgen oder  
-    B) Bei bereits bestehender Zugriffsberechtigung die gewünschte Facebook-Page auswählen.
-5.  Im Feld "Zugriffsschlüssel" befindet sich ein kurzlebiger Zugangsschlüssel (hier: `access_token1`), der nach ca. 1 Stunde ungültig wird. Diesen in folgenden Link einsetzen, zusammen mit den App-Zugangsdaten:  
-    `https://graph.facebook.com/oauth/access_token?client_id=[[[App ID]]]&client_secret=[[[App secret]]]&grant_type=fb_exchange_token&fb_exchange_token=[[[access_token1]]]` und aufrufen.  
-    Der durch den Link erzeugten neuen langlebigen Zugriffsschlüssel (hier: `access_token2`) ist ca. 2 Monate gültig.
-6.  Diesen Code erneut kopieren und in diesen Link einfügen:  
-    `https://graph.facebook.com/me/accounts?access_token=[[[access_token2]]]`
-7.  Gibt es hier keine Fehlermeldung, kann der nun generierte, neue "unsterbliche" Zugangsschlüssel kann dann in den Einstellungen für den Facebook-Stream eingesetzt werden. Er wird nur noch dann ungültig, wenn bspw. das Passwort des Facebook-Accounts geändert wird, Admin-Rechte für die Facebook-Page entzogen werden oder die App gelöscht wird.
 
 ### Tipps: 
 
@@ -163,10 +130,6 @@ Oder alternativ:  Einen access-token im 'public-content' scope generieren lassen
 
 Dann gibt man einfach UserID oder UserName ein und fügt noch unter Einstellungen den Accesstoken ein.
 
-
-## Twitter
-
-Infos zur Erstellung des Access-Tokens gibt es hier: https://developer.twitter.com/en/docs/basics/authentication/guides/access-tokens
 
 
 ### Tipp
