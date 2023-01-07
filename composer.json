@@ -2,6 +2,7 @@
     "require": {
         "madcoda/php-youtube-api": "^1.2",
         "vimeo/vimeo-api": "^3.0",
-        "raiym/instagram-php-scraper": "^0.12"
+        "raiym/instagram-php-scraper": "^0.12",
+        "debril/feed-io": "^5"
     }
 }
