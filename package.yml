@@ -13,11 +13,6 @@ page:
             title: 'translate:streams'
         items:
             title: 'translate:items'
-        settings:
-            title: 'translate:settings'
-            subpages:
-                instagram:
-                    title: 'translate:instagram'
         help:
             title: 'translate:help'
             perm: admin[]
