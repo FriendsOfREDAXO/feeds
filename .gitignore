@@ -4,4 +4,3 @@ vendor/composer/
 vendor/bin/
 test/
 bin/
-autoload*
