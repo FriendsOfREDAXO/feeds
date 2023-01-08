@@ -74,8 +74,7 @@ class rex_feeds_stream_vimeo_pro_user extends rex_feeds_stream_abstract
                 
             $item->setUrl($video['link']);
                 
-            $item->setMedia($video->snippet->thumbnails->maxres->url);
-
+            $item->setMedia($video['pictures']['base_link']);
             $item->setDate(new DateTime($video['created_time']));
                 
             //$item->setAuthor($video->snippet->channelTitle);
