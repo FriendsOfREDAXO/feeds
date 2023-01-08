@@ -62,7 +62,11 @@ class rex_feeds_stream_vimeo_pro_user extends rex_feeds_stream_abstract
             $uri = $video['uri'];
             $uri = str_replace("/videos/", "", $uri);
             $item = new rex_feeds_item($this->streamId, $uri);
-            
+            // only Videos with View-Right
+            if ($video['privacy']['view'] === 'anybody') {
+            } else {
+                    continue;
+            } 
             $item->setTitle($video['name']);
                 
             $item->setContentRaw($video['description']);
@@ -70,7 +74,7 @@ class rex_feeds_stream_vimeo_pro_user extends rex_feeds_stream_abstract
                 
             $item->setUrl($video['link']);
                 
-            //$item->setMedia($video->snippet->thumbnails->maxres->url);
+            $item->setMedia($video->snippet->thumbnails->maxres->url);
 
             $item->setDate(new DateTime($video['created_time']));
                 
