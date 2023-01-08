@@ -1,12 +1,10 @@
 # Feeds
 
-Ein REDAXO5-AddOn zum Abruf externer Streams, vormals YFeed.
-
-![Screenshot](https://raw.githubusercontent.com/FriendsOfREDAXO/feeds/assets/screenshot.png)
+REDAXO 5.x-AddOn zum Abruf externer Streams.
 
 ## Features
 
-* Abruf von Instagram, YouTube-, Vimeo- und RSS-Streams.
+* Abruf von YouTube-, Vimeo- und RSS-Streams.
 * Dauerhaftes Speichern der Beiträge in einer Datenbank-Tabelle
 * Nachträgliche Aktualisierung der Beiträge (z.B. nach einem Update / einer Korrektur)
 * Erweiterung um eigene Feed-Typen möglich
@@ -81,7 +79,7 @@ ausgegeben werden können, muss das Bild über den Media-Manager-Effekt von Feed
 <?php rex_sql::factory()->setQuery("DELETE FROM rex_feeds_item WHERE stream_id = 4 AND createdate < (NOW() - INTERVAL 2 MONTH)"); ?>
 ```
 
-## Feeds erweitern
+## Eigene Feeds einbinden
 
 Um Feeds zu erweitern, kann man sich die Logik der von Haus aus mitgelieferten Extension Points und Feeds ansehen:
 
@@ -130,13 +128,6 @@ Oder alternativ:  Einen access-token im 'public-content' scope generieren lassen
 
 Dann gibt man einfach UserID oder UserName ein und fügt noch unter Einstellungen den Accesstoken ein.
 
-
-
-### Tipp
-
-> Die API verlangt normalerweise zwingend eine UserID (Dezimalzahl) beim Typ Instagram-Benuter für Feed-Anfragen via access_token. Ist keine UserID (Dezimalzahl) angegeben wird diese durch API-Anfrage ermittelt und dann erst zur eigentlichen Feed-Anfrage weitergegangen. (Was fehlschlägt, wegen fehlendem ‚public_content‘-scope bzw. SandBox-Mode)
-Glorreiche Ausnahme ist ***'self'***, diese Anfrage wird mit "UserName" druchgewunken.
-Instagram lässt einem zumindest die Berechtigung, mit entsprechenden access_token, den eigenen Stream (des access-token-Inhabers) auszulesen. 
 
 
 ## RSS Feed
