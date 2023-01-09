@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => '__root__',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => NULL,
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => '460a4dafab1bafda0b031c012c8621457b75fb2e',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         '__root__' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => NULL,
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '460a4dafab1bafda0b031c012c8621457b75fb2e',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -37,14 +37,11 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-        'debril/feed-io' => array(
-            'pretty_version' => 'v5.3.1',
-            'version' => '5.3.1.0',
-            'reference' => 'b1237713ae174fc4dd57aff1e472303a1162ccfc',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../debril/feed-io',
-            'aliases' => array(),
+        'container-interop/container-interop' => array(
             'dev_requirement' => false,
+            'replaced' => array(
+                0 => '^1.2.0',
+            ),
         ),
         'guzzlehttp/guzzle' => array(
             'pretty_version' => '7.5.0',
@@ -65,11 +62,47 @@
             'dev_requirement' => false,
         ),
         'guzzlehttp/psr7' => array(
-            'pretty_version' => '1.9.0',
-            'version' => '1.9.0.0',
-            'reference' => 'e98e3e6d4f86621a9b75f623996e6bbdeb4b9318',
+            'pretty_version' => '2.4.3',
+            'version' => '2.4.3.0',
+            'reference' => '67c26b443f348a51926030c83481b85718457d3d',
             'type' => 'library',
             'install_path' => __DIR__ . '/../guzzlehttp/psr7',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'laminas/laminas-escaper' => array(
+            'pretty_version' => '2.12.0',
+            'version' => '2.12.0.0',
+            'reference' => 'ee7a4c37bf3d0e8c03635d5bddb5bb3184ead490',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../laminas/laminas-escaper',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'laminas/laminas-feed' => array(
+            'pretty_version' => '2.20.0',
+            'version' => '2.20.0.0',
+            'reference' => '508ebef6e622f2f2ce3dd0559739ffd0dfa3b938',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../laminas/laminas-feed',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'laminas/laminas-servicemanager' => array(
+            'pretty_version' => '3.15.0',
+            'version' => '3.15.0.0',
+            'reference' => '65910ef6a8066b0369fab77fbec9e030be59c866',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../laminas/laminas-servicemanager',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'laminas/laminas-stdlib' => array(
+            'pretty_version' => '3.16.1',
+            'version' => '3.16.1.0',
+            'reference' => 'f4f773641807c7ccee59b758bfe4ac4ba33ecb17',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../laminas/laminas-stdlib',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
@@ -109,6 +142,12 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'psr/container-implementation' => array(
+            'dev_requirement' => false,
+            'provided' => array(
+                0 => '^1.1 || ^2.0',
+            ),
+        ),
         'psr/event-dispatcher' => array(
             'pretty_version' => '1.0.0',
             'version' => '1.0.0.0',
@@ -134,6 +173,21 @@
             'dev_requirement' => false,
         ),
         'psr/http-client-implementation' => array(
+            'dev_requirement' => false,
+            'provided' => array(
+                0 => '1.0',
+            ),
+        ),
+        'psr/http-factory' => array(
+            'pretty_version' => '1.0.1',
+            'version' => '1.0.1.0',
+            'reference' => '12ac7fcd07e5b077433f5f2bee95b3a771bf61be',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../psr/http-factory',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'psr/http-factory-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
                 0 => '1.0',
@@ -165,24 +219,6 @@
             'provided' => array(
                 0 => '1.0|2.0|3.0',
             ),
-        ),
-        'psr/simple-cache' => array(
-            'pretty_version' => '3.0.0',
-            'version' => '3.0.0.0',
-            'reference' => '764e0b3939f5ca87cb904f570ef9be2d78a07865',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../psr/simple-cache',
-            'aliases' => array(),
-            'dev_requirement' => false,
-        ),
-        'raiym/instagram-php-scraper' => array(
-            'pretty_version' => 'v0.12.9',
-            'version' => '0.12.9.0',
-            'reference' => '17c265e6ded35e1cf470c31b9b3976702a54fcb1',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../raiym/instagram-php-scraper',
-            'aliases' => array(),
-            'dev_requirement' => false,
         ),
         'ralouphie/getallheaders' => array(
             'pretty_version' => '3.0.3',
