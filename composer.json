@@ -2,8 +2,7 @@
     "require": {
         "madcoda/php-youtube-api": "^1.2",
         "vimeo/vimeo-api": "^3.0",
-        "raiym/instagram-php-scraper": "^0.12",
-        "debril/feed-io": "^5"
+        "laminas/laminas-feed": "^5"
     },
     "replace": {
         "psr/log": "*"
