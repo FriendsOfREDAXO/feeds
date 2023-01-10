@@ -28,6 +28,7 @@ if ('' == $func) {
     $query = 'SELECT
                 i.id,
                 s.namespace,
+                i.date,
                 i.media,
                 s.type,
                 (CASE WHEN (i.title IS NULL or i.title = "")
@@ -83,6 +84,10 @@ if ('' == $func) {
     $list->removeColumn('url');
     $list->removeColumn('type');
 
+    $list->setColumnLabel('date', $this->i18n('item_date'));
+    $list->setColumnSortable('date', $direction = 'DESC');
+
+
     $list->setColumnLabel('namespace', $this->i18n('stream_namespace') . '/' . $this->i18n('stream_type'));
     $list->setColumnFormat('namespace', 'custom', function ($params) {
         /** @var rex_list $list */
@@ -93,6 +98,7 @@ if ('' == $func) {
         $out = '<span class="type' . (($list->getValue('status')) ? '' : ' text-muted') . '">' . $out . '</span>';
         return $out;
     });
+    $list->setColumnSortable('namespace', $direction = 'asc');
 
     $list->setColumnLabel('title', $this->i18n('item_title'));
     $list->setColumnFormat('title', 'custom', function ($params) {
@@ -104,7 +110,10 @@ if ('' == $func) {
         $title = '<div style="word-wrap:break-word; max-width:310px; max-width:40vw;"><span class="title' . (($list->getValue('status')) ? '' : ' text-muted') . '">' . $title . '</span></div>';
         return $title;
     });
-    
+
+
+
+
     $list->setColumnLabel('media', $this->i18n('item_media'));
     $list->setColumnFormat('media', 'custom', function ($params) {
         /** @var rex_list $list */
@@ -192,7 +201,7 @@ if ('' == $func) {
         $field->setLabel($this->i18n('item_mediasource'));
     }
     if ($media = $form->getSql()->getValue('media')) {
-        $form->addRawField('<p class="text-center"><img src="'.$media.'" style="max-height: 300px"/></p>');
+        $form->addRawField('<p class="text-center"><img src="' . $media . '" style="max-height: 300px"/></p>');
     }
 
     $content = $form->get();
