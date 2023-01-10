@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2017 Facebook, Inc.
+ * Copyright 2016 Facebook, Inc.
  *
  * You are hereby granted a non-exclusive, worldwide, royalty-free license to
  * use, copy, modify, and distribute this software in source code or binary
@@ -125,8 +125,8 @@ class OAuth2Client
      * Generates an authorization URL to begin the process of authenticating a user.
      *
      * @param string $redirectUrl The callback URL to redirect to.
-     * @param string $state       The CSPRNG-generated CSRF value.
      * @param array  $scope       An array of permissions to request.
+     * @param string $state       The CSPRNG-generated CSRF value.
      * @param array  $params      An array of parameters to generate URL.
      * @param string $separator   The separator to use in http_build_query().
      *

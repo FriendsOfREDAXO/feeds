@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2017 Facebook, Inc.
+ * Copyright 2016 Facebook, Inc.
  *
  * You are hereby granted a non-exclusive, worldwide, royalty-free license to
  * use, copy, modify, and distribute this software in source code or binary
@@ -37,8 +37,6 @@ class GraphPage extends GraphNode
         'best_page' => '\Facebook\GraphNodes\GraphPage',
         'global_brand_parent_page' => '\Facebook\GraphNodes\GraphPage',
         'location' => '\Facebook\GraphNodes\GraphLocation',
-        'cover' => '\Facebook\GraphNodes\GraphCoverPhoto',
-        'picture' => '\Facebook\GraphNodes\GraphPicture',
     ];
 
     /**
@@ -102,26 +100,6 @@ class GraphPage extends GraphNode
     }
 
     /**
-     * Returns CoverPhoto of the Page.
-     *
-     * @return GraphCoverPhoto|null
-     */
-    public function getCover()
-    {
-        return $this->getField('cover');
-    }
-
-    /**
-     * Returns Picture of the Page.
-     *
-     * @return GraphPicture|null
-     */
-    public function getPicture()
-    {
-        return $this->getField('picture');
-    }
-
-    /**
      * Returns the page access token for the admin user.
      *
      * Only available in the `/me/accounts` context.
@@ -143,15 +121,5 @@ class GraphPage extends GraphNode
     public function getPerms()
     {
         return $this->getField('perms');
-    }
-
-    /**
-     * Returns the `fan_count` (Number of people who likes to page) as int if present.
-     *
-     * @return int|null
-     */
-    public function getFanCount()
-    {
-        return $this->getField('fan_count');
     }
 }

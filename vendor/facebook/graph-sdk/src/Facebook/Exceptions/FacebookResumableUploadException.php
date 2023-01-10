@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2017 Facebook, Inc.
+ * Copyright 2016 Facebook, Inc.
  *
  * You are hereby granted a non-exclusive, worldwide, royalty-free license to
  * use, copy, modify, and distribute this software in source code or binary
@@ -30,39 +30,4 @@ namespace Facebook\Exceptions;
  */
 class FacebookResumableUploadException extends FacebookSDKException
 {
-    protected $startOffset;
-
-    protected $endOffset;
-
-    /**
-     * @return int|null
-     */
-    public function getStartOffset()
-    {
-        return $this->startOffset;
-    }
-
-    /**
-     * @param int|null $startOffset
-     */
-    public function setStartOffset($startOffset)
-    {
-        $this->startOffset = $startOffset;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getEndOffset()
-    {
-        return $this->endOffset;
-    }
-
-    /**
-     * @param int|null $endOffset
-     */
-    public function setEndOffset($endOffset)
-    {
-        $this->endOffset = $endOffset;
-    }
 }

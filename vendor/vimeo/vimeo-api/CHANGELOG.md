@@ -1,4 +1,46 @@
 # Changelog
+## [3.0.8] - 2021-05-03
+### Fixed
+- Fix user-agent in vimeo.php
+
+## [3.0.7] - 2021-04-28
+### Fixed
+- Fix an issue with SSL certificates on certain requests ([#286](https://github.com/vimeo/vimeo.php/issues/286))
+
+## [3.0.6] - 2020-06-20
+### Fixed
+- Add TUS 2.0
+
+## [3.0.5] - 2019-12-11
+### Fixed
+- Fixes `setUrl` method not found error.([#239](https://github.com/vimeo/vimeo.php/pull/239)) 
+- Adds `TusHelper` class.
+
+## [3.0.4] - 2019-12-02
+### Fixed
+- Fixes "invalid bucket" error when uploading a new video. ([#237](https://github.com/vimeo/vimeo.php/pull/237))
+
+## [3.0.3] - 2019-11-15
+### Changed
+- Updating `ankitpokhrel/tus-php` to stable `v1.0.0` release.
+
+## [3.0.2] - 2018-12-18
+### Fixed
+- Locking our `ankitpokhrel/tus-php` at v0.1.0 instead of a specific commit. ([#189](https://github.com/vimeo/vimeo.php/issues/189))
+
+## [3.0.1] - 2018-11-19
+### Changed
+- Updating the user agent version string to match the library version.
+
+## [3.0.0] - 2018-11-19
+### Added
+- Added [Psalm](https://github.com/vimeo/psalm) into our test process for static analysis. ([#186](https://github.com/vimeo/vimeo.php/pull/186))
+
+### Changed
+- Rewrote the Tus upload integration to use [TusPHP](https://github.com/ankitpokhrel/tus-php). ([#186](https://github.com/vimeo/vimeo.php/pull/186))
+
+### Removed
+- Removed support for <PHP 7.1. ([#186](https://github.com/vimeo/vimeo.php/pull/186))
 
 ## [2.0.5] - 2018-04-27
 ### Changed
@@ -87,6 +129,15 @@
 ### Added
 - This is the Vimeo library for version 3 of the Vimeo API.
 
+[3.0.8]: https://github.com/vimeo/vimeo.php/compare/3.0.7...3.0.8
+[3.0.7]: https://github.com/vimeo/vimeo.php/compare/3.0.6...3.0.7
+[3.0.6]: https://github.com/vimeo/vimeo.php/compare/3.0.5...3.0.6
+[3.0.5]: https://github.com/vimeo/vimeo.php/compare/3.0.4...3.0.5
+[3.0.4]: https://github.com/vimeo/vimeo.php/compare/3.0.3...3.0.4
+[3.0.3]: https://github.com/vimeo/vimeo.php/compare/3.0.2...3.0.3
+[3.0.2]: https://github.com/vimeo/vimeo.php/compare/3.0.1...3.0.2
+[3.0.1]: https://github.com/vimeo/vimeo.php/compare/3.0.0...3.0.1
+[3.0.0]: https://github.com/vimeo/vimeo.php/compare/2.0.5...3.0.0
 [2.0.5]: https://github.com/vimeo/vimeo.php/compare/2.0.4...2.0.5
 [2.0.4]: https://github.com/vimeo/vimeo.php/compare/2.0.3...2.0.4
 [2.0.3]: https://github.com/vimeo/vimeo.php/compare/2.0.2...2.0.3

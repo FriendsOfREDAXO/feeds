@@ -14,6 +14,10 @@ class Media extends AbstractModel
     const TYPE_VIDEO = 'video';
     const TYPE_SIDECAR = 'sidecar';
     const TYPE_CAROUSEL = 'carousel';
+    
+    const MEDIA_TYPE_IMAGE = 1;
+    const MEDIA_TYPE_VIDEO = 2;
+    const MEDIA_TYPE_CAROUSEL = 8;
 
     /**
      * @var string
@@ -96,6 +100,11 @@ class Media extends AbstractModel
     protected $videoStandardResolutionUrl = '';
 
     /**
+     * @var integer
+     */
+    protected $videoDuration = '';
+
+    /**
      * @var string
      */
     protected $videoLowBandwidthUrl = '';
@@ -121,6 +130,11 @@ class Media extends AbstractModel
     protected $likesCount = 0;
 
     /**
+     * @var boolean
+     */
+    protected $hasLiked = null;
+
+    /**
      * @var
      */
     protected $locationId;
@@ -129,6 +143,11 @@ class Media extends AbstractModel
      * @var string
      */
     protected $locationName = '';
+
+    /**
+     * @var bool
+     */
+    protected $commentsDisabled = false;
 
     /**
      * @var string
@@ -164,6 +183,26 @@ class Media extends AbstractModel
      * @var string
      */
     protected $locationSlug;
+
+    /**
+     * @var string
+     */
+    protected $altText;
+
+    /**
+     * @var string
+     */
+    protected $locationAddressJson;
+    /**
+     * @var array
+     */
+    protected $taggedUsers=[];
+    /**
+     * @var array
+     */
+    protected $taggedUsersIds=[];
+    
+    private $media_type;
 
     /**
      * @param string $code
@@ -206,9 +245,25 @@ class Media extends AbstractModel
         while ($id > 0) {
             $remainder = $id % 64;
             $id = ($id - $remainder) / 64;
-            $code = $alphabet{$remainder} . $code;
-        };
+            $code = $alphabet[$remainder] . $code;
+        }
         return $code;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTaggedUsers(): array
+    {
+        return $this->taggedUsers;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTaggedUsersIds(): array
+    {
+        return $this->taggedUsersIds;
     }
 
     /**
@@ -342,6 +397,14 @@ class Media extends AbstractModel
     }
 
     /**
+     * @return integer
+     */
+    public function getVideoDuration()
+    {
+        return $this->videoDuration;
+    }
+
+    /**
      * @return string
      */
     public function getVideoLowBandwidthUrl()
@@ -374,6 +437,14 @@ class Media extends AbstractModel
     }
 
     /**
+     * @return boolean
+     */
+    public function getHasLiked()
+    {
+        return $this->hasLiked;
+    }
+
+    /**
      * @return mixed
      */
     public function getLocationId()
@@ -387,6 +458,22 @@ class Media extends AbstractModel
     public function getLocationName()
     {
         return $this->locationName;
+    }
+
+    /**
+     * @param string
+     */
+    public function setLocationName($name)
+    {
+        $this->locationName = $name;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getCommentsDisabled()
+    {
+        return $this->commentsDisabled;
     }
 
     /**
@@ -446,33 +533,76 @@ class Media extends AbstractModel
     }
 
     /**
+     * @param string
+     */
+    public function setLocationSlug($slug)
+    {
+        $this->locationSlug = $slug;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAltText()
+    {
+        return $this->altText;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLocationAddressJson()
+    {
+        return $this->locationAddressJson;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLocationAddress()
+    {
+        return json_decode($this->locationAddressJson);
+    }
+
+    /**
      * @param $value
      * @param $prop
      */
     protected function initPropertiesCustom($value, $prop, $arr)
     {
         switch ($prop) {
+            case 'pk':
             case 'id':
                 $this->id = $value;
                 break;
             case 'type':
                 $this->type = $value;
                 break;
+            case 'date':
+            case 'taken_at':
             case 'created_time':
                 $this->createdTime = (int)$value;
                 break;
             case 'code':
+            case 'shortcode':
                 $this->shortCode = $value;
                 $this->link = Endpoints::getMediaPageLink($this->shortCode);
                 break;
             case 'link':
                 $this->link = $value;
                 break;
-            case 'comments':
-                $this->commentsCount = $arr[$prop]['count'];
+            case 'comments_disabled':
+                $this->commentsDisabled = $value;
                 break;
+            case 'comments':
+                break;
+            case 'edge_liked_by':
+            case 'edge_media_preview_like':
             case 'likes':
                 $this->likesCount = $arr[$prop]['count'];
+                break;
+            case 'like_count':
+                $this->likesCount = $value;
                 break;
             case 'display_resources':
                 foreach ($value as $media) {
@@ -517,7 +647,10 @@ class Media extends AbstractModel
                 }
                 break;
             case 'caption':
-                $this->caption = $arr[$prop];
+                $this->caption = $value['text'] ?? '';
+                break;
+            case 'accessibility_caption':
+                $this->altText = $value;
                 break;
             case 'video_views':
                 $this->videoViews = $value;
@@ -527,6 +660,9 @@ class Media extends AbstractModel
                 $this->videoLowResolutionUrl = $arr[$prop]['low_resolution']['url'];
                 $this->videoStandardResolutionUrl = $arr[$prop]['standard_resolution']['url'];
                 $this->videoLowBandwidthUrl = $arr[$prop]['low_bandwidth']['url'];
+                break;
+            case 'video_duration':
+                $this->videoDuration = $arr[$prop];
                 break;
             case 'video_resources':
                 foreach ($value as $video) {
@@ -539,10 +675,14 @@ class Media extends AbstractModel
                 }
                 break;
             case 'location':
-                $this->locationId = $arr[$prop]['id'];
-                $this->locationName = $arr[$prop]['name'];
-                $this->locationSlug = $arr[$prop]['slug'];
+                if (isset($arr[$prop])) {
+                    $this->locationId = $arr[$prop]['pk'] ?? null;
+                    $this->locationName = $arr[$prop]['name'] ?? null;
+                    $this->locationSlug = $arr[$prop]['slug'] ?? null;
+                    $this->locationAddressJson = $arr[$prop]['address_json'] ?? null;
+                }
                 break;
+            case 'owner':
             case 'user':
                 $this->owner = Account::create($arr[$prop]);
                 break;
@@ -554,6 +694,7 @@ class Media extends AbstractModel
             case 'video_url':
                 $this->videoStandardResolutionUrl = $value;
                 break;
+            case 'view_count':
             case 'video_view_count':
                 $this->videoViews = $value;
                 break;
@@ -566,13 +707,10 @@ class Media extends AbstractModel
             case 'taken_at_timestamp':
                 $this->createdTime = $value;
                 break;
-            case 'shortcode':
-                $this->shortCode = $value;
-                $this->link = Endpoints::getMediaPageLink($this->shortCode);
-                break;
+
             case 'edge_media_preview_comment':
                 if (isset($arr[$prop]['count'])) {
-                    $this->commentsCount = (int) $arr[$prop]['count'];
+                    $this->commentsCount = (int)$arr[$prop]['count'];
                 }
                 if (isset($arr[$prop]['edges']) && is_array($arr[$prop]['edges'])) {
                     foreach ($arr[$prop]['edges'] as $commentData) {
@@ -583,7 +721,7 @@ class Media extends AbstractModel
             case 'edge_media_to_comment':
             case 'edge_media_to_parent_comment':
                 if (isset($arr[$prop]['count'])) {
-                    $this->commentsCount = (int) $arr[$prop]['count'];
+                    $this->commentsCount = (int)$arr[$prop]['count'];
                 }
                 if (isset($arr[$prop]['edges']) && is_array($arr[$prop]['edges'])) {
                     foreach ($arr[$prop]['edges'] as $commentData) {
@@ -591,17 +729,15 @@ class Media extends AbstractModel
                     }
                 }
                 if (isset($arr[$prop]['page_info']['has_next_page'])) {
-                    $this->hasMoreComments = (bool) $arr[$prop]['page_info']['has_next_page'];
+                    $this->hasMoreComments = (bool)$arr[$prop]['page_info']['has_next_page'];
                 }
                 if (isset($arr[$prop]['page_info']['end_cursor'])) {
-                    $this->commentsNextPage = (string) $arr[$prop]['page_info']['end_cursor'];
+                    $this->commentsNextPage = (string)$arr[$prop]['page_info']['end_cursor'];
                 }
                 break;
-            case 'edge_media_preview_like':
-                $this->likesCount = $arr[$prop]['count'];
-                break;
-            case 'edge_liked_by':
-                $this->likesCount = $arr[$prop]['count'];
+
+            case 'viewer_has_liked':
+                $this->hasLiked = $arr[$prop];
                 break;
             case 'edge_media_to_caption':
                 if (is_array($arr[$prop]['edges']) && !empty($arr[$prop]['edges'])) {
@@ -625,19 +761,82 @@ class Media extends AbstractModel
                     $this->sidecarMedias[] = static::create($edge['node']);
                 }
                 break;
-            case 'owner':
-                $this->owner = Account::create($arr[$prop]);
-                break;
-            case 'date':
-                $this->createdTime = (int)$value;
+            case 'edge_media_to_tagged_user':
+                if (!is_array($arr[$prop]['edges'])) {
+                    break;
+                }
+                foreach ($arr[$prop]['edges'] as $edge) {
+                    if (!isset($edge['node'])) {
+                        continue;
+                    }
+
+                    $this->taggedUsers[] = $edge['node']['user'] ?? [];
+                    $this->taggedUsersIds[] = $edge['node']['user']['id'] ?? '';
+                }
+
                 break;
             case '__typename':
-                if ($value == 'GraphImage') {
+                if ($value == 'GraphImage' || $value == 'GraphStoryImage') {
                     $this->type = static::TYPE_IMAGE;
-                } else if ($value == 'GraphVideo') {
-                    $this->type = static::TYPE_VIDEO;
-                } else if ($value == 'GraphSidecar') {
-                    $this->type = static::TYPE_SIDECAR;
+                } else {
+                    if ($value == 'GraphVideo' || $value == 'GraphStoryVideo') {
+                        $this->type = static::TYPE_VIDEO;
+                    } else {
+                        if ($value == 'GraphSidecar') {
+                            $this->type = static::TYPE_SIDECAR;
+                        }
+                    }
+                }
+                break;
+            case 'comment_count':
+                $this->commentsCount = $value;
+                break;
+            case 'media_type':
+                $this->media_type = $value;
+                switch ($value){
+                    case static::MEDIA_TYPE_IMAGE:
+                        $this->type = static::TYPE_IMAGE;
+                        break;
+                    case static::MEDIA_TYPE_VIDEO:
+                        $this->type = static::TYPE_VIDEO;
+                        break;
+                    case static::MEDIA_TYPE_CAROUSEL:
+                        $this->type = static::TYPE_CAROUSEL;
+                        break;                    
+                }
+                break;
+            case 'image_versions2':
+                foreach ($value['candidates'] as $media) {
+                    $mediasUrl[] = $media['url'];
+                    switch ($media['width']) {
+                        case 150:
+                            $this->imageThumbnailUrl = $media['url'];
+                            break;
+                        case 320:
+                            $this->imageLowResolutionUrl = $media['url'];
+                            break;
+                        case 750:
+                            $this->imageStandardResolutionUrl = $media['url'];
+                            break;
+                        case 1080:
+                            $this->imageHighResolutionUrl = $media['url'];
+                            break;
+                    }
+                }
+                break;
+            case 'video_versions':
+                foreach ($value as $media) {
+                    switch ($media['type']) {
+                        case 101:
+                            $this->videoStandardResolutionUrl = $media['url'];
+                            break;
+                        case 102:
+                            $this->videoLowResolutionUrl = $media['url'];
+                            break;
+                        case 103:
+                            $this->videoLowBandwidthUrl = $media['url'];
+                            break;
+                    }
                 }
                 break;
         }
@@ -656,25 +855,79 @@ class Media extends AbstractModel
     private static function setCarouselMedia($mediaArray, $carouselArray, $instance)
     {
         $carouselMedia = new CarouselMedia();
-        $carouselMedia->setType($carouselArray['type']);
-
-        if (isset($carouselArray['images'])) {
-            $carouselImages = self::getImageUrls($carouselArray['images']['standard_resolution']['url']);
-            $carouselMedia->setImageLowResolutionUrl($carouselImages['low']);
-            $carouselMedia->setImageThumbnailUrl($carouselImages['thumbnail']);
-            $carouselMedia->setImageStandardResolutionUrl($carouselImages['standard']);
-            $carouselMedia->setImageHighResolutionUrl($carouselImages['high']);
+        if(isset($carouselArray['id'])) {
+            $carouselMedia->setId($carouselArray['id']);
         }
+        if(isset($carouselArray['type'])) {
+            $carouselMedia->setType($carouselArray['type']);
 
-        if ($carouselMedia->getType() === self::TYPE_VIDEO) {
-            if (isset($mediaArray['video_views'])) {
-                $carouselMedia->setVideoViews($carouselArray['video_views']);
+            if (isset($carouselArray['images'])) {
+                $carouselImages = self::getImageUrls($carouselArray['images']['standard_resolution']['url']);
+                $carouselMedia->setImageLowResolutionUrl($carouselImages['low']);
+                $carouselMedia->setImageThumbnailUrl($carouselImages['thumbnail']);
+                $carouselMedia->setImageStandardResolutionUrl($carouselImages['standard']);
+                $carouselMedia->setImageHighResolutionUrl($carouselImages['high']);
             }
-            if (isset($carouselArray['videos'])) {
-                $carouselMedia->setVideoLowResolutionUrl($carouselArray['videos']['low_resolution']['url']);
-                $carouselMedia->setVideoStandardResolutionUrl($carouselArray['videos']['standard_resolution']['url']);
-                $carouselMedia->setVideoLowBandwidthUrl($carouselArray['videos']['low_bandwidth']['url']);
+
+            if ($carouselMedia->getType() === self::TYPE_VIDEO) {
+                if (isset($mediaArray['video_views'])) {
+                    $carouselMedia->setVideoViews($carouselArray['video_views']);
+                }
+                if (isset($carouselArray['videos'])) {
+                    $carouselMedia->setVideoLowResolutionUrl($carouselArray['videos']['low_resolution']['url']);
+                    $carouselMedia->setVideoStandardResolutionUrl($carouselArray['videos']['standard_resolution']['url']);
+                    $carouselMedia->setVideoLowBandwidthUrl($carouselArray['videos']['low_bandwidth']['url']);
+                }
             }
+        } elseif(isset($carouselArray['media_type'])) {
+            switch ($carouselArray['media_type']){
+                case static::MEDIA_TYPE_IMAGE:
+                    $carouselMedia->setType(static::TYPE_IMAGE);
+                    break;
+                case static::MEDIA_TYPE_VIDEO:
+                    $carouselMedia->setType(static::TYPE_VIDEO);
+                    break;                 
+            }
+            
+            if($carouselArray['media_type'] == static::MEDIA_TYPE_VIDEO && isset($carouselArray['video_versions'])){                
+                if (isset($mediaArray['view_count'])) {
+                    $carouselMedia->setVideoViews($carouselArray['view_count']);
+                }
+                
+                foreach ($carouselArray['video_versions'] as $media) {
+                    switch ($media['type']) {
+                        case 101:
+                            $carouselMedia->setVideoStandardResolutionUrl($media['url']);
+                            break;
+                        case 102:
+                            $carouselMedia->setVideoLowResolutionUrl($media['url']);
+                            break;
+                        case 103:
+                            $carouselMedia->setVideoLowBandwidthUrl($media['url']);
+                            break;
+                    }
+                }
+            }
+            
+            if(($carouselArray['media_type'] == static::MEDIA_TYPE_IMAGE || $carouselArray['media_type'] == static::MEDIA_TYPE_VIDEO) && isset($carouselArray['image_versions2'])){                 
+                foreach ($carouselArray['image_versions2']['candidates'] as $media) {
+                    $mediasUrl[] = $media['url'];
+                    switch ($media['width']) {
+                        case 150:
+                            $carouselMedia->setImageThumbnailUrl($media['url']);
+                            break;
+                        case 320:
+                            $carouselMedia->setImageLowResolutionUrl($media['url']);
+                            break;
+                        case 750:
+                            $carouselMedia->setImageStandardResolutionUrl($media['url']);
+                            break;
+                        case 1080:
+                            $carouselMedia->setImageHighResolutionUrl($media['url']);
+                            break;
+                    }
+                }
+            }   
         }
         array_push($instance->carouselMedia, $carouselMedia);
         return $mediaArray;

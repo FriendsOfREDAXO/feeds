@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2017 Facebook, Inc.
+ * Copyright 2016 Facebook, Inc.
  *
  * You are hereby granted a non-exclusive, worldwide, royalty-free license to
  * use, copy, modify, and distribute this software in source code or binary
@@ -24,7 +24,6 @@
 namespace Facebook;
 
 use Facebook\Authentication\AccessToken;
-use Facebook\Exceptions\FacebookSDKException;
 
 class FacebookApp implements \Serializable
 {
@@ -41,18 +40,10 @@ class FacebookApp implements \Serializable
     /**
      * @param string $id
      * @param string $secret
-     *
-     * @throws FacebookSDKException
      */
     public function __construct($id, $secret)
     {
-        if (!is_string($id)
-          // Keeping this for BC. Integers greater than PHP_INT_MAX will make is_int() return false
-          && !is_int($id)) {
-            throw new FacebookSDKException('The "app_id" must be formatted as a string since many app ID\'s are greater than PHP_INT_MAX on some systems.');
-        }
-        // We cast as a string in case a valid int was set on a 64-bit system and this is unserialised on a 32-bit system
-        $this->id = (string) $id;
+        $this->id = $id;
         $this->secret = $secret;
     }
 

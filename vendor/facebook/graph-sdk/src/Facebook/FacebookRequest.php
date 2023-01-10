@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2017 Facebook, Inc.
+ * Copyright 2016 Facebook, Inc.
  *
  * You are hereby granted a non-exclusive, worldwide, royalty-free license to
  * use, copy, modify, and distribute this software in source code or binary
@@ -108,7 +108,7 @@ class FacebookRequest
     /**
      * Set the access token for this request.
      *
-     * @param AccessToken|string|null
+     * @param AccessToken|string
      *
      * @return FacebookRequest
      */

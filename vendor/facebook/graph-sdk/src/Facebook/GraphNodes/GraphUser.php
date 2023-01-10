@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2017 Facebook, Inc.
+ * Copyright 2016 Facebook, Inc.
  *
  * You are hereby granted a non-exclusive, worldwide, royalty-free license to
  * use, copy, modify, and distribute this software in source code or binary
@@ -123,7 +123,7 @@ class GraphUser extends GraphNode
     /**
      * Returns the users birthday, if available.
      *
-     * @return Birthday|null
+     * @return \DateTime|null
      */
     public function getBirthday()
     {

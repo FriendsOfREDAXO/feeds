@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2017 Facebook, Inc.
+ * Copyright 2016 Facebook, Inc.
  *
  * You are hereby granted a non-exclusive, worldwide, royalty-free license to
  * use, copy, modify, and distribute this software in source code or binary
@@ -164,7 +164,7 @@ class SignedRequest
     /**
      * Splits a raw signed request into signature and payload.
      *
-     * @return array
+     * @returns array
      *
      * @throws FacebookSDKException
      */
@@ -182,7 +182,7 @@ class SignedRequest
      *
      * @param string $encodedSig
      *
-     * @return string
+     * @returns string
      *
      * @throws FacebookSDKException
      */
@@ -202,7 +202,7 @@ class SignedRequest
      *
      * @param string $encodedPayload
      *
-     * @return array
+     * @returns array
      *
      * @throws FacebookSDKException
      */
@@ -268,8 +268,14 @@ class SignedRequest
      */
     protected function validateSignature($hashedSig, $sig)
     {
-        if (\hash_equals($hashedSig, $sig)) {
-            return;
+        if (mb_strlen($hashedSig) === mb_strlen($sig)) {
+            $validate = 0;
+            for ($i = 0; $i < mb_strlen($sig); $i++) {
+                $validate |= ord($hashedSig[$i]) ^ ord($sig[$i]);
+            }
+            if ($validate === 0) {
+                return;
+            }
         }
 
         throw new FacebookSDKException('Signed request has an invalid signature.', 602);

@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2017 Facebook, Inc.
+ * Copyright 2016 Facebook, Inc.
  *
  * You are hereby granted a non-exclusive, worldwide, royalty-free license to
  * use, copy, modify, and distribute this software in source code or binary
@@ -119,16 +119,6 @@ class FacebookResumableUploader
             $preException = $e->getPrevious();
             if ($allowToThrow || !$preException instanceof FacebookResumableUploadException) {
                 throw $e;
-            }
-
-            if (null !== $preException->getStartOffset() && null !== $preException->getEndOffset()) {
-                return new FacebookTransferChunk(
-                    $chunk->getFile(),
-                    $chunk->getUploadSessionId(),
-                    $chunk->getVideoId(),
-                    $preException->getStartOffset(),
-                    $preException->getEndOffset()
-                );
             }
 
             // Return the same chunk entity so it can be retried.

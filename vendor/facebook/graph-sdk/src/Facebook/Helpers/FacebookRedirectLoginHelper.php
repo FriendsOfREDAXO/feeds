@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2017 Facebook, Inc.
+ * Copyright 2016 Facebook, Inc.
  *
  * You are hereby granted a non-exclusive, worldwide, royalty-free license to
  * use, copy, modify, and distribute this software in source code or binary
@@ -122,7 +122,7 @@ class FacebookRedirectLoginHelper
      */
     private function makeUrl($redirectUrl, array $scope, array $params = [], $separator = '&')
     {
-        $state = $this->persistentDataHandler->get('state') ?: $this->pseudoRandomStringGenerator->getPseudoRandomString(static::CSRF_LENGTH);
+        $state = $this->pseudoRandomStringGenerator->getPseudoRandomString(static::CSRF_LENGTH);
         $this->persistentDataHandler->set('state', $state);
 
         return $this->oAuth2Client->getAuthorizationUrl($redirectUrl, $state, $scope, $params, $separator);
@@ -219,11 +219,10 @@ class FacebookRedirectLoginHelper
         }
 
         $this->validateCsrf();
-        $this->resetCsrf();
 
         $redirectUrl = $redirectUrl ?: $this->urlDetectionHandler->getCurrentUrl();
-        // At minimum we need to remove the 'code', 'enforce_https' and 'state' params
-        $redirectUrl = FacebookUrlManipulator::removeParamsFromUrl($redirectUrl, ['code', 'enforce_https', 'state']);
+        // At minimum we need to remove the state param
+        $redirectUrl = FacebookUrlManipulator::removeParamsFromUrl($redirectUrl, ['state']);
 
         return $this->oAuth2Client->getAccessTokenFromCode($code, $redirectUrl);
     }
@@ -236,27 +235,27 @@ class FacebookRedirectLoginHelper
     protected function validateCsrf()
     {
         $state = $this->getState();
-        if (!$state) {
-            throw new FacebookSDKException('Cross-site request forgery validation failed. Required GET param "state" missing.');
-        }
         $savedState = $this->persistentDataHandler->get('state');
-        if (!$savedState) {
-            throw new FacebookSDKException('Cross-site request forgery validation failed. Required param "state" missing from persistent data.');
+
+        if (!$state || !$savedState) {
+            throw new FacebookSDKException('Cross-site request forgery validation failed. Required param "state" missing.');
         }
 
-        if (\hash_equals($savedState, $state)) {
-            return;
+        $savedLen = strlen($savedState);
+        $givenLen = strlen($state);
+
+        if ($savedLen !== $givenLen) {
+            throw new FacebookSDKException('Cross-site request forgery validation failed. The "state" param from the URL and session do not match.');
         }
 
-        throw new FacebookSDKException('Cross-site request forgery validation failed. The "state" param from the URL and session do not match.');
-    }
+        $result = 0;
+        for ($i = 0; $i < $savedLen; $i++) {
+            $result |= ord($state[$i]) ^ ord($savedState[$i]);
+        }
 
-    /**
-     * Resets the CSRF so that it doesn't get reused.
-     */
-    private function resetCsrf()
-    {
-        $this->persistentDataHandler->set('state', null);
+        if ($result !== 0) {
+            throw new FacebookSDKException('Cross-site request forgery validation failed. The "state" param from the URL and session do not match.');
+        }
     }
 
     /**
