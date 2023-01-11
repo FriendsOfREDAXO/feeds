@@ -76,7 +76,7 @@ if ('' == $func) {
                     $icon = 'fa-google';
                     break;
                 case 'vimeo':
-                    $icon = 'fa-vimeo';
+                    $icon = 'fa-video-camera';
                     break;
             }
             return $list->getColumnLink('', '<i class="rex-icon ' . $icon . (($list->getValue('status')) ? '' : ' text-muted') . '"></i>');
