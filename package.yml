@@ -23,7 +23,7 @@ page:
 requires:
     redaxo: '^5.14'
     php:
-        version: '>=8.0'
+        version: '>=8.1'
 
 conflicts:
     packages:
