@@ -70,18 +70,6 @@ feeds_youtube_playlist = Youtube :: Playlist laden
 feeds_youtube_playlist_id = Playlist-ID
 feeds_youtube_playlist_id_notice = z.B. <code>PLrevOqFLX0RMyUWioOz3X6gmLiGvAh6M5</code>
 
-feeds_instagram = Instagram
-feeds_instagram_settings = Einstellungen
-feeds_instagram_access_token = Access Token
-
-feeds_instagram_tag = Instagram :: Tag
-feeds_instagram_tag_name = Tagname
-feeds_instagram_tag_without_prefix = Tag ohne # eingeben
-feeds_instagram_count = Anzahl der Einträge
-
-feeds_instagram_user = Instagram :: Benutzer
-feeds_instagram_username = Benutzername / Benutzer-ID
-feeds_instagram_username_notice = Bei Nutzung der offiziellen API (Access Token hinterlegt) muss die Benutzer-ID genutzt werden, ansonsten der Benutzername.
 
 feeds_vimeo_pro_user = Vimeo Pro :: Videos eines Pro-Users
 feeds_vimeo_user_id = User-ID
