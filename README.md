@@ -85,17 +85,9 @@ Um Feeds zu erweitern, kann man sich die Logik der von Haus aus mitgelieferten E
 
 ### Eigenen Stream hinzufügen
 
-Am Beispiel "Twitter" wird ein neuer Stream erstellt:
+--- Text muss neu ---
 
-* In `/redaxo/src/addons/feeds/pages/settings.twitter.php` wird die Einstellungsseite für das Hinterlegen von API-Keys u.a. Zugangsdaten für Twitter hinterlegt.
-
-* In `/redaxo/src/addons/feeds/lib/stream/twitter_user_timeline.php` wird die Logik für den Import der Tweets eines Users hinterlegt.
-
-Diese lassen sich kopieren und bspw. im `project`-Addon anpassen. In der `boot.php` des Projekt-Addons hinzufügen: `rex_feeds_stream::addStream("rex_Feeds_stream_meine_klasse";`. Zum Einhängen der Einstellungsseite in Feeds muss dann in der `package.yml` die Einstellungsseite registriert werden.
-
-> Tipp: Du hast einen neuen Stream für Feeds? Teile ihn mit der REDAXO-Community! [Zum GitHub-Repository von Feeds](github.com/FriendsOfREDAXO/feeds/)
-
-### Extension Points nutzen
+## Extension Points nutzen
 
 Feeds kommt mit 2 Extension Points, namentlich `FEEDS_STREAM_FETCHED` nach Abruf eines Streams sowie `FEEDS_ITEM_SAVED` nach dem Speichern eines neuen Eintrags.
 
@@ -103,31 +95,7 @@ So lassen sich nach Abruf eines oder mehrerer Streams bestimmte Aktionen ausfüh
 
 Weitere Infos zu Extension Points in REDAXO unter https://www.redaxo.org/doku/master/extension-points
 
-> Tipp: Du hast Beispiele aus der Praxis für die Extension Points? Teile sie mit der REDAXO-Community! [Zum GitHub-Repository von Feeds](github.com/FriendsOfREDAXO/feeds/)
-
-
-### Tipps: 
-
-Jeder Token kann [auf der Facebook Developer Debug-Seite](https://developers.facebook.com/tools/debug/accesstoken/) überprüft werden, welche Gültigkeitsdauer vorhanden ist.
-
-Hier löst man Tokens aus und Berechtigungen setzen 
-
-https://developers.facebook.com/tools/accesstoken
-
-Hier sieht man, ob man einen langlebigen API-Schlüssel hat und kann ihn sich von dort kopieren
-
-https://developers.facebook.com/tools/explorer/?classic=0
-
-## Instagram 
-
-Eigenen Access-Token anfordern, entweder über:
-
-http://www.stephan-romhart.de/artikel/instagram-feed-anleitung-code-access-token-api-einbindung-php
-
-Oder alternativ:  Einen access-token im 'public-content' scope generieren lassen, in dem man einer entsprechenden App Zugriff aufs eigene Profil gestattet: https://instagram.pixelunion.net/
-
-Dann gibt man einfach UserID oder UserName ein und fügt noch unter Einstellungen den Accesstoken ein.
-
+[Zum GitHub-Repository von Feeds](github.com/FriendsOfREDAXO/feeds/)
 
 
 ## RSS Feed
