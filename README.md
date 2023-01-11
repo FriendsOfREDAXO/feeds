@@ -5,9 +5,9 @@ REDAXO 5.x-AddOn zum Abruf externer Streams.
 ## Features
 
 * Abruf von YouTube-, Vimeo- und RSS-Streams.
-* Dauerhaftes Speichern der Beiträge in einer Datenbank-Tabelle
+* Dauerhaftes Speichern der Beiträge und des Hauptmediums in einer Datenbank-Tabelle
 * Nachträgliche Aktualisierung der Beiträge (z.B. nach einem Update / einer Korrektur)
-* Erweiterung um eigene Feed-Typen möglich
+* Erweiterbar durch eigene Feed-Provider
 * Feeds können in Watson gesucht werden `feed suchbegriff`
 
 ## Installation
@@ -79,13 +79,18 @@ ausgegeben werden können, muss das Bild über den Media-Manager-Effekt von Feed
 <?php rex_sql::factory()->setQuery("DELETE FROM rex_feeds_item WHERE stream_id = 4 AND createdate < (NOW() - INTERVAL 2 MONTH)"); ?>
 ```
 
-## Eigene Feeds einbinden
+## Eigenen Provider anmelden
 
-Um Feeds zu erweitern, kann man sich die Logik der von Haus aus mitgelieferten Extension Points und Feeds ansehen:
+Feeds kann Inhalte auch anderer Quellen als die der mitglieferten Provider annehmen.
 
-### Eigenen Stream hinzufügen
+Hierzu erstellt man eine extended Class der `rex_feeds_stream_abstract` im lib Ordner des eigenen AddOns oder des project-AddOns an,  z.B.: `rex_feeds_stream_my_class`. Man kann sich dabei an die mitgelieferten Classes im Ordner `/lib/streams` halten. Alle möglichen Methoden findet man in der `rex_feeds_stream_abstract` -Class unter `/lib/stream_abstract.php`. Dort ruft man die Streamdaten ab und ordnet diese den Tabellenspalten zu. 
 
---- Text muss neu ---
+Anschließend meldet man den neuen Provider wie folgt in der boot.php an: 
+
+```php 
+rex_feeds_stream::addStream("rex_feeds_stream_meine_klasse";
+```
+
 
 ## Extension Points nutzen
 
