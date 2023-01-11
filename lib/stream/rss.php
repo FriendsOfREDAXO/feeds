@@ -32,13 +32,10 @@ class rex_feeds_stream_rss extends rex_feeds_stream_abstract
 
     public function fetch()
     {
-        $client = new \FeedIo\Adapter\Guzzle\Client(new GuzzleHttp\Client());
+        $client = new \FeedIo\Adapter\Http\Client(new GuzzleHttp\Client());
         $logger = new \Psr\Log\NullLogger();
         $feedIo = new \FeedIo\FeedIo($client, $logger);
-
         $result = $feedIo->read($this->typeParams['url']);
-
-
         /** @var Item $rssItem */
         foreach ($result->getFeed()  as $rssItem) {
             $item = new rex_feeds_item($this->streamId, $rssItem->getPublicId());
@@ -47,11 +44,9 @@ class rex_feeds_stream_rss extends rex_feeds_stream_abstract
             $item->setContent(strip_tags($rssItem->getContent()));
             $item->setUrl($rssItem->getLink());
             $item->setDate($rssItem->getLastModified());
-            // muss noch ermittelt werden. 
-            #$item->setAuthor($rssItem->getAuthor());
-            #$item->setLanguage($rssItem->getLanguage());
-            if ($rssItem->getMedias() && $rssItem->getMedias()[0]!='')
-            {
+            $item->getAuthor($rssItem->getAuthor());
+            if ($rssItem->getMedias() && isset($rssItem->getMedias()[0]))
+            {   
                 $item->setMedia($rssItem->getMedias()[0]->getUrl());
             }
             $this->updateCount($item);
