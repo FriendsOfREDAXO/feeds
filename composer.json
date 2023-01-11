@@ -2,8 +2,7 @@
     "require": {
         "madcoda/php-youtube-api": "*",
         "vimeo/vimeo-api": "*",
-        "laminas/laminas-feed": "*",
-        "laminas/laminas-http": "*"
+        "debril/feed-io": "*"
     },
     "replace": {
         "psr/log": "*"

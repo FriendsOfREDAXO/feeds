@@ -4,13 +4,12 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit64e3debcb057be29ff8221a1353018f5
+class ComposerStaticInit770b1e78b8744e7a9cffa57d1f0a4353
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
         'e69f7f6ee287b969198c3c9d6777bd38' => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer/bootstrap.php',
-        'c9d07b32a2e02bc0fc582d4f0c1b56cc' => __DIR__ . '/..' . '/laminas/laminas-servicemanager/src/autoload.php',
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         '8825ede83f2f289127722d4e842cf7e8' => __DIR__ . '/..' . '/symfony/polyfill-intl-grapheme/bootstrap.php',
@@ -65,26 +64,30 @@ class ComposerStaticInit64e3debcb057be29ff8221a1353018f5
             'Psr\\Container\\' => 14,
             'Predis\\' => 7,
         ),
+        'N' => 
+        array (
+            'Nyholm\\Psr7\\' => 12,
+        ),
         'M' => 
         array (
             'Madcoda\\Youtube\\' => 16,
         ),
-        'L' => 
+        'H' => 
         array (
-            'Laminas\\Validator\\' => 18,
-            'Laminas\\Uri\\' => 12,
-            'Laminas\\Stdlib\\' => 15,
-            'Laminas\\ServiceManager\\' => 23,
-            'Laminas\\Loader\\' => 15,
-            'Laminas\\Http\\' => 13,
-            'Laminas\\Feed\\' => 13,
-            'Laminas\\Escaper\\' => 16,
+            'Http\\Promise\\' => 13,
+            'Http\\Message\\' => 13,
+            'Http\\Discovery\\' => 15,
+            'Http\\Client\\' => 12,
         ),
         'G' => 
         array (
             'GuzzleHttp\\Psr7\\' => 16,
             'GuzzleHttp\\Promise\\' => 19,
             'GuzzleHttp\\' => 11,
+        ),
+        'F' => 
+        array (
+            'FeedIo\\' => 7,
         ),
         'C' => 
         array (
@@ -179,8 +182,8 @@ class ComposerStaticInit64e3debcb057be29ff8221a1353018f5
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-factory/src',
-            1 => __DIR__ . '/..' . '/psr/http-message/src',
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
+            1 => __DIR__ . '/..' . '/psr/http-factory/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -198,41 +201,29 @@ class ComposerStaticInit64e3debcb057be29ff8221a1353018f5
         array (
             0 => __DIR__ . '/..' . '/predis/predis/src',
         ),
+        'Nyholm\\Psr7\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/nyholm/psr7/src',
+        ),
         'Madcoda\\Youtube\\' => 
         array (
             0 => __DIR__ . '/..' . '/madcoda/php-youtube-api/src',
         ),
-        'Laminas\\Validator\\' => 
+        'Http\\Promise\\' => 
         array (
-            0 => __DIR__ . '/..' . '/laminas/laminas-validator/src',
+            0 => __DIR__ . '/..' . '/php-http/promise/src',
         ),
-        'Laminas\\Uri\\' => 
+        'Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/laminas/laminas-uri/src',
+            0 => __DIR__ . '/..' . '/php-http/message-factory/src',
         ),
-        'Laminas\\Stdlib\\' => 
+        'Http\\Discovery\\' => 
         array (
-            0 => __DIR__ . '/..' . '/laminas/laminas-stdlib/src',
+            0 => __DIR__ . '/..' . '/php-http/discovery/src',
         ),
-        'Laminas\\ServiceManager\\' => 
+        'Http\\Client\\' => 
         array (
-            0 => __DIR__ . '/..' . '/laminas/laminas-servicemanager/src',
-        ),
-        'Laminas\\Loader\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/laminas/laminas-loader/src',
-        ),
-        'Laminas\\Http\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/laminas/laminas-http/src',
-        ),
-        'Laminas\\Feed\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/laminas/laminas-feed/src',
-        ),
-        'Laminas\\Escaper\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/laminas/laminas-escaper/src',
+            0 => __DIR__ . '/..' . '/php-http/httplug/src',
         ),
         'GuzzleHttp\\Psr7\\' => 
         array (
@@ -245,6 +236,10 @@ class ComposerStaticInit64e3debcb057be29ff8221a1353018f5
         'GuzzleHttp\\' => 
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
+        ),
+        'FeedIo\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/debril/feed-io/src/FeedIo',
         ),
         'Carbon\\' => 
         array (
@@ -270,9 +265,9 @@ class ComposerStaticInit64e3debcb057be29ff8221a1353018f5
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit64e3debcb057be29ff8221a1353018f5::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit64e3debcb057be29ff8221a1353018f5::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit64e3debcb057be29ff8221a1353018f5::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit770b1e78b8744e7a9cffa57d1f0a4353::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit770b1e78b8744e7a9cffa57d1f0a4353::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit770b1e78b8744e7a9cffa57d1f0a4353::$classMap;
 
         }, null, ClassLoader::class);
     }
