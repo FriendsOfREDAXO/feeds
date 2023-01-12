@@ -73,6 +73,9 @@ if ('' == $func) {
                 case 'google':
                     $icon = 'fa-google';
                     break;
+                case 'vimeo':
+                    $icon = 'fa-video-camera';
+                    break;
             }
             return $list->getColumnLink($thIcon, '<i class="rex-icon ' . $icon . '"></i>');
         }
