@@ -38,8 +38,9 @@ class rex_feeds_stream_rss extends rex_feeds_stream_abstract
 
         try {
             $result = $feedIo->read($this->typeParams['url']);
-        } catch (Exception $e) {
+        } catch (exception $e) {
             rex_logger::logException($e);
+            echo rex_view::error($e->getMessage());
             return;
         }
         /** @var Item $rssItem */
