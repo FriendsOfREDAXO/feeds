@@ -9,9 +9,6 @@
  * file that was distributed with this source code.
  */
 
-use PicoFeed\Reader\Reader;
-use PicoFeed\Processor;
-
 class rex_feeds_stream_rss extends rex_feeds_stream_abstract
 {
     public function getTypeName()
