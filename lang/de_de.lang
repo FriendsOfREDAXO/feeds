@@ -75,5 +75,8 @@ feeds_vimeo_pro_user = Vimeo Pro :: Videos eines Pro-Users
 feeds_vimeo_user_id = User-ID
 feeds_vimeo_access_token = Access Token
 feeds_vimeo_client_secret = Client Secret
+feeds_vimeo_view = Welche Videos sollen geladen werden?
+feeds_vimeo_all = Alle Videos
+feeds_vimeo_public = Nur öffentliche Videos
 
 feeds_help = Hilfe
