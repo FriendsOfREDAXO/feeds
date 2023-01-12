@@ -122,8 +122,12 @@ if ('' == $func) {
         /** @var rex_list $list */
         $list = $params['list'];
         $media = $list->getValue('media');
-        $media = ($media != '') ? '<div class="img-thumbnail"><div style="width:60px; height:60px; overflow:hidden; background: #333 url(\'' . $media . '\') no-repeat; background-size:contain;' . ((!$list->getValue('status')) ? '; opacity:.4' : '') . '">&nbsp;</div></div>' : '';
-        return $media;
+        if($list->getValue('media'))
+        {    
+        $media_url = rex_media_manager::getUrl('feeds_thumb', $list->getValue('media'));
+        $media = '<img class="thumbnail" src="'. $media_url.'" width="60" height="60" alt="" title="" loading="lazy">';
+        }
+       return $media;
     });
 
     $list->setColumnLabel('status', $this->i18n('status'));
