@@ -15,17 +15,6 @@ REDAXO 5.x-AddOn zum Abruf externer Streams.
 1. Im REDAXO-Backend unter `Installer` abrufen und 
 2. anschließend unter `Hauptmenü` > `AddOns` installieren.
 
-## Lizenz
-
-AddOn, siehe [LICENSE](https://github.com/FriendsOfREDAXO/feeds/blob/master/LICENCE.md)
-
-Vendoren, siehe Vendors-Ordner des AddOns
-
-## Autoren
-
-* [Friends Of REDAXO](https://github.com/FriendsOfREDAXO) 
-* [Contributors](https://github.com/FriendsOfREDAXO/feeds/graphs/contributors)
-
 ## Verwendung
 
 ### Einen neuen Feed einrichten
@@ -125,3 +114,13 @@ Alle Infos dazu unter: https://developer.vimeo.com/api/authentication
 
 Die Stream-Tabelle lässt sich im YForm-Tablemanager importieren. Dadurch ist es möglich eine eigene Oberfläche für die Redakteure bereitzustellen. 
 
+## Lizenz
+
+AddOn, siehe [LICENSE](https://github.com/FriendsOfREDAXO/feeds/blob/master/LICENCE.md)
+
+Vendoren, siehe Vendors-Ordner des AddOns
+
+## Autoren
+
+* [Friends Of REDAXO](https://github.com/FriendsOfREDAXO) 
+* [Contributors](https://github.com/FriendsOfREDAXO/feeds/graphs/contributors)
