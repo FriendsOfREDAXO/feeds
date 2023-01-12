@@ -55,17 +55,21 @@ Jetzt werden Feeds-Streams regelmäßig dann abgerufen, wenn die Website aufgeru
 Um ein Feed auszugeben, können die Inhalte in einem Modul oder Template per SQL oder mit nachfolgender Methode abgerufen werden, z.B.:
 
 ```php
+<?php 
 $stream_id = 1;
-$media_manager_type = 'my_mediatype';
+// Mediamanager Typ mit feeds als erster Effekt
+$media_manager_type = 'feeds_thumb';
 $stream = rex_feeds_stream::get($stream_id);
 $items = $stream->getPreloadedItems(); // Standard gibt 5 Einträge zurück, sonst gewünschte Anzahl übergeben
     foreach($items as $item) {
         // Titel ermitteln und alles verlinken
         print '<a href="'. $item->getUrl() .'" title="'. rex_escape($stream->getTitle()) .'">';
         // Bild ausgeben
-        print '<img src="'.rex_media_manager::getUrl($media_manager_type,$item->getId() .'.feeds').'"  alt="'. rex_escape($item->getTitle()) .'" title="'. rex_escape($item->getTitle()) .'">'; 
-        print '</a>';
+        print '<img src="'.rex_media_manager::getUrl($media_manager_type,$item->getId() .'.feeds').'"  alt="'. rex_escape($item->getTitle()) .'" title="'. rex_escape($item->getTitle()) .'">';
+       print '<p>'.rex_escape($item->getContent()).'</p>';
+       print '</a>';
     }
+?>
 ```
 
 ### Bilder ausgeben
