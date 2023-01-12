@@ -11,7 +11,7 @@
 
 use Vimeo\Vimeo;
 
-class rex_feeds_stream_vimeo_pro_user extends rex_feeds_stream_abstract
+class rex_feeds_stream_vimeo_pro extends rex_feeds_stream_abstract
 {
     public function getTypeName()
     {
