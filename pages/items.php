@@ -110,7 +110,7 @@ if ('' == $func) {
         $title = $list->getValue('title');
         $title = rex_formatter::truncate($title, ['length' => 140]);
         $title .= ($list->getValue('url') != '') ? '<br /><small><a href="' . $list->getValue('url') . '" target="_blank">' . $list->getValue('url') . '</a></small>' : '';
-        $title = '<div style="word-wrap:break-word; max-width:310px; max-width:40vw;"><span class="title' . (($list->getValue('status')) ? '' : ' text-muted') . '">' . $title . '</span></div>';
+        $title = '<div class="rex-word-break"><span class="title' . (($list->getValue('status')) ? '' : ' text-muted') . '">' . $title . '</span></div>';
         return $title;
     });
 
@@ -124,7 +124,7 @@ if ('' == $func) {
         $media = $list->getValue('media');
         if($list->getValue('media'))
         {    
-        $media_url = rex_media_manager::getUrl('feeds_thumb', $list->getValue('id').'feeds');
+        $media_url = rex_media_manager::getUrl('feeds_thumb', $list->getValue('id').'.feeds');
         $media = '<img class="thumbnail" src="'. $media_url.'" width="60" height="60" alt="" title="" loading="lazy">';
         }
        return $media;
@@ -208,7 +208,7 @@ if ('' == $func) {
         $field->setLabel($this->i18n('item_mediasource'));
     }
     if ($media = $form->getSql()->getValue('media')) {
-        $form->addRawField('<p class="text-center"><img src="' . $media . '" style="max-height: 300px"/></p>');
+        $form->addRawField('<div class="text-center"><img class="img-responsive" src="' . $media . '"></div>');
     }
 
     $content = $form->get();
