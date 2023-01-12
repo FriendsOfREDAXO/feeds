@@ -41,7 +41,7 @@ class rex_feeds_stream_vimeo_pro_user extends rex_feeds_stream_abstract
                 'name' => 'view',
                 'type' => 'select',
                 'options' => ['' => rex_i18n::msg('feeds_vimeo_all'), 'public' => rex_i18n::msg('feeds_vimeo_public')],
-                'default' => '',
+                'default' => 'public',
             ],
         ];
     }
