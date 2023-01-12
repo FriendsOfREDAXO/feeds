@@ -124,7 +124,7 @@ if ('' == $func) {
         $media = $list->getValue('media');
         if($list->getValue('media'))
         {    
-        $media_url = rex_media_manager::getUrl('feeds_thumb', $list->getValue('media'));
+        $media_url = rex_media_manager::getUrl('feeds_thumb', $list->getValue('id'));
         $media = '<img class="thumbnail" src="'. $media_url.'" width="60" height="60" alt="" title="" loading="lazy">';
         }
        return $media;
