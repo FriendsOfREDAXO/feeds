@@ -61,10 +61,18 @@ $items = $stream->getPreloadedItems(); // Standard gibt 5 Einträge zurück, son
 ?>
 ```
 
-### Bilder ausgeben
+## Bilder ausgeben mit dem Mediamanager
 
-Damit Bilder in der Form `/index.php?rex_media_type=<medientyp>&rex_media_file=<id>.feeds` bzw. `/media/<medientyp>/<id>.feeds`
-ausgegeben werden können, muss das Bild über den Media-Manager-Effekt von Feeds eingelesen werden. Diesen sollte man direkt am Anfang vor allen anderen Effekten setzen. Als Medientyp das Media-Manager-Profil angeben und als `id` die ID des Eintrags.
+Die Bilder eines Feeds werden in der Datenbank gespeichert und müssen mit dem Mediamanager-Effekt `feeds` ausgelesen werden. Der Effekt muss an den Anfang der Verarbeitung. 
+- Der Dateiname ist die Datensatz-ID. 
+- Damit der Effekt mitbekommt dass ein Feed-Medium verarbeitet werden soll wird dem Mediamanager die Datei-Endung `.feeds` übergeben. 
+- Im Anschluss können diese wie gewöhnliche Medien im Mediamanager verarbeitet werden und somit auch alle anderen Effekte angewendet werden. 
+
+Beispielcode: 
+
+```php
+$bildurl = rex_media_manager::getUrl($media_manager_type,$item->getId() .'.feeds';
+```
 
 ## Einträge entfernen
 
