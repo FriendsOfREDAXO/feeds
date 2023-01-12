@@ -60,8 +60,10 @@ $media_manager_type = 'my_mediatype';
 $stream = rex_feeds_stream::get($stream_id);
 $items = $stream->getPreloadedItems(); // Standard gibt 5 Einträge zurück, sonst gewünschte Anzahl übergeben
     foreach($items as $item) {
+        // Titel ermitteln und alles verlinken
         print '<a href="'. $item->getUrl() .'" title="'. rex_escape($stream->getTitle()) .'">';
-        print '<img src="index.php?rex_media_type='. $media_manager_type .'&rex_media_file='. $item->getId() .'.feeds"  alt="'. rex_escape($item->getTitle()) .'" title="'. rex_escape($item->getTitle()) .'">'; 
+        // Bild ausgeben
+        print '<img src="'.rex_media_manager::getUrl($media_manager_type,$item->getId() .'.feeds').'"  alt="'. rex_escape($item->getTitle()) .'" title="'. rex_escape($item->getTitle()) .'">'; 
         print '</a>';
     }
 ```
