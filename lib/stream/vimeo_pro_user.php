@@ -36,6 +36,13 @@ class rex_feeds_stream_vimeo_pro_user extends rex_feeds_stream_abstract
                 'name' => 'client_secret',
                 'type' => 'string',
             ],
+            [
+                'label' => rex_i18n::msg('feeds_vimeo_view'),
+                'name' => 'view',
+                'type' => 'select',
+                'options' => ['' => rex_i18n::msg('feeds_vimeo_all'), 'public' => rex_i18n::msg('feeds_vimeo_public')],
+                'default' => '',
+            ],
         ];
     }
 
@@ -49,12 +56,11 @@ class rex_feeds_stream_vimeo_pro_user extends rex_feeds_stream_abstract
             $videos = $vimeo->request('/me/videos?per_page=100');
             // $videos = $videos['body'];
             $videos_data = $videos['body']['data'];
-            while($videos['body']['paging']['next'] != "") {
+            while ($videos['body']['paging']['next'] != "") {
                 $videos = $vimeo->request($videos['body']['paging']['next']);
                 $videos_data = array_merge($videos_data, $videos['body']['data']);
-                }
+            }
             $videos = $videos_data;
-			
         }
         ini_set('arg_separator.output', $argSeparator);
 
@@ -62,27 +68,30 @@ class rex_feeds_stream_vimeo_pro_user extends rex_feeds_stream_abstract
             $uri = $video['uri'];
             $uri = str_replace("/videos/", "", $uri);
             $item = new rex_feeds_item($this->streamId, $uri);
-            // only Videos with View-Right
-            if ($video['privacy']['view'] === 'anybody') {
-            } else {
+
+            if ($this->typeParams['view'] === 'public') {
+                // only Videos with View-Right
+                if ($video['privacy']['view'] === 'anybody') {
+                } else {
                     continue;
-            } 
+                }
+            }
             $item->setTitle($video['name']);
-                
+
             $item->setContentRaw($video['description']);
             $item->setContent($video['description']);
-                
+
             $item->setUrl($video['link']);
-                
+
             $item->setMedia($video['pictures']['base_link']);
             $item->setDate(new DateTime($video['created_time']));
-                
+
             //$item->setAuthor($video->snippet->channelTitle);
             $item->setRaw($video);
             $this->updateCount($item);
             $item->save();
         }
-        
+
         self::registerExtensionPoint($this->streamId);
     }
     protected function getVimeoClientID()
