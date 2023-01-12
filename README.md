@@ -1,6 +1,6 @@
 # Feeds
 
-REDAXO 5.x-AddOn zum Abruf externer Streams.
+REDAXO Feed Aggregator
 
 ## Features
 
