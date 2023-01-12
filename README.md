@@ -94,7 +94,7 @@ Hierzu erstellt man eine extended Class der `rex_feeds_stream_abstract` im lib O
 Anschließend meldet man den neuen Provider wie folgt in der boot.php an: 
 
 ```php 
-rex_feeds_stream::addStream("rex_feeds_stream_meine_klasse";
+rex_feeds_stream::addStream("rex_feeds_stream_meine_klasse");
 ```
 
 
