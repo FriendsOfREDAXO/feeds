@@ -49,8 +49,8 @@ feeds_stream_status_saved = Der Status wurde gespeichert.
 
 
 feeds_cronjob = Feeds: Feeds abrufen
-feeds_blacklist_sources = Von Abruf ausschließen
-feeds_blacklist_sources_notice = Wenn ausgewählt, werden diese Quellen nicht gesichert.
+feeds_stream_list = Nur folgende Streams abrufen
+feeds_stream_list_notice = Wenn keine ausgewählt, werden alle abgreufen.
 
 feeds_media_manager_effect = Datei: Aus Feeds einlesen (wenn *.feeds)
 
