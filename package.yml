@@ -24,6 +24,8 @@ requires:
     redaxo: '^5.14'
     php:
         version: '>=8.1'
+    packages:
+        media_manager: '^2'
 
 conflicts:
     packages:
