@@ -47,7 +47,10 @@ class rex_feeds_stream_rss extends rex_feeds_stream_abstract
             $item->setContentRaw($rssItem->getContent());
             $item->setContent(strip_tags($rssItem->getContent()));
             $item->setUrl($rssItem->getLink());
+            if($rssItem->getLastModified())
+            {
             $item->setDate($rssItem->getLastModified());
+            }
             $item->getAuthor($rssItem->getAuthor());
             if ($rssItem->getMedias() && isset($rssItem->getMedias()[0])) {
                 $item->setMedia($rssItem->getMedias()[0]->getUrl());
