@@ -15,9 +15,9 @@ if (rex_addon::get('cronjob')->isAvailable()) {
     rex_cronjob_manager::registerType(rex_cronjob_feeds::class);
 }
 
-if (rex_addon::get('media_manager')->isAvailable()) {
-    rex_media_manager::addEffect(rex_effect_feeds::class);
-}
+
+rex_media_manager::addEffect(rex_effect_feeds::class);
+
 if (rex_addon::get('watson')->isAvailable()) {
  
     function feedsearch(rex_extension_point $ep){
