@@ -9,6 +9,7 @@ REDAXO Feed Aggregator
 * Nachträgliche Aktualisierung der Beiträge (z.B. nach einem Update / einer Korrektur)
 * Erweiterbar durch eigene Feed-Provider
 * Feeds können in Watson gesucht werden `feed suchbegriff`
+* Abruf aller oder einzelner Feeds per Cronjob
 
 ## Installation
 
