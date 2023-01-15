@@ -2,6 +2,8 @@
 
 REDAXO Feed Aggregator
 
+![Screenshot](https://raw.githubusercontent.com/FriendsOfREDAXO/feeds/assets/screen.png)
+
 ## Features
 
 * Abruf von YouTube-, Vimeo- und RSS-Streams.
