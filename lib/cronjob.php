@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the Feeds package.
  *
@@ -13,12 +14,22 @@ class rex_cronjob_feeds extends rex_cronjob
     public function execute()
     {
         $streams = [];
-        foreach (rex_feeds_stream::getAllActivated() as &$stream) {
-            if (strpos($this->getParam('blacklist_streams'), get_class($stream)) === false) {
-                $streams[] = $stream;
-            };
+        $streamlist = [];
+
+        if ($this->getParam('stream_list') && $this->getParam('stream_list') !== '') {
+            $streamlist = explode('|', $this->getParam('stream_list'));
         }
-        
+
+        foreach (rex_feeds_stream::getAllActivated() as $stream) {
+
+            if (in_array($stream->getStreamId(),  $streamlist) || !$this->getParam('stream_list') || $this->getParam('stream_list') === '') {
+                $streams[] = $stream;
+            } else {
+                continue;
+            }
+        }
+
+
         $errors = [];
         $countAdded = 0;
         $countUpdated = 0;
@@ -38,7 +49,7 @@ class rex_cronjob_feeds extends rex_cronjob
         $this->setMessage(sprintf(
             '%d errors%s, %d items added, %d items updated, %d items not updated because changed by user',
             count($errors),
-            $errors ? ' ('.implode(', ', $errors).')' : '',
+            $errors ? ' (' . implode(', ', $errors) . ')' : '',
             $countAdded,
             $countUpdated,
             $countNotUpdatedChangedByUser
@@ -54,16 +65,16 @@ class rex_cronjob_feeds extends rex_cronjob
     {
         $options = [];
         foreach (rex_feeds_stream::getAllActivated() as $stream) {
-            $options[get_class($stream)] = get_class($stream);
+            $options[$stream->getStreamId()] = $stream->getTitle();
         }
 
         $fields[] = [
-            'label' => rex_i18n::msg('feeds_blacklist_sources'),
-            'name' => 'blacklist_streams',
+            'label' => rex_i18n::msg('feeds_stream_list'),
+            'name' => 'stream_list',
             'type' => 'select',
             'attributes' => ['multiple' => 'multiple', 'data-live-search' => 'true'],
             'options' => $options,
-            'notice' => rex_i18n::msg('feeds_blacklist_sources_notice'),
+            'notice' => rex_i18n::msg('feeds_stream_list_notice'),
         ];
 
         return $fields;
