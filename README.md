@@ -113,12 +113,14 @@ Weitere Infos zu Extension Points in REDAXO unter https://www.redaxo.org/doku/ma
 
 Gebe einfach die URL zum Feed ein. ;-) 
 
+> Tipp: Mastodon-Feed auslesen: https://phpc.social/@REDAXO.rss 
+
 
 ## Vimeo Pro
 
 Zum Auslesen des Streams werden User-ID, Access Token und ein Client Secret benötigt. 
 
-Alle Infos dazu unter: https://developer.vimeo.com/api/authentication
+Alle Infos dazu unter: https://developer.vimeo.com/api/guides/start
 
 
 ## Feeds und YForm
