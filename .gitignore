@@ -3,3 +3,4 @@
 vendor/bin/
 test/
 bin/
+vendor/nyholm/psr7/
