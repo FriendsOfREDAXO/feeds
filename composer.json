@@ -6,6 +6,6 @@
     },
     "replace": {
         "psr/log": "*"
-        "symfony/console": "*"
+        "ankitpokhrel/tus-php": "*"
     }
 }
