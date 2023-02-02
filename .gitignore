@@ -1,6 +1,5 @@
 .DS_Store
 .definition
-vendor/nyholm/psr7/
 vendor/bin/
 test/
 bin/
