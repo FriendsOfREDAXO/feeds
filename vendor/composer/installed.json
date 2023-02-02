@@ -1091,6 +1091,6 @@
             "install-path": "../vimeo/vimeo-api"
         }
     ],
-    "dev": true,
+    "dev": false,
     "dev-package-names": []
 }
