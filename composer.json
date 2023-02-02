@@ -5,10 +5,10 @@
         "debril/feed-io": "*"
     },
     "replace": {
-        "psr/log": "*"
-        "psr/container":"*"
-        "psr/http-message": "*"
-        "ankitpokhrel/tus-php": "*"
+        "psr/log": "*",
+        "psr/container":"*",
+        "psr/http-message": "*",
+        "ankitpokhrel/tus-php": "*",
         "symfony/polyfill-ctype": "*",
         "symfony/polyfill-iconv": "*",
         "symfony/polyfill-intl-grapheme": "*",
