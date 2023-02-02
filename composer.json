@@ -6,5 +6,6 @@
     },
     "replace": {
         "psr/log": "*"
+        "symfony/console": "*"
     }
 }
