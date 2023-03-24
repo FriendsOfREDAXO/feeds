@@ -44,7 +44,7 @@ abstract class rex_feeds_stream_abstract
 	{
 		$items = [];
 		$result = rex_sql::factory();
-		$result->setQuery('SELECT id FROM '. rex::getTablePrefix() .'feeds_item WHERE stream_id = '. $this->streamId .' ORDER BY '.$orderBy.' DESC LIMIT 0, '. $number .';');
+		$result->setQuery('SELECT id FROM '. rex::getTablePrefix() .'feeds_item WHERE status = 1 AND stream_id = '. $this->streamId .' ORDER BY '.$orderBy.' DESC LIMIT 0, '. $number .';');
 
 		for ($i = 0; $i < $result->getRows(); $i++) {
 			$item = rex_feeds_item::get($result->getValue('id'));
