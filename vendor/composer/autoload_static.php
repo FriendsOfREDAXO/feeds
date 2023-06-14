@@ -7,13 +7,19 @@ namespace Composer\Autoload;
 class ComposerStaticInit2ab140e0e911df606a4d946200920c6b
 {
     public static $files = array (
-        '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
+        '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
     );
 
     public static $prefixLengthsPsr4 = array (
         'V' => 
         array (
             'Vimeo\\' => 6,
+        ),
+        'S' => 
+        array (
+            'Symfony\\Contracts\\Service\\' => 26,
+            'Symfony\\Contracts\\HttpClient\\' => 29,
+            'Symfony\\Component\\HttpClient\\' => 29,
         ),
         'P' => 
         array (
@@ -31,13 +37,8 @@ class ComposerStaticInit2ab140e0e911df606a4d946200920c6b
         'H' => 
         array (
             'Http\\Promise\\' => 13,
-            'Http\\Message\\' => 13,
             'Http\\Discovery\\' => 15,
             'Http\\Client\\' => 12,
-        ),
-        'G' => 
-        array (
-            'GuzzleHttp\\' => 11,
         ),
         'F' => 
         array (
@@ -49,6 +50,18 @@ class ComposerStaticInit2ab140e0e911df606a4d946200920c6b
         'Vimeo\\' => 
         array (
             0 => __DIR__ . '/..' . '/vimeo/vimeo-api/src/Vimeo',
+        ),
+        'Symfony\\Contracts\\Service\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/service-contracts',
+        ),
+        'Symfony\\Contracts\\HttpClient\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/http-client-contracts',
+        ),
+        'Symfony\\Component\\HttpClient\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/http-client',
         ),
         'Psr\\Http\\Message\\' => 
         array (
@@ -70,10 +83,6 @@ class ComposerStaticInit2ab140e0e911df606a4d946200920c6b
         array (
             0 => __DIR__ . '/..' . '/php-http/promise/src',
         ),
-        'Http\\Message\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/php-http/message-factory/src',
-        ),
         'Http\\Discovery\\' => 
         array (
             0 => __DIR__ . '/..' . '/php-http/discovery/src',
@@ -81,10 +90,6 @@ class ComposerStaticInit2ab140e0e911df606a4d946200920c6b
         'Http\\Client\\' => 
         array (
             0 => __DIR__ . '/..' . '/php-http/httplug/src',
-        ),
-        'GuzzleHttp\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
         ),
         'FeedIo\\' => 
         array (
