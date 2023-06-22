@@ -29,7 +29,7 @@ class rex_feeds_stream_rss extends rex_feeds_stream_abstract
 
     public function fetch()
     {
-        $client = new \FeedIo\Adapter\Http\Client(new GuzzleHttp\Client());
+        $client = new \FeedIo\Adapter\Http\Client(new Symfony\Component\HttpClient\HttplugClient());
         $logger = new \Psr\Log\NullLogger();
         $feedIo = new \FeedIo\FeedIo($client, $logger);
 
