@@ -15,10 +15,13 @@ use Symfony\Component\HttpClient\Exception\InvalidArgumentException;
 
 class JsonMockResponse extends MockResponse
 {
+    /**
+     * @param mixed $body Any value that `json_encode()` can serialize
+     */
     public function __construct(mixed $body = [], array $info = [])
     {
         try {
-            $json = json_encode($body, \JSON_THROW_ON_ERROR);
+            $json = json_encode($body, \JSON_THROW_ON_ERROR | \JSON_PRESERVE_ZERO_FRACTION);
         } catch (\JsonException $e) {
             throw new InvalidArgumentException('JSON encoding failed: '.$e->getMessage(), $e->getCode(), $e);
         }

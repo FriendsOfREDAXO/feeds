@@ -42,7 +42,7 @@ final class CurlResponse implements ResponseInterface, StreamableInterface
     /**
      * @internal
      */
-    public function __construct(CurlClientState $multi, \CurlHandle|string $ch, array $options = null, LoggerInterface $logger = null, string $method = 'GET', callable $resolveRedirect = null, int $curlVersion = null, string $originalUrl = null)
+    public function __construct(CurlClientState $multi, \CurlHandle|string $ch, ?array $options = null, ?LoggerInterface $logger = null, string $method = 'GET', ?callable $resolveRedirect = null, ?int $curlVersion = null, ?string $originalUrl = null)
     {
         $this->multi = $multi;
 
@@ -98,12 +98,11 @@ final class CurlResponse implements ResponseInterface, StreamableInterface
         $this->info['pause_handler'] = static function (float $duration) use ($ch, $multi, $execCounter) {
             if (0 < $duration) {
                 if ($execCounter === $multi->execCounter) {
-                    $multi->execCounter = !\is_float($execCounter) ? 1 + $execCounter : \PHP_INT_MIN;
                     curl_multi_remove_handle($multi->handle, $ch);
                 }
 
                 $lastExpiry = end($multi->pauseExpiries);
-                $multi->pauseExpiries[(int) $ch] = $duration += microtime(true);
+                $multi->pauseExpiries[(int) $ch] = $duration += hrtime(true) / 1E9;
                 if (false !== $lastExpiry && $lastExpiry > $duration) {
                     asort($multi->pauseExpiries);
                 }
@@ -193,7 +192,7 @@ final class CurlResponse implements ResponseInterface, StreamableInterface
         });
     }
 
-    public function getInfo(string $type = null): mixed
+    public function getInfo(?string $type = null): mixed
     {
         if (!$info = $this->finalInfo) {
             $info = array_merge($this->info, curl_getinfo($this->handle));
@@ -242,7 +241,7 @@ final class CurlResponse implements ResponseInterface, StreamableInterface
 
             $this->doDestruct();
         } finally {
-            if (\is_resource($this->handle) || $this->handle instanceof \CurlHandle) {
+            if ($this->handle instanceof \CurlHandle) {
                 curl_setopt($this->handle, \CURLOPT_VERBOSE, false);
             }
         }
@@ -266,7 +265,7 @@ final class CurlResponse implements ResponseInterface, StreamableInterface
     /**
      * @param CurlClientState $multi
      */
-    private static function perform(ClientState $multi, array &$responses = null): void
+    private static function perform(ClientState $multi, ?array &$responses = null): void
     {
         if ($multi->performing) {
             if ($responses) {
@@ -326,7 +325,7 @@ final class CurlResponse implements ResponseInterface, StreamableInterface
     private static function select(ClientState $multi, float $timeout): int
     {
         if ($multi->pauseExpiries) {
-            $now = microtime(true);
+            $now = hrtime(true) / 1E9;
 
             foreach ($multi->pauseExpiries as $id => $pauseExpiry) {
                 if ($now < $pauseExpiry) {
@@ -344,7 +343,7 @@ final class CurlResponse implements ResponseInterface, StreamableInterface
             return $selected;
         }
 
-        if ($multi->pauseExpiries && 0 < $timeout -= microtime(true) - $now) {
+        if ($multi->pauseExpiries && 0 < $timeout -= hrtime(true) / 1E9 - $now) {
             usleep((int) (1E6 * $timeout));
         }
 
