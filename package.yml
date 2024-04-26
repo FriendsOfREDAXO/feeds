@@ -18,7 +18,7 @@ page:
             perm: admin[]
             pjax: false
             subPath: README.md
-            itemclass: pull-right
+            itemClass: pull-right
 
 requires:
     redaxo: '^5.14'
