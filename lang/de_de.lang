@@ -79,4 +79,7 @@ feeds_vimeo_view = Welche Videos sollen geladen werden?
 feeds_vimeo_all = Alle Videos
 feeds_vimeo_public = Nur öffentliche Videos
 
+feeds_ical_url = Url
+feeds_ical_lang = Sprache 
+
 feeds_help = Hilfe
