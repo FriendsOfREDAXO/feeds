@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '0334b3b8db8bb42be594ef8b77dcd40e1d28c774',
+        'reference' => '6763df268d6e6f91845848d7d4a6f026bfa6bcc6',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '0334b3b8db8bb42be594ef8b77dcd40e1d28c774',
+            'reference' => '6763df268d6e6f91845848d7d4a6f026bfa6bcc6',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -120,9 +120,9 @@
             ),
         ),
         'psr/http-factory' => array(
-            'pretty_version' => '1.0.2',
-            'version' => '1.0.2.0',
-            'reference' => 'e616d01114759c4c489f93b099585439f795fe35',
+            'pretty_version' => '1.1.0',
+            'version' => '1.1.0.0',
+            'reference' => '2b4765fddfe3b508ac62f829e852b1501d3f6e8a',
             'type' => 'library',
             'install_path' => __DIR__ . '/../psr/http-factory',
             'aliases' => array(),
@@ -131,8 +131,8 @@
         'psr/http-factory-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '*',
-                1 => '1.0',
+                0 => '1.0',
+                1 => '*',
             ),
         ),
         'psr/http-message' => array(
@@ -144,8 +144,8 @@
         'psr/http-message-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '*',
-                1 => '1.0',
+                0 => '1.0',
+                1 => '*',
             ),
         ),
         'psr/log' => array(
@@ -155,27 +155,27 @@
             ),
         ),
         'symfony/deprecation-contracts' => array(
-            'pretty_version' => 'v3.4.0',
-            'version' => '3.4.0.0',
-            'reference' => '7c3aff79d10325257a001fcf92d991f24fc967cf',
+            'pretty_version' => 'v3.5.0',
+            'version' => '3.5.0.0',
+            'reference' => '0e0d29ce1f20deffb4ab1b016a7257c4f1e789a1',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/deprecation-contracts',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
         'symfony/http-client' => array(
-            'pretty_version' => 'v6.4.6',
-            'version' => '6.4.6.0',
-            'reference' => '6a46c0ea9b099f9a5132d560a51833ffcbd5b0d9',
+            'pretty_version' => 'v7.1.3',
+            'version' => '7.1.3.0',
+            'reference' => 'b79858aa7a051ea791b0d50269a234a0b50cb231',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/http-client',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
         'symfony/http-client-contracts' => array(
-            'pretty_version' => 'v3.4.2',
-            'version' => '3.4.2.0',
-            'reference' => 'b6b5c876b3a4ed74460e2c5ac53bbce2f12e2a7e',
+            'pretty_version' => 'v3.5.0',
+            'version' => '3.5.0.0',
+            'reference' => '20414d96f391677bf80078aa55baece78b82647d',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/http-client-contracts',
             'aliases' => array(),
@@ -247,10 +247,22 @@
                 0 => '*',
             ),
         ),
+        'symfony/polyfill-php82' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => '*',
+            ),
+        ),
+        'symfony/polyfill-php83' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => '*',
+            ),
+        ),
         'symfony/service-contracts' => array(
-            'pretty_version' => 'v3.4.2',
-            'version' => '3.4.2.0',
-            'reference' => '11bbf19a0fb7b36345861e85c5768844c552906e',
+            'pretty_version' => 'v3.5.0',
+            'version' => '3.5.0.0',
+            'reference' => 'bd1d9e59a81d8fa4acdcea3f617c581f7475a80f',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/service-contracts',
             'aliases' => array(),
