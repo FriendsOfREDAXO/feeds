@@ -1,5 +1,5 @@
 package: feeds
-version: '4.2.0'
+version: '4.2.1'
 author: Friends Of REDAXO
 supportpage: https://github.com/FriendsOfREDAXO/feeds
 
@@ -23,7 +23,7 @@ page:
 requires:
     redaxo: '^5.14'
     php:
-        version: '>=8.1'
+        version: '>=8.2'
     packages:
         media_manager: '^2'
 
