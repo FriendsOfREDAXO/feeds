@@ -90,7 +90,6 @@ if ('' == $func) {
     $list->setColumnLabel('date', $this->i18n('item_date'));
     $list->setColumnSortable('date', $direction = 'DESC');
 
-
     $list->setColumnLabel('namespace', $this->i18n('stream_namespace') . '/' . $this->i18n('stream_type'));
     $list->setColumnFormat('namespace', 'custom', function ($params) {
         /** @var rex_list $list */
@@ -108,14 +107,14 @@ if ('' == $func) {
         /** @var rex_list $list */
         $list = $params['list'];
         $title = $list->getValue('title');
+        if ($title === null) {
+            $title = ''; // Set to empty string if null
+        }
         $title = rex_formatter::truncate($title, ['length' => 140]);
         $title .= ($list->getValue('url') != '') ? '<br /><small><a href="' . $list->getValue('url') . '" target="_blank">' . $list->getValue('url') . '</a></small>' : '';
         $title = '<div class="rex-word-break"><span class="title' . (($list->getValue('status')) ? '' : ' text-muted') . '">' . $title . '</span></div>';
         return $title;
     });
-
-
-
 
     $list->setColumnLabel('media', $this->i18n('item_media'));
     $list->setColumnFormat('media', 'custom', function ($params) {
