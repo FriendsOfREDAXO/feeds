@@ -58,6 +58,7 @@ feeds_rss = RSS
 feeds_rss_feed = RSS Feed
 feeds_rss_url = Url
 
+feeds_ical_calendar = Ical-Kalender
 
 feeds_youtube_channel = Youtube :: Kanal abonnieren
 feeds_youtube_channel_id = ID
