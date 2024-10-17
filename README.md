@@ -133,7 +133,9 @@ AddOn, siehe [LICENSE](https://github.com/FriendsOfREDAXO/feeds/blob/master/LICE
 
 Vendoren, siehe Vendors-Ordner des AddOns
 
-## Autoren
+## Autor
 
-* [Friends Of REDAXO](https://github.com/FriendsOfREDAXO) 
-* [Contributors](https://github.com/FriendsOfREDAXO/feeds/graphs/contributors)
+[Friends Of REDAXO](https://github.com/FriendsOfREDAXO)
+
+## Credits
+[Contributors](https://github.com/FriendsOfREDAXO/feeds/graphs/contributors)
