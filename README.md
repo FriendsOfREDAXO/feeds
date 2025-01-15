@@ -64,18 +64,65 @@ $items = $stream->getPreloadedItems(); // Standard gibt 5 Einträge zurück, son
 ?>
 ```
 
-## Bilder ausgeben mit dem Mediamanager
+# Bilder ausgeben mit dem Media Manager
 
-Die Bilder eines Feeds werden in der Datenbank gespeichert und müssen mit dem Mediamanager-Effekt `feeds` ausgelesen werden. Der Effekt muss an den Anfang der Verarbeitung. 
-- Der Dateiname ist die Datensatz-ID. 
-- Damit der Effekt mitbekommt dass ein Feed-Medium verarbeitet werden soll wird dem Mediamanager die Datei-Endung `.feeds` übergeben. 
-- Im Anschluss können diese wie gewöhnliche Medien im Mediamanager verarbeitet werden und somit auch alle anderen Effekte angewendet werden. 
+Die Bilder eines Feeds werden im AddOn-Data-Ordner unter `data/addons/feeds/media` gespeichert. Für die Ausgabe der Bilder stehen zwei gleichwertige Möglichkeiten zur Verfügung.
 
-Beispielcode: 
+## 1. Klassische Methode (Legacy Support)
 
 ```php
-$bildurl = rex_media_manager::getUrl($media_manager_type,$item->getId() .'.feeds';
+// $item ist ein rex_feeds_item Objekt
+$media_url = rex_media_manager::getUrl('feeds_thumb', $item->getId() .'.feeds');
+echo '<img src="'.$media_url.'" alt="Mein Bild">';
 ```
+
+## 2. Methode des Feed-Items
+
+```php
+// Mit Media Manager Effekt
+$media_url = $item->getMediaManagerUrl('feeds_thumb');
+echo '<img src="'.$media_url.'" alt="Mein Bild">';
+```
+
+## Komplettes Beispiel
+
+```php
+<?php 
+$stream_id = 1;
+// Media Manager Typ wo der Feeds-Effekt als erster Effekt eingerichtet ist
+$media_manager_type = 'feeds_thumb';
+
+$stream = rex_feeds_stream::get($stream_id);
+$items = $stream->getPreloadedItems(); // Standard gibt 5 Einträge zurück
+
+foreach($items as $item) {
+    // Titel ermitteln und verlinken
+    echo '<a href="'. $item->getUrl() .'" title="'. rex_escape($stream->getTitle()) .'">';
+    
+    // Variante 1: Klassische Methode
+    echo '<img src="'.rex_media_manager::getUrl($media_manager_type, $item->getId() .'.feeds').'" 
+              alt="'. rex_escape($item->getTitle()) .'">';
+              
+    // ODER Variante 2: Neue Methode
+    echo '<img src="'.$item->getMediaManagerUrl($media_manager_type).'" 
+              alt="'. rex_escape($item->getTitle()) .'">';
+    
+    echo '<p>'.rex_escape($item->getContent()).'</p>';
+    echo '</a>';
+}
+?>
+```
+
+## Media Manager Effekt einrichten
+
+1. Im REDAXO-Backend unter Media Manager einen neuen Typ anlegen
+2. Als ersten Effekt "Datei: Aus Feeds einlesen" auswählen
+3. Weitere gewünschte Effekte wie Resize, Crop etc. hinzufügen
+
+> **Wichtig:** Der Feed-Effekt muss immer als erster Effekt in der Effektkette eingerichtet sein.
+
+> **Hinweis:** Beide Methoden der Bildausgabe sind in ihrer Funktionalität identisch. Die klassische Methode wird aus Gründen der Abwärtskompatibilität weiterhin unterstützt.
+
 
 ## Einträge entfernen
 
