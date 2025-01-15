@@ -1,14 +1,4 @@
 <?php
-
-/**
- * This file is part of the Feeds package.
- *
- * @author FriendsOfREDAXO
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 class rex_feeds_stream_rss extends rex_feeds_stream_abstract
 {
     public function getTypeName()
@@ -51,24 +41,23 @@ class rex_feeds_stream_rss extends rex_feeds_stream_abstract
                     $title = $rssItem->getTitle();
                     $item->setTitle($title ?: '');
 
-                    // Content mit Fallback und speziellem Content:encoded Handling
+                    // Content mit Fallback
                     $content = '';
                     
-                    // 1. Versuche content:encoded zu bekommen
+                    // Versuche alle möglichen Content-Quellen
                     $elements = iterator_to_array($rssItem->getAllElements());
+                    
                     foreach ($elements as $element) {
                         if ($element->getName() === 'content:encoded') {
                             $content = $element->getValue();
                             break;
                         }
                     }
-                    
-                    // 2. Fallback auf normalen Content
+
                     if (empty($content)) {
                         $content = $rssItem->getContent();
                     }
-                    
-                    // 3. Fallback auf description
+
                     if (empty($content)) {
                         foreach ($elements as $element) {
                             if ($element->getName() === 'description') {
@@ -96,58 +85,44 @@ class rex_feeds_stream_rss extends rex_feeds_stream_abstract
                     $authorName = ($author && method_exists($author, 'getName')) ? $author->getName() : '';
                     $item->setAuthor($authorName);
 
-                    // Media-Handling speziell für rss.app
+                    // Media-Handling für Instagram RSS Feed
                     $mediaUrl = null;
-                    
-                    // 1. Suche nach img-Tags im Content
-                    if ($content) {
-                        $dom = new DOMDocument();
-                        // Suppress warnings for invalid HTML
-                        @$dom->loadHTML($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-                        $xpath = new DOMXPath($dom);
-                        
-                        // Suche nach dem ersten img-Tag
-                        $images = $xpath->query('//img');
-                        if ($images->length > 0) {
-                            // Nehme das erste Bild
-                            $mediaUrl = $images->item(0)->getAttribute('src');
-                            
-                            // Prüfe auf data-src falls src leer ist (lazy loading)
-                            if (empty($mediaUrl)) {
-                                $mediaUrl = $images->item(0)->getAttribute('data-src');
+
+                    // 1. Prüfe enclosure
+                    foreach ($elements as $element) {
+                        if ($element->getName() === 'enclosure') {
+                            $attributes = $element->getAttributes();
+                            if (isset($attributes['url'])) {
+                                $mediaUrl = $attributes['url'];
+                                break;
                             }
                         }
                     }
-                    
-                    // 2. Fallback auf Media Enclosures
+
+                    // 2. Prüfe media:content wenn noch kein Bild gefunden
                     if (!$mediaUrl) {
-                        $medias = $rssItem->getMedias();
-                        if ($medias && !empty($medias)) {
-                            foreach ($medias as $media) {
-                                if ($media->getUrl()) {
-                                    $mediaUrl = $media->getUrl();
+                        foreach ($elements as $element) {
+                            if ($element->getName() === 'media:content') {
+                                $attributes = $element->getAttributes();
+                                if (isset($attributes['url'])) {
+                                    $mediaUrl = $attributes['url'];
                                     break;
                                 }
                             }
                         }
                     }
 
-                    // Setze das gefundene Bild
-                    if ($mediaUrl) {
-                        // Entferne Query-Parameter aus der URL
-                        $mediaUrl = preg_replace('/\?.*/', '', $mediaUrl);
-                        $item->setMedia($mediaUrl);
-                        $item->setMediaSource($mediaUrl);
+                    // 3. Suche nach Bildern in description 
+                    if (!$mediaUrl && $content) {
+                        if (preg_match('/<img[^>]+src=[\'"]([^\'"]+)[\'"][^>]*>/i', $content, $matches)) {
+                            $mediaUrl = $matches[1];
+                        }
                     }
 
-                    // Raw-Daten
-                    $rawData = [
-                        'title' => $title,
-                        'content' => $content,
-                        'link' => $link,
-                        'media_url' => $mediaUrl
-                    ];
-                    $item->setRaw($rawData);
+                    // Setze das Bild wenn gefunden
+                    if ($mediaUrl) {
+                        $item->setMedia($mediaUrl);
+                    }
 
                     $this->updateCount($item);
                     $item->save();
