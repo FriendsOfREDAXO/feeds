@@ -6,8 +6,8 @@ feeds_delete_question = Wirklich löschen?
 
 feeds_search_results = Treffer: 
 feeds_search = Suche
-fee
-
+feeds_clear = Zurücksetzen
+feeds_search_term = Suchbegriff
 
 
 feeds_items = Einträge
