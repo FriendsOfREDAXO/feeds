@@ -1,45 +1,12 @@
-<?php
-
-/**
- * This file is part of the Feeds package.
- *
- * @author FriendsOfREDAXO
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
-class rex_feeds_stream_rss extends rex_feeds_stream_abstract
+<?php 
+public function fetch()
 {
-    public function getTypeName()
-    {
-        return rex_i18n::msg('feeds_rss_feed');
-    }
+    $client = new \FeedIo\Adapter\Http\Client(new Symfony\Component\HttpClient\HttplugClient());
+    $logger = new \Psr\Log\NullLogger();
+    $feedIo = new \FeedIo\FeedIo($client, $logger);
 
-    public function getTypeParams()
-    {
-        return [
-            [
-                'label' => rex_i18n::msg('feeds_rss_url'),
-                'name' => 'url',
-                'type' => 'string',
-            ],
-        ];
-    }
-
-    public function fetch()
-    {
-        $client = new \FeedIo\Adapter\Http\Client(new Symfony\Component\HttpClient\HttplugClient());
-        $logger = new \Psr\Log\NullLogger();
-        $feedIo = new \FeedIo\FeedIo($client, $logger);
-
-        try {
-            $result = $feedIo->read($this->typeParams['url']);
-        } catch (exception $e) {
-            rex_logger::logException($e);
-            echo rex_view::error($e->getMessage());
-            return;
-        }
+    try {
+        $result = $feedIo->read($this->typeParams['url']);
 
         /** @var Item $rssItem */
         foreach ($result->getFeed() as $rssItem) {
@@ -47,7 +14,6 @@ class rex_feeds_stream_rss extends rex_feeds_stream_abstract
                 // Sichere Extraktion der PublicId
                 $publicId = $rssItem->getPublicId();
                 if (empty($publicId)) {
-                    // Generiere eine eindeutige ID wenn keine vorhanden
                     $publicId = uniqid('feed_', true);
                 }
                 
@@ -77,24 +43,73 @@ class rex_feeds_stream_rss extends rex_feeds_stream_abstract
                 $authorName = ($author && method_exists($author, 'getName')) ? $author->getName() : '';
                 $item->setAuthor($authorName);
 
-                // Media mit mehrfacher Null-Check
+                // Media-Handling verbessert
+                $mediaUrl = null;
+                
+                // 1. Versuche es zuerst mit Media Enclosures
                 $medias = $rssItem->getMedias();
-                if ($medias && !empty($medias) && isset($medias[0])) {
-                    $mediaUrl = $medias[0]->getUrl();
-                    if ($mediaUrl) {
-                        $item->setMedia($mediaUrl);
+                if ($medias && !empty($medias)) {
+                    foreach ($medias as $media) {
+                        if ($media->getUrl()) {
+                            $mediaUrl = $media->getUrl();
+                            break;
+                        }
+                    }
+                }
+                
+                // 2. Wenn kein Media gefunden, suche nach einem Bild im Content
+                if (!$mediaUrl && $content) {
+                    if (preg_match('/<img[^>]+src=[\'"]([^\'"]+)[\'"][^>]*>/i', $content, $matches)) {
+                        $mediaUrl = $matches[1];
                     }
                 }
 
+                // 3. Versuche es mit custom Elementen (falls vorhanden)
+                if (!$mediaUrl) {
+                    $elements = $rssItem->getCustomElements();
+                    $mediaElements = array_filter($elements, function($element) {
+                        return strpos(strtolower($element->getName()), 'image') !== false 
+                            || strpos(strtolower($element->getName()), 'thumbnail') !== false;
+                    });
+                    
+                    if (!empty($mediaElements)) {
+                        foreach ($mediaElements as $element) {
+                            if ($element->getValue()) {
+                                $mediaUrl = $element->getValue();
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                // Setze das gefundene Bild
+                if ($mediaUrl) {
+                    $item->setMedia($mediaUrl);
+                }
+
+                // Raw-Daten und Debug-Informationen
+                $rawData = [
+                    'title' => $title,
+                    'content' => $content,
+                    'link' => $link,
+                    'media_url' => $mediaUrl,
+                    'custom_elements' => $rssItem->getCustomElements()
+                ];
+                $item->setRaw($rawData);
+
                 $this->updateCount($item);
                 $item->save();
+
             } catch (Exception $e) {
-                // Logge Fehler für einzelne Items, aber fahre mit dem nächsten fort
                 rex_logger::logException($e);
                 continue;
             }
         }
 
         self::registerExtensionPoint($this->streamId);
+
+    } catch (Exception $e) {
+        rex_logger::logException($e);
+        echo rex_view::error($e->getMessage());
     }
 }
