@@ -71,6 +71,7 @@ if ('' == $func) {
     // Suchformular erstellen
     $searchForm = '
     <form action="' . rex_url::currentBackendPage() . '" method="get">
+        <input type="hidden" name="page" value="feeds/items" />
         <div class="row">
             <div class="col-sm-4">
                 <div class="input-group">
