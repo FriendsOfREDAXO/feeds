@@ -11,48 +11,93 @@
 
 class rex_feeds_media_helper
 {
-    /**
-     * Stores a media file from a URL in the addon's data directory
-     * 
-     * @param string $url The URL of the media file
-     * @param int $streamId The ID of the stream
-     * @param string $itemId The unique ID of the item
-     * @return string|null The filename if successful, null otherwise
-     */
-    public static function saveMediaFile($url, $streamId, $itemId)
-    {
-        if (!$url || !$streamId || !$itemId) {
-            return null;
+   /**
+ * Stores a media file from a URL in the addon's assets directory
+ * 
+ * @param string $url The URL of the media file
+ * @param int $streamId The ID of the stream
+ * @param string $itemId The unique ID of the item
+ * @return string|null The filename if successful, null otherwise
+ */
+public static function saveMediaFile($url, $streamId, $itemId)
+{
+    if (!$url || !$streamId || !$itemId) {
+        return null;
+    }
+
+    try {
+        // Get mime type from url
+        $mime = '';
+        $headers = get_headers($url, 1);
+        if (isset($headers['Content-Type'])) {
+            $mime = is_array($headers['Content-Type']) 
+                ? $headers['Content-Type'][0] 
+                : $headers['Content-Type'];
         }
 
-        try {
-            // Create unique filename using stream ID and item ID
-            $extension = pathinfo(parse_url($url, PHP_URL_PATH), PATHINFO_EXTENSION) ?: 'jpg';
-            $filename = sprintf('%d_%s.%s', $streamId, $itemId, $extension);
-            
-            // Create directory if it doesn't exist
-            $mediaPath = self::getMediaPath();
-            if (!is_dir($mediaPath)) {
-                rex_dir::create($mediaPath, true);
+        // Create unique filename using stream ID and item ID
+        $extension = strtolower(pathinfo(parse_url($url, PHP_URL_PATH), PATHINFO_EXTENSION));
+        
+        // If no extension found, try to get from mime type
+        if (!$extension || !in_array($extension, ['jpg', 'jpeg', 'png', 'gif', 'webp', 'avif'])) {
+            switch ($mime) {
+                case 'image/jpeg':
+                    $extension = 'jpg';
+                    break;
+                case 'image/png':
+                    $extension = 'png';
+                    break;
+                case 'image/gif':
+                    $extension = 'gif';
+                    break;
+                case 'image/webp':
+                    $extension = 'webp';
+                    break;
+                case 'image/avif':
+                    $extension = 'avif';
+                    break;
+                default:
+                    $extension = 'jpg';
             }
+        }
+        
+        $filename = sprintf('%d_%s.%s', $streamId, $itemId, $extension);
+        
+        // Create directory if it doesn't exist
+        $mediaPath = self::getMediaPath();
+        if (!is_dir($mediaPath)) {
+            rex_dir::create($mediaPath);
+        }
 
-            // Download and save file
-            $response = rex_socket::factoryUrl($url)->doGet();
-            if ($response->isOk()) {
-                $filepath = $mediaPath . '/' . $filename;
-                
+        // Download and save file
+        $response = rex_socket::factoryUrl($url)->doGet();
+        if ($response->isOk()) {
+            $filepath = $mediaPath . '/' . $filename;
+            
+            // Get the image content
+            $content = $response->getBody();
+            
+            // Validate image
+            if (@imagecreatefromstring($content)) {
                 // Use rex_file for safe file operations
-                if (rex_file::put($filepath, $response->getBody())) {
+                if (rex_file::put($filepath, $content)) {
                     @chmod($filepath, rex::getFilePerm());
                     return $filename;
                 }
+            } else {
+                // Log invalid image
+                rex_logger::logError(E_WARNING, 'Invalid image file from URL: ' . $url, __FILE__, __LINE__);
             }
-        } catch (Exception $e) {
-            rex_logger::logException($e);
+        } else {
+            // Log failed download
+            rex_logger::logError(E_WARNING, 'Failed to download image from URL: ' . $url, __FILE__, __LINE__);
         }
-
-        return null;
+    } catch (Exception $e) {
+        rex_logger::logException($e);
     }
+
+    return null;
+}
 
     /**
      * Gets the absolute path to the media directory
