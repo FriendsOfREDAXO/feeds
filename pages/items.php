@@ -67,23 +67,21 @@ if ('' == $func) {
 
     $list = rex_list::factory($sql, 30, 'items');
 
-    if ($namespaceFilter) {
-        $list->setQueryParam('namespace', $namespaceFilter);
-    }
-
-    $list->setQueryParams(['namespace_filter' => $namespaceFilter, 'search' => $search] ,true);
-
-    if($namespaceFilter){
-        $list->setWhere(['namespace' => $namespaceFilter], ['namespace' => $namespaceFilter], true);
+     if ($namespaceFilter) {
+         $list->setQueryParam('namespace', $namespaceFilter);
     }
 
     // Parameter an Liste übergeben
-    if ($search) {
+     if ($search) {
         $list->addParam('search', $search);
     }
      if ($namespaceFilter) {
         $list->addParam('namespace_filter', $namespaceFilter);
     }
+
+     if($namespaceFilter){
+          $list->setWhere(['namespace' => $namespaceFilter], ['namespace' => $namespaceFilter], true);
+      }
 
 
     // Suchformular erstellen
