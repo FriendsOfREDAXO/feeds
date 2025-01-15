@@ -27,14 +27,14 @@ if ($func == 'setstatus') {
 if ('' == $func) {
     // Suchparameter
     $search = rex_request('search', 'string', '');
-    
-    $query = 'SELECT
+
+    $list = rex_list::factory("SELECT
                 i.id,
                 s.namespace,
                 i.date,
                 i.media_filename,
                 s.type,
-                (CASE WHEN (i.title IS NULL or i.title = "")
+                (CASE WHEN (i.title IS NULL or i.title = '')
                     THEN i.content
                     ELSE i.title
                 END) as title,
@@ -43,29 +43,19 @@ if ('' == $func) {
                 i.author,
                 s.type as stream_type
             FROM
-                ' . rex_feeds_item::table() . ' AS i
+                " . rex_feeds_item::table() . " AS i
                 LEFT JOIN
-                    ' . rex_feeds_stream::table() . ' AS s
-                    ON  i.stream_id = s.id';
-                    
-    // Suchfilter hinzufügen wenn Suche aktiv
-    if ($search) {
-        $query .= ' WHERE (i.title LIKE :search 
-                    OR i.content LIKE :search 
-                    OR s.namespace LIKE :search 
-                    OR i.author LIKE :search)';
-    }
-            
-    $query .= ' ORDER BY i.date DESC, id DESC';
+                    " . rex_feeds_stream::table() . " AS s
+                    ON  i.stream_id = s.id
+            " . ($search ? "WHERE (i.title LIKE '%". $search ."%' 
+                    OR i.content LIKE '%". $search ."%' 
+                    OR s.namespace LIKE '%". $search ."%' 
+                    OR i.author LIKE '%". $search ."%')" : "") . "
+            ORDER BY i.date DESC, id DESC");
 
-    $list = rex_list::factory($query);
-    
-    // Suchparameter an Liste übergeben wenn Suche aktiv
+    // Parameter an Liste übergeben
     if ($search) {
-        $list->setParameter('search', $search);
         $list->addParam('search', $search);
-        $search_term = '%' . $search . '%';
-        $list->setQuery($query, ['search' => $search_term]);
     }
 
     // Suchformular erstellen
