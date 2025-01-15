@@ -14,29 +14,57 @@ class rex_effect_feeds extends rex_effect_abstract
     public function execute()
     {
         $filename = $this->media->getMediaFilename();
+        if (!$filename) {
+            return;
+        }
 
-        if (preg_match('/^(\d+)\.feeds$/', $filename, $match) || preg_match('/^(\d+)\.yfeed$/', $filename, $match) ) {}
-        else { 
+        // Check if this is a feeds file and extract the ID
+        if (!preg_match('/^(\d+)\.feeds$/', $filename, $match)) {
             return;
         }
         $id = $match[1];
 
+        // Get the item from database
         $sql = rex_sql::factory()
             ->setTable(rex_feeds_item::table())
             ->setWhere(['id' => $id, 'status' => 1])
-            ->select('media');
+            ->select('media_filename');
 
         if (!$sql->getRows()) {
             return;
         }
         
-        $data = $sql->getValue('media');
-
-        if (!$data || !preg_match('@^data:image/(.*?);base64,(.+)$@', $data, $match)) {
+        $mediaFilename = $sql->getValue('media_filename');
+        if (!$mediaFilename) {
             return;
         }
 
-        $img = @imagecreatefromstring(base64_decode($match[2]));
+        // Get the physical file path
+        $filepath = rex_feeds_media_helper::getMediaPath() . '/' . $mediaFilename;
+        if (!file_exists($filepath)) {
+            return;
+        }
+
+        // Get file extension
+        $extension = strtolower(pathinfo($mediaFilename, PATHINFO_EXTENSION));
+        
+        // Create image resource based on file type
+        $img = null;
+        switch ($extension) {
+            case 'jpg':
+            case 'jpeg':
+                $img = @imagecreatefromjpeg($filepath);
+                break;
+            case 'png':
+                $img = @imagecreatefrompng($filepath);
+                break;
+            case 'gif':
+                $img = @imagecreatefromgif($filepath);
+                break;
+            case 'webp':
+                $img = @imagecreatefromwebp($filepath);
+                break;
+        }
 
         if (!$img) {
             return;
@@ -46,8 +74,8 @@ class rex_effect_feeds extends rex_effect_abstract
         $media->setMediaPath(null);
         $media->setMediaFilename($filename);
         $media->setImage($img);
-        $media->setFormat($match[1]);
-        $media->setHeader('Content-Type', 'image/'.$match[1]);
+        $media->setFormat($extension);
+        $media->setHeader('Content-Type', 'image/'.$extension);
         $media->refreshImageDimensions();
     }
 
