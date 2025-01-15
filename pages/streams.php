@@ -32,12 +32,21 @@ if ('fetch' === $func) {
 }
 
 if ('delete' === $func) {
-   rex_feeds_media_helper::deleteStreamMedia($id);
-
+    // 1. Alle Media-Files für diesen Stream löschen
+    rex_feeds_media_helper::deleteStreamMedia($id);
+    
+    // 2. Erst Items löschen (wird zwar automatisch durch FK gemacht, aber so haben wir die richtige Reihenfolge)
+    rex_sql::factory()
+        ->setTable(rex_feeds_item::table())
+        ->setWhere(['stream_id' => $id])
+        ->delete();
+    
+    // 3. Dann den Stream löschen  
     rex_sql::factory()
         ->setTable(rex_feeds_stream::table())
-        ->setWhere('id = ?', [$id])
+        ->setWhere(['id' => $id])
         ->delete();
+        
     echo rex_view::success($this->i18n('stream_deleted'));
     $func = '';
 }
