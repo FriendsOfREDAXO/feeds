@@ -27,8 +27,9 @@ if ($func == 'setstatus') {
 if ('' == $func) {
     // Suchparameter
     $search = rex_request('search', 'string', '');
+    $namespaceFilter = rex_request('namespace_filter', 'string', '');
 
-    $list = rex_list::factory("SELECT
+    $sql = "SELECT
                 i.id,
                 s.namespace,
                 i.date,
@@ -47,23 +48,62 @@ if ('' == $func) {
                 LEFT JOIN
                     " . rex_feeds_stream::table() . " AS s
                     ON  i.stream_id = s.id
-            " . ($search ? "WHERE (i.title LIKE '%". $search ."%' 
+            WHERE 1=1 ";
+
+        if ($search) {
+             $sql .= " AND (i.title LIKE '%". $search ."%' 
                     OR i.content LIKE '%". $search ."%' 
                     OR s.namespace LIKE '%". $search ."%' 
-                    OR i.author LIKE '%". $search ."%')" : "") . "
-            ORDER BY i.date DESC, id DESC");
+                    OR i.author LIKE '%". $search ."%') ";
+        }
+    
+        if ($namespaceFilter) {
+            $sql .= " AND s.namespace = :namespace ";
+        }
+
+
+    $sql .= " ORDER BY i.date DESC, id DESC";
+
+
+    $list = rex_list::factory($sql, 30, 'items');
+
+    if ($namespaceFilter) {
+        $list->setQueryParam('namespace', $namespaceFilter);
+    }
+
+    $list->setQueryParams(['namespace_filter' => $namespaceFilter, 'search' => $search] ,true);
+
+    if($namespaceFilter){
+        $list->setWhere(['namespace' => $namespaceFilter], ['namespace' => $namespaceFilter], true);
+    }
 
     // Parameter an Liste übergeben
     if ($search) {
         $list->addParam('search', $search);
     }
+     if ($namespaceFilter) {
+        $list->addParam('namespace_filter', $namespaceFilter);
+    }
+
 
     // Suchformular erstellen
+     $namespaceSelect = '<select class="form-control" name="namespace_filter"><option value="">' . rex_i18n::msg('feeds_namespace_all') . '</option>';
+    $namespaces = rex_sql::factory()->getArray('SELECT DISTINCT namespace FROM ' . rex_feeds_stream::table() . ' ORDER BY namespace ASC');
+    foreach ($namespaces as $namespace) {
+        $selected = ($namespace['namespace'] == $namespaceFilter) ? ' selected="selected"' : '';
+         $namespaceSelect .= '<option value="' . $namespace['namespace'] . '"' . $selected . '>' . $namespace['namespace'] . '</option>';
+    }
+    $namespaceSelect .= '</select>';
+
+
     $searchForm = '
     <form action="' . rex_url::currentBackendPage() . '" method="get">
         <input type="hidden" name="page" value="feeds/items" />
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-4">
+                ' . $namespaceSelect . '
+            </div>
+            <div class="col-sm-4">
                 <div class="input-group">
                     <input class="form-control" type="text" name="search" value="' . htmlspecialchars($search) . '" placeholder="' . rex_i18n::msg('feeds_search_term') . '" autofocus />
                     <span class="input-group-btn">
@@ -73,7 +113,7 @@ if ('' == $func) {
                 </div>
             </div>
             ' . ($search ? '
-            <div class="col-sm-12">
+            <div class="col-sm-4">
                 <div class="alert alert-info">
                     ' . rex_i18n::msg('feeds_search_results') . ': ' . $list->getRows() . ' 
                 </div>
