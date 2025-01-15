@@ -4,6 +4,12 @@ feeds_edit = bearbeiten
 feeds_delete = löschen
 feeds_delete_question = Wirklich löschen?
 
+feeds_search_results = Treffer: 
+feeds_search = Suche
+fee
+
+
+
 feeds_items = Einträge
 feeds_item_author = Autor
 feeds_item_content = Inhalt
