@@ -25,6 +25,9 @@ if ($func == 'setstatus') {
 }
 
 if ('' == $func) {
+    // Suchparameter
+    $search = rex_request('search', 'string', '');
+    
     $query = 'SELECT
                 i.id,
                 s.namespace,
@@ -41,11 +44,62 @@ if ('' == $func) {
                 ' . rex_feeds_item::table() . ' AS i
                 LEFT JOIN
                     ' . rex_feeds_stream::table() . ' AS s
-                    ON  i.stream_id = s.id
-            ORDER BY i.date DESC, id DESC
-            ';
+                    ON  i.stream_id = s.id';
+                    
+    // Suchfilter hinzufügen wenn Suche aktiv
+    if ($search) {
+        $query .= ' WHERE (i.title LIKE :search 
+                    OR i.content LIKE :search 
+                    OR s.namespace LIKE :search 
+                    OR i.author LIKE :search)';
+    }
+            
+    $query .= ' ORDER BY i.date DESC, id DESC';
 
     $list = rex_list::factory($query);
+    
+    // Suchparameter an Liste übergeben wenn Suche aktiv
+    if ($search) {
+        $list->setParameter('search', $search);
+        $list->addParam('search', $search);
+        $search_term = '%' . $search . '%';
+        $list->setQuery($query, ['search' => $search_term]);
+    }
+
+    $panelElements = [];
+
+    // Suchformular erstellen
+    $searchForm = new rex_form_container();
+    $searchForm->setAttributes(['class' => 'form-inline', 'method' => 'get']);
+
+    $searchField = new rex_form_element('text', 'search');
+    $searchField->setAttribute('class', 'form-control');
+    $searchField->setAttribute('value', htmlspecialchars($search));
+    $searchField->setAttribute('placeholder', rex_i18n::msg('search'));
+    $searchField->setAttribute('autofocus', 'autofocus');
+
+    $searchButton = new rex_form_element('button', 'search_button');
+    $searchButton->setLabel(rex_i18n::msg('search'));
+    $searchButton->setAttribute('class', 'btn btn-search');
+    $searchButton->setAttribute('type', 'submit');
+
+    $searchContainer = '<div class="input-group">';
+    $searchContainer .= $searchField->get();
+    $searchContainer .= '<span class="input-group-btn">';
+    $searchContainer .= $searchButton->get();
+    if ($search) {
+        $searchContainer .= '<a class="btn btn-default" href="' . rex_url::currentBackendPage() . '">' . rex_i18n::msg('clear') . '</a>';
+    }
+    $searchContainer .= '</span>';
+    $searchContainer .= '</div>';
+
+    $panelElements[] = $searchContainer;
+
+    $fragment = new rex_fragment();
+    $fragment->setVar('content', [$panelElements], false);
+    $fragment->setVar('options', $searchForm, false);
+    $panel = $fragment->parse('core/page/section.php');
+
     $list->addTableAttribute('class', 'table-striped');
 
     $list->addColumn('', '', 0, ['<th class="rex-table-icon">###VALUE###</th>', '<td class="rex-table-icon">###VALUE###</td>']);
@@ -88,7 +142,7 @@ if ('' == $func) {
     $list->removeColumn('type');
 
     $list->setColumnLabel('date', $this->i18n('item_date'));
-    $list->setColumnSortable('date', $direction = 'DESC');
+    $list->setColumnSortable('date');
 
     $list->setColumnLabel('namespace', $this->i18n('stream_namespace') . '/' . $this->i18n('stream_type'));
     $list->setColumnFormat('namespace', 'custom', function ($params) {
@@ -100,7 +154,7 @@ if ('' == $func) {
         $out = '<span class="type' . (($list->getValue('status')) ? '' : ' text-muted') . '">' . $out . '</span>';
         return $out;
     });
-    $list->setColumnSortable('namespace', $direction = 'asc');
+    $list->setColumnSortable('namespace');
 
     $list->setColumnLabel('title', $this->i18n('item_title'));
     $list->setColumnFormat('title', 'custom', function ($params) {
@@ -123,7 +177,6 @@ if ('' == $func) {
         $item = rex_feeds_item::get($list->getValue('id'));
         
         if ($item && $item->getMediaFilename()) {
-            // Verwende die neue Methode zum Abrufen der Media Manager URL
             $media_url = $item->getMediaManagerUrl('feeds_thumb');
             return '<img class="thumbnail" src="'. $media_url.'" width="60" height="60" alt="" title="" loading="lazy">';
         }
@@ -155,6 +208,7 @@ if ('' == $func) {
     $fragment->setVar('content', $content, false);
     $content = $fragment->parse('core/page/section.php');
 
+    echo $panel;
     echo $content;
 } else {
     $title = $func == 'edit' ? $this->i18n('item_edit') : $this->i18n('item_add');
@@ -208,11 +262,10 @@ if ('' == $func) {
         $field->setLabel($this->i18n('item_mediasource'));
     }
     
-    // Zeige das Bild im Formular, wenn vorhanden
     if ($form->isEditMode()) {
         $item = rex_feeds_item::get($id);
         if ($item && $item->getMediaFilename()) {
-            $form->addRawField('<div class="text-center"><img class="img-responsive" src="' . $item->getMediaUrl() . '"></div>');
+            $form->addRawField('<div class="text-center"><img class="img-responsive" src="' . $item->getMediaManagerUrl('feeds_thumb') . '"></div>');
         }
     }
 
