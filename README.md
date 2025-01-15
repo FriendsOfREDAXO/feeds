@@ -139,6 +139,15 @@ foreach($items as $item) {
 <?php rex_sql::factory()->setQuery("DELETE FROM rex_feeds_item WHERE stream_id = 4 AND createdate < (NOW() - INTERVAL 2 MONTH)"); ?>
 ```
 
+Alternativ: 
+
+`<?php rex_sql::factory()->setQuery("DELETE t1 FROM rex_feeds_item t1 JOIN (SELECT id FROM rex_feeds_item WHERE stream_id = 1 ORDER BY id DESC LIMIT 50,500) t2 ON t1.id = t2.id"); ?>`
+
+Dies löscht nicht nach Datum, sondern nach Anzahl.
+Vorteil: Wenn viele Posts immer geladen werden, kann sich die die DB sehr schnell aufblähen und Probleme beim Backup machen.
+
+
+
 ## Eigenen Provider anmelden
 
 Feeds kann Inhalte auch anderer Quellen als die der mitglieferten Provider annehmen.
