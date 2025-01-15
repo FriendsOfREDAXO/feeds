@@ -1,5 +1,17 @@
 <?php 
 
+// Delete media files directory
+$mediaPath = rex_path::addonData('feeds', 'media');
+if (is_dir($mediaPath)) {
+    $files = glob($mediaPath . '/*');
+    foreach($files as $file) {
+        if(is_file($file)) {
+            unlink($file);
+        }
+    }
+    rmdir($mediaPath);
+}
+
 // delete ForeignKey
 rex_sql_table::get(rex::getTable('feeds_stream'))
 ->removeForeignKey('rex_feeds_item_ibfk_1')
