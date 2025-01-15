@@ -55,7 +55,7 @@ class rex_feeds_stream_rss extends rex_feeds_stream_abstract
                     $content = '';
                     
                     // 1. Versuche content:encoded zu bekommen
-                    $elements = $rssItem->getAllElements();
+                    $elements = iterator_to_array($rssItem->getAllElements());
                     foreach ($elements as $element) {
                         if ($element->getName() === 'content:encoded') {
                             $content = $element->getValue();
@@ -136,29 +136,16 @@ class rex_feeds_stream_rss extends rex_feeds_stream_abstract
                     if ($mediaUrl) {
                         // Entferne Query-Parameter aus der URL
                         $mediaUrl = preg_replace('/\?.*/', '', $mediaUrl);
-                        
                         $item->setMedia($mediaUrl);
                         $item->setMediaSource($mediaUrl);
-                        
-              
-                     
-                    } else {
-                 
-                       
                     }
 
-                    // Raw-Daten und Debug-Informationen
+                    // Raw-Daten
                     $rawData = [
                         'title' => $title,
                         'content' => $content,
                         'link' => $link,
-                        'media_url' => $mediaUrl,
-                        'elements' => array_map(function($el) {
-                            return [
-                                'name' => $el->getName(),
-                                'value' => substr($el->getValue(), 0, 100) . '...'
-                            ];
-                        }, $elements),
+                        'media_url' => $mediaUrl
                     ];
                     $item->setRaw($rawData);
 
