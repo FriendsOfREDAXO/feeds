@@ -16,8 +16,7 @@ REDAXO Feed Aggregator
 
 ## Installation
 
-1. Im REDAXO-Backend unter `Installer` abrufen und 
-2. anschließend unter `Hauptmenü` > `AddOns` installieren.
+Im REDAXO-Backend unter `Installer` abrufen und installieren
 
 ## Verwendung
 
