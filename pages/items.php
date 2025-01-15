@@ -63,17 +63,17 @@ if ('' == $func) {
     <form action="' . rex_url::currentBackendPage() . '" method="get">
         <input type="hidden" name="page" value="feeds/items" />
         <div class="row">
-            <div class="col-sm-4">
+            <div class="col-sm-12">
                 <div class="input-group">
-                    <input class="form-control" type="text" name="search" value="' . htmlspecialchars($search) . '" placeholder="' . rex_i18n::msg('search') . '" autofocus />
+                    <input class="form-control" type="text" name="search" value="' . htmlspecialchars($search) . '" placeholder="' . rex_i18n::msg('feeds_search_term') . '" autofocus />
                     <span class="input-group-btn">
-                        <button class="btn btn-primary" type="submit"><i class="rex-icon fa-search"></i> ' . rex_i18n::msg('search') . '</button>
-                        ' . ($search ? '<a class="btn btn-default" href="' . rex_url::currentBackendPage() . '"><i class="rex-icon fa-times"></i> ' . rex_i18n::msg('clear') . '</a>' : '') . '
+                        <button class="btn btn-primary" type="submit"><i class="rex-icon fa-search"></i> ' . rex_i18n::msg('feeds_search') . '</button>
+                        ' . ($search ? '<a class="btn btn-default" href="' . rex_url::currentBackendPage() . '"><i class="rex-icon fa-times"></i> ' . rex_i18n::msg('feeds_clear') . '</a>' : '') . '
                     </span>
                 </div>
             </div>
             ' . ($search ? '
-            <div class="col-sm-8">
+            <div class="col-sm-12">
                 <div class="alert alert-info">
                     ' . rex_i18n::msg('search_results') . ': ' . $list->getRows() . ' 
                 </div>
