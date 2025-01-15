@@ -39,7 +39,9 @@ if ('' == $func) {
                     ELSE i.title
                 END) as title,
                 i.url,
-                i.status
+                i.status,
+                i.author,
+                s.type as stream_type
             FROM
                 ' . rex_feeds_item::table() . ' AS i
                 LEFT JOIN
@@ -66,39 +68,31 @@ if ('' == $func) {
         $list->setQuery($query, ['search' => $search_term]);
     }
 
-    $panelElements = [];
-
     // Suchformular erstellen
-    $searchForm = new rex_form_container();
-    $searchForm->setAttributes(['class' => 'form-inline', 'method' => 'get']);
-
-    $searchField = new rex_form_element('text', 'search');
-    $searchField->setAttribute('class', 'form-control');
-    $searchField->setAttribute('value', htmlspecialchars($search));
-    $searchField->setAttribute('placeholder', rex_i18n::msg('search'));
-    $searchField->setAttribute('autofocus', 'autofocus');
-
-    $searchButton = new rex_form_element('button', 'search_button');
-    $searchButton->setLabel(rex_i18n::msg('search'));
-    $searchButton->setAttribute('class', 'btn btn-search');
-    $searchButton->setAttribute('type', 'submit');
-
-    $searchContainer = '<div class="input-group">';
-    $searchContainer .= $searchField->get();
-    $searchContainer .= '<span class="input-group-btn">';
-    $searchContainer .= $searchButton->get();
-    if ($search) {
-        $searchContainer .= '<a class="btn btn-default" href="' . rex_url::currentBackendPage() . '">' . rex_i18n::msg('clear') . '</a>';
-    }
-    $searchContainer .= '</span>';
-    $searchContainer .= '</div>';
-
-    $panelElements[] = $searchContainer;
+    $searchForm = '
+    <form action="' . rex_url::currentBackendPage() . '" method="get">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="input-group">
+                    <input class="form-control" type="text" name="search" value="' . htmlspecialchars($search) . '" placeholder="' . rex_i18n::msg('search') . '" autofocus />
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" type="submit"><i class="rex-icon fa-search"></i> ' . rex_i18n::msg('search') . '</button>
+                        ' . ($search ? '<a class="btn btn-default" href="' . rex_url::currentBackendPage() . '"><i class="rex-icon fa-times"></i> ' . rex_i18n::msg('clear') . '</a>' : '') . '
+                    </span>
+                </div>
+            </div>
+            ' . ($search ? '
+            <div class="col-sm-8">
+                <div class="alert alert-info">
+                    ' . rex_i18n::msg('search_results') . ': ' . $list->getRows() . ' 
+                </div>
+            </div>' : '') . '
+        </div>
+    </form>';
 
     $fragment = new rex_fragment();
-    $fragment->setVar('content', [$panelElements], false);
-    $fragment->setVar('options', $searchForm, false);
-    $panel = $fragment->parse('core/page/section.php');
+    $fragment->setVar('body', $searchForm, false);
+    $searchPanel = $fragment->parse('core/page/section.php');
 
     $list->addTableAttribute('class', 'table-striped');
 
@@ -107,7 +101,7 @@ if ('' == $func) {
     $list->setColumnFormat('', 'custom', function ($params) {
         /** @var rex_list $list */
         $list = $params['list'];
-        $type = explode('_', $list->getValue('s.type'));
+        $type = explode('_', $list->getValue('stream_type'));
         $icon = 'fa-paper-plane-o';
         if (isset($type[0])) {
             switch ($type[0]) {
@@ -139,17 +133,22 @@ if ('' == $func) {
 
     $list->removeColumn('id');
     $list->removeColumn('url');
-    $list->removeColumn('type');
+    $list->removeColumn('stream_type');
 
     $list->setColumnLabel('date', $this->i18n('item_date'));
+    $list->setColumnFormat('date', 'custom', function ($params) {
+        /** @var rex_list $list */
+        $list = $params['list'];
+        return rex_formatter::strftime($list->getValue('date'), 'datetime');
+    });
     $list->setColumnSortable('date');
 
-    $list->setColumnLabel('namespace', $this->i18n('stream_namespace') . '/' . $this->i18n('stream_type'));
+    $list->setColumnLabel('namespace', $this->i18n('stream_namespace'));
     $list->setColumnFormat('namespace', 'custom', function ($params) {
         /** @var rex_list $list */
         $list = $params['list'];
         $namespace = $list->getValue('namespace');
-        $type = $list->getValue('type');
+        $type = $list->getValue('stream_type');
         $out = $namespace . '<br /><small>' . $type . '</small>';
         $out = '<span class="type' . (($list->getValue('status')) ? '' : ' text-muted') . '">' . $out . '</span>';
         return $out;
@@ -162,7 +161,7 @@ if ('' == $func) {
         $list = $params['list'];
         $title = $list->getValue('title');
         if ($title === null) {
-            $title = ''; // Set to empty string if null
+            $title = '';
         }
         $title = rex_formatter::truncate($title, ['length' => 140]);
         $title .= ($list->getValue('url') != '') ? '<br /><small><a href="' . $list->getValue('url') . '" target="_blank">' . $list->getValue('url') . '</a></small>' : '';
@@ -183,6 +182,9 @@ if ('' == $func) {
         return '';
     });
 
+    $list->setColumnLabel('author', $this->i18n('item_author'));
+    $list->setColumnSortable('author');
+    
     $list->setColumnLabel('status', $this->i18n('status'));
     $list->setColumnParams('status', ['func' => 'setstatus', 'oldstatus' => '###status###', 'id' => '###id###']);
     $list->setColumnLayout('status', ['<th class="rex-table-action">###VALUE###</th>', '<td class="rex-table-action">###VALUE###</td>']);
@@ -208,7 +210,7 @@ if ('' == $func) {
     $fragment->setVar('content', $content, false);
     $content = $fragment->parse('core/page/section.php');
 
-    echo $panel;
+    echo $searchPanel;
     echo $content;
 } else {
     $title = $func == 'edit' ? $this->i18n('item_edit') : $this->i18n('item_add');
