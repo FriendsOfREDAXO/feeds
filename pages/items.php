@@ -29,7 +29,7 @@ if ('' == $func) {
                 i.id,
                 s.namespace,
                 i.date,
-                i.media,
+                i.media_filename,
                 s.type,
                 (CASE WHEN (i.title IS NULL or i.title = "")
                     THEN i.content
@@ -116,17 +116,18 @@ if ('' == $func) {
         return $title;
     });
 
-    $list->setColumnLabel('media', $this->i18n('item_media'));
-    $list->setColumnFormat('media', 'custom', function ($params) {
+    $list->setColumnLabel('media_filename', $this->i18n('item_media'));
+    $list->setColumnFormat('media_filename', 'custom', function ($params) {
         /** @var rex_list $list */
         $list = $params['list'];
-        $media = $list->getValue('media');
-        if($list->getValue('media'))
-        {    
-        $media_url = rex_media_manager::getUrl('feeds_thumb', $list->getValue('id').'.feeds');
-        $media = '<img class="thumbnail" src="'. $media_url.'" width="60" height="60" alt="" title="" loading="lazy">';
+        $item = rex_feeds_item::get($list->getValue('id'));
+        
+        if ($item && $item->getMediaFilename()) {
+            // Verwende die neue Methode zum Abrufen der Media Manager URL
+            $media_url = $item->getMediaManagerUrl('feeds_thumb');
+            return '<img class="thumbnail" src="'. $media_url.'" width="60" height="60" alt="" title="" loading="lazy">';
         }
-       return $media;
+        return '';
     });
 
     $list->setColumnLabel('status', $this->i18n('status'));
@@ -206,8 +207,13 @@ if ('' == $func) {
         $field = $form->addTextField('mediasource');
         $field->setLabel($this->i18n('item_mediasource'));
     }
-    if ($media = $form->getSql()->getValue('media')) {
-        $form->addRawField('<div class="text-center"><img class="img-responsive" src="' . $media . '"></div>');
+    
+    // Zeige das Bild im Formular, wenn vorhanden
+    if ($form->isEditMode()) {
+        $item = rex_feeds_item::get($id);
+        if ($item && $item->getMediaFilename()) {
+            $form->addRawField('<div class="text-center"><img class="img-responsive" src="' . $item->getMediaUrl() . '"></div>');
+        }
     }
 
     $content = $form->get();
