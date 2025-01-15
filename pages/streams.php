@@ -32,6 +32,8 @@ if ('fetch' === $func) {
 }
 
 if ('delete' === $func) {
+   rex_feeds_media_helper::deleteStreamMedia($id);
+
     rex_sql::factory()
         ->setTable(rex_feeds_stream::table())
         ->setWhere('id = ?', [$id])
