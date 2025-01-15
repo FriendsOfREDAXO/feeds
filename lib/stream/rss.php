@@ -140,19 +140,11 @@ class rex_feeds_stream_rss extends rex_feeds_stream_abstract
                         $item->setMedia($mediaUrl);
                         $item->setMediaSource($mediaUrl);
                         
-                        // Debug Log
-                        rex_logger::logInfo('RSS Feed Image found', [
-                            'url' => $mediaUrl,
-                            'title' => $title,
-                            'stream_id' => $this->streamId
-                        ]);
+              
+                     
                     } else {
-                        // Debug Log wenn kein Bild gefunden wurde
-                        rex_logger::logError('No image found for RSS item', [
-                            'title' => $title,
-                            'content_length' => strlen($content),
-                            'stream_id' => $this->streamId
-                        ]);
+                 
+                       
                     }
 
                     // Raw-Daten und Debug-Informationen
