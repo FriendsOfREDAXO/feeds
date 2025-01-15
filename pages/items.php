@@ -25,27 +25,66 @@ if ($func == 'setstatus') {
 }
 
 if ('' == $func) {
-    $query = 'SELECT
+    // Suchparameter
+    $search = rex_request('search', 'string', '');
+
+    $list = rex_list::factory("SELECT
                 i.id,
                 s.namespace,
                 i.date,
                 i.media_filename,
                 s.type,
-                (CASE WHEN (i.title IS NULL or i.title = "")
+                (CASE WHEN (i.title IS NULL or i.title = '')
                     THEN i.content
                     ELSE i.title
                 END) as title,
                 i.url,
-                i.status
+                i.status,
+                i.author,
+                s.type as stream_type
             FROM
-                ' . rex_feeds_item::table() . ' AS i
+                " . rex_feeds_item::table() . " AS i
                 LEFT JOIN
-                    ' . rex_feeds_stream::table() . ' AS s
+                    " . rex_feeds_stream::table() . " AS s
                     ON  i.stream_id = s.id
-            ORDER BY i.date DESC, id DESC
-            ';
+            " . ($search ? "WHERE (i.title LIKE '%". $search ."%' 
+                    OR i.content LIKE '%". $search ."%' 
+                    OR s.namespace LIKE '%". $search ."%' 
+                    OR i.author LIKE '%". $search ."%')" : "") . "
+            ORDER BY i.date DESC, id DESC");
 
-    $list = rex_list::factory($query);
+    // Parameter an Liste übergeben
+    if ($search) {
+        $list->addParam('search', $search);
+    }
+
+    // Suchformular erstellen
+    $searchForm = '
+    <form action="' . rex_url::currentBackendPage() . '" method="get">
+        <input type="hidden" name="page" value="feeds/items" />
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="input-group">
+                    <input class="form-control" type="text" name="search" value="' . htmlspecialchars($search) . '" placeholder="' . rex_i18n::msg('feeds_search_term') . '" autofocus />
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" type="submit"><i class="rex-icon fa-search"></i> ' . rex_i18n::msg('feeds_search') . '</button>
+                        ' . ($search ? '<a class="btn btn-default" href="' . rex_url::currentBackendPage() . '"><i class="rex-icon fa-times"></i> ' . rex_i18n::msg('feeds_clear') . '</a>' : '') . '
+                    </span>
+                </div>
+            </div>
+            ' . ($search ? '
+            <div class="col-sm-12">
+                <div class="alert alert-info">
+                    ' . rex_i18n::msg('feeds_search_results') . ': ' . $list->getRows() . ' 
+                </div>
+            </div>' : '') . '
+        </div>
+    </form>';
+
+    $fragment = new rex_fragment();
+    $fragment->setVar('body', $searchForm, false);
+    $searchPanel = $fragment->parse('core/page/section.php');
+
     $list->addTableAttribute('class', 'table-striped');
 
     $list->addColumn('', '', 0, ['<th class="rex-table-icon">###VALUE###</th>', '<td class="rex-table-icon">###VALUE###</td>']);
@@ -53,7 +92,7 @@ if ('' == $func) {
     $list->setColumnFormat('', 'custom', function ($params) {
         /** @var rex_list $list */
         $list = $params['list'];
-        $type = explode('_', $list->getValue('s.type'));
+        $type = explode('_', $list->getValue('stream_type'));
         $icon = 'fa-paper-plane-o';
         if (isset($type[0])) {
             switch ($type[0]) {
@@ -85,22 +124,27 @@ if ('' == $func) {
 
     $list->removeColumn('id');
     $list->removeColumn('url');
-    $list->removeColumn('type');
+    $list->removeColumn('stream_type');
 
     $list->setColumnLabel('date', $this->i18n('item_date'));
-    $list->setColumnSortable('date', $direction = 'DESC');
+    $list->setColumnFormat('date', 'custom', function ($params) {
+        /** @var rex_list $list */
+        $list = $params['list'];
+        return rex_formatter::strftime($list->getValue('date'), 'datetime');
+    });
+    $list->setColumnSortable('date');
 
-    $list->setColumnLabel('namespace', $this->i18n('stream_namespace') . '/' . $this->i18n('stream_type'));
+    $list->setColumnLabel('namespace', $this->i18n('stream_namespace'));
     $list->setColumnFormat('namespace', 'custom', function ($params) {
         /** @var rex_list $list */
         $list = $params['list'];
         $namespace = $list->getValue('namespace');
-        $type = $list->getValue('type');
+        $type = $list->getValue('stream_type');
         $out = $namespace . '<br /><small>' . $type . '</small>';
         $out = '<span class="type' . (($list->getValue('status')) ? '' : ' text-muted') . '">' . $out . '</span>';
         return $out;
     });
-    $list->setColumnSortable('namespace', $direction = 'asc');
+    $list->setColumnSortable('namespace');
 
     $list->setColumnLabel('title', $this->i18n('item_title'));
     $list->setColumnFormat('title', 'custom', function ($params) {
@@ -108,7 +152,7 @@ if ('' == $func) {
         $list = $params['list'];
         $title = $list->getValue('title');
         if ($title === null) {
-            $title = ''; // Set to empty string if null
+            $title = '';
         }
         $title = rex_formatter::truncate($title, ['length' => 140]);
         $title .= ($list->getValue('url') != '') ? '<br /><small><a href="' . $list->getValue('url') . '" target="_blank">' . $list->getValue('url') . '</a></small>' : '';
@@ -123,13 +167,15 @@ if ('' == $func) {
         $item = rex_feeds_item::get($list->getValue('id'));
         
         if ($item && $item->getMediaFilename()) {
-            // Verwende die neue Methode zum Abrufen der Media Manager URL
             $media_url = $item->getMediaManagerUrl('feeds_thumb');
             return '<img class="thumbnail" src="'. $media_url.'" width="60" height="60" alt="" title="" loading="lazy">';
         }
         return '';
     });
 
+    $list->setColumnLabel('author', $this->i18n('item_author'));
+    $list->setColumnSortable('author');
+    
     $list->setColumnLabel('status', $this->i18n('status'));
     $list->setColumnParams('status', ['func' => 'setstatus', 'oldstatus' => '###status###', 'id' => '###id###']);
     $list->setColumnLayout('status', ['<th class="rex-table-action">###VALUE###</th>', '<td class="rex-table-action">###VALUE###</td>']);
@@ -155,6 +201,7 @@ if ('' == $func) {
     $fragment->setVar('content', $content, false);
     $content = $fragment->parse('core/page/section.php');
 
+    echo $searchPanel;
     echo $content;
 } else {
     $title = $func == 'edit' ? $this->i18n('item_edit') : $this->i18n('item_add');
@@ -208,11 +255,10 @@ if ('' == $func) {
         $field->setLabel($this->i18n('item_mediasource'));
     }
     
-    // Zeige das Bild im Formular, wenn vorhanden
     if ($form->isEditMode()) {
         $item = rex_feeds_item::get($id);
         if ($item && $item->getMediaFilename()) {
-            $form->addRawField('<div class="text-center"><img class="img-responsive" src="' . $item->getMediaUrl() . '"></div>');
+            $form->addRawField('<div class="text-center"><img class="img-responsive" src="' . $item->getMediaManagerUrl('feeds_thumb') . '"></div>');
         }
     }
 
