@@ -23,7 +23,7 @@ class rex_feeds_item
     private $author;
     private $username;
     private $language;
-    private $media_filename;  // New property for media filename
+    private $media_filename;
     private $mediasource;
     private $raw;
 
@@ -113,7 +113,86 @@ class rex_feeds_item
         }
     }
 
-    // ... [previous methods remain unchanged until getMedia()]
+    /**
+     * Get item title
+     * @return string title
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Get raw content
+     * @return string Raw content
+     */
+    public function getContentRaw()
+    {
+        return $this->contentRaw;
+    }
+
+    /**
+     * Get content
+     * @return string Content
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+    
+    /**
+     * Get database Id
+     * @return int Id
+     */
+    public function getId()
+    {
+        return $this->primaryId;
+    }
+    
+    /**
+     * Get URL
+     * @return string URL
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * Get datetime object
+     * @return DateTimeInterface Date
+     */
+    public function getDateTime()
+    {
+        return $this->date;
+    }
+
+    /**
+     * Get author
+     * @return string Authors name
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    /**
+     * Get username
+     * @return string username
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * Get language
+     * @return string Language
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
 
     /**
      * Get media filename
@@ -122,18 +201,6 @@ class rex_feeds_item
     public function getMediaFilename()
     {
         return $this->media_filename;
-    }
-
-    /**
-     * Get media url directly
-     * @return string|null Direct URL to the media file
-     */
-    public function getMediaUrl()
-    {
-        if (!$this->media_filename) {
-            return null;
-        }
-        return rex_feeds_media_helper::getMediaUrl($this->media_filename);
     }
 
     /**
@@ -148,11 +215,65 @@ class rex_feeds_item
             throw new rex_exception(__CLASS__.'::getMediaManagerUrl() can be used only when media_manager is activated.');
         }
 
-        if (!$this->media_filename) {
+        if (!$this->primaryId) {
             return null;
         }
 
-        return rex_media_manager::getUrl($type, $this->media_filename, $this->date->getTimestamp(), $escape);
+        return rex_media_manager::getUrl($type, $this->primaryId .'.feeds', $this->date ? $this->date->getTimestamp() : null, $escape);
+    }
+
+    /**
+     * Get raw data.
+     * @return string JSON encoded raw data
+     */
+    public function getRaw()
+    {
+        return $this->raw;
+    }
+    
+    public function setTitle($value)
+    {
+        $this->title = $value;
+    }
+
+    public function setType($value)
+    {
+        $this->type = $value;
+    }
+
+    public function setContentRaw($value)
+    {
+        $this->contentRaw = $value;
+    }
+
+    public function setContent($value)
+    {
+        $this->content = $value;
+    }
+
+    public function setUrl($value)
+    {
+        $this->url = $value;
+    }
+
+    public function setDate(DateTimeInterface $value)
+    {
+        $this->date = $value;
+    }
+
+    public function setAuthor($value)
+    {
+        $this->author = $value;
+    }
+
+    public function setUsername($value)
+    {
+        $this->username = $value;
+    }
+
+    public function setLanguage($value)
+    {
+        $this->language = $value;
     }
 
     /**
@@ -163,14 +284,45 @@ class rex_feeds_item
     {
         // Delete old media file if exists
         if ($this->media_filename) {
-            rex_feeds_media_helper::deleteMediaFile($this->media_filename);
+            $filepath = rex_feeds_media_helper::getMediaPath() . '/' . $this->media_filename;
+            if (file_exists($filepath)) {
+                unlink($filepath);
+            }
         }
 
         // Save new media file
         $this->media_filename = rex_feeds_media_helper::saveMediaFile($url, $this->streamId, $this->uid);
     }
 
-    // ... [previous methods remain unchanged until save()]
+    public function setMediaSource($value)
+    {
+        $this->mediasource = $value;
+    }
+
+    public function setRaw($value)
+    {
+        $this->raw = json_encode((array) $value);
+    }
+
+    public function setOnline($online)
+    {
+        $this->status = (bool) $online;
+    }
+
+    public function isOnline()
+    {
+        return $this->status;
+    }
+
+    public function exists()
+    {
+        return $this->exists;
+    }
+
+    public function changedByUser()
+    {
+        return $this->changedByUser;
+    }
 
     public function save()
     {
