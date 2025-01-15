@@ -75,7 +75,7 @@ if ('' == $func) {
             ' . ($search ? '
             <div class="col-sm-12">
                 <div class="alert alert-info">
-                    ' . rex_i18n::msg('search_results') . ': ' . $list->getRows() . ' 
+                    ' . rex_i18n::msg('feeds_search_results') . ': ' . $list->getRows() . ' 
                 </div>
             </div>' : '') . '
         </div>
