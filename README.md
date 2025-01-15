@@ -7,7 +7,8 @@ REDAXO Feed Aggregator
 ## Features
 
 * Abruf von YouTube-, Vimeo- und RSS-Streams.
-* Dauerhaftes Speichern der Beiträge und des Hauptmediums in einer Datenbank-Tabelle
+* Dauerhaftes Speichern der Beiträge
+* Speicherung des Hauptmediums Im data-Ordner des AddOns
 * Nachträgliche Aktualisierung der Beiträge (z.B. nach einem Update / einer Korrektur)
 * Erweiterbar durch eigene Feed-Provider
 * Feeds können in Watson gesucht werden `feed suchbegriff`
@@ -64,11 +65,24 @@ $items = $stream->getPreloadedItems(); // Standard gibt 5 Einträge zurück, son
 ?>
 ```
 
-# Bilder ausgeben mit dem Media Manager
+## Bilder ausgeben mit dem Media Manager
 
 Die Bilder eines Feeds werden im AddOn-Data-Ordner unter `data/addons/feeds/media` gespeichert. Für die Ausgabe der Bilder stehen zwei gleichwertige Möglichkeiten zur Verfügung.
 
-## 1. Klassische Methode (Legacy Support)
+### 1. Methode des Feed-Items
+
+Neu seit 5.0.0
+
+```php
+// Mit Media Manager Effekt
+$media_url = $item->getMediaManagerUrl('feeds_thumb');
+echo '<img src="'.$media_url.'" alt="Mein Bild">';
+```
+
+### 2. Direkt über de Mediamanager
+
+Dies ist die traditionelle Methode zur Ausgabe des Mediums.
+Wichtig hierbei die Endung `.feeds`. 
 
 ```php
 // $item ist ein rex_feeds_item Objekt
@@ -76,13 +90,6 @@ $media_url = rex_media_manager::getUrl('feeds_thumb', $item->getId() .'.feeds');
 echo '<img src="'.$media_url.'" alt="Mein Bild">';
 ```
 
-## 2. Methode des Feed-Items
-
-```php
-// Mit Media Manager Effekt
-$media_url = $item->getMediaManagerUrl('feeds_thumb');
-echo '<img src="'.$media_url.'" alt="Mein Bild">';
-```
 
 ## Komplettes Beispiel
 
