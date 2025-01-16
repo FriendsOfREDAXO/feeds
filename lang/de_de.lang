@@ -7,7 +7,8 @@ feeds_delete_question = Wirklich löschen?
 feeds_search = Suche
 feeds_clear = Zurücksetzen
 feeds_search_term = Suchbegriff
-feeds_search_results = Treffer
+feeds_search_results = Gefunden:
+feeds_all_namespaces = Alle Namesoaces
 
 feeds_items = Einträge
 feeds_item_author = Autor
