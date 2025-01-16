@@ -25,10 +25,16 @@ if ($func == 'setstatus') {
 }
 
 if ('' == $func) {
-    // Suchparameter
+    // Suchparameter und Filter
     $search = rex_request('search', 'string', '');
+    $namespace_filter = rex_request('namespace_filter', 'string', '');
 
-    $list = rex_list::factory("SELECT
+    // Hole verfügbare Namespaces für den Filter
+    $sql = rex_sql::factory();
+    $namespaces = $sql->getArray('SELECT DISTINCT namespace FROM ' . rex_feeds_stream::table() . ' ORDER BY namespace');
+
+    // Base Query
+    $query = "SELECT
                 i.id,
                 s.namespace,
                 i.date,
@@ -46,33 +52,64 @@ if ('' == $func) {
                 " . rex_feeds_item::table() . " AS i
                 LEFT JOIN
                     " . rex_feeds_stream::table() . " AS s
-                    ON  i.stream_id = s.id
-            " . ($search ? "WHERE (i.title LIKE '%". $search ."%' 
+                    ON  i.stream_id = s.id";
+
+    // WHERE Bedingungen
+    $where = [];
+    if ($search) {
+        $where[] = "(i.title LIKE '%". $search ."%' 
                     OR i.content LIKE '%". $search ."%' 
                     OR s.namespace LIKE '%". $search ."%' 
-                    OR i.author LIKE '%". $search ."%')" : "") . "
-            ORDER BY i.date DESC, id DESC");
+                    OR i.author LIKE '%". $search ."%')";
+    }
+    if ($namespace_filter) {
+        $where[] = "s.namespace = '". $namespace_filter ."'";
+    }
 
+    // WHERE Bedingungen zusammenführen
+    if (!empty($where)) {
+        $query .= " WHERE " . implode(' AND ', $where);
+    }
+
+    $query .= " ORDER BY i.date DESC, id DESC";
+
+    $list = rex_list::factory($query);
+    
     // Parameter an Liste übergeben
     if ($search) {
         $list->addParam('search', $search);
     }
+    if ($namespace_filter) {
+        $list->addParam('namespace_filter', $namespace_filter);
+    }
 
-    // Suchformular erstellen
+    // Suchformular mit Filter erstellen
     $searchForm = '
     <form action="' . rex_url::currentBackendPage() . '" method="get">
         <input type="hidden" name="page" value="feeds/items" />
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <select class="form-control selectpicker" data-live-search="true" name="namespace_filter" onchange="this.form.submit()">
+                        <option value="">' . rex_i18n::msg('feeds_all_namespaces') . '</option>';
+                        foreach ($namespaces as $n) {
+                            $searchForm .= '<option value="' . htmlspecialchars($n['namespace']) . '"' 
+                                . ($namespace_filter == $n['namespace'] ? ' selected' : '') 
+                                . '>' . htmlspecialchars($n['namespace']) . '</option>';
+                        }
+    $searchForm .= '</select>
+                </div>
+            </div>
+            <div class="col-sm-8">
                 <div class="input-group">
-                    <input class="form-control" type="text" name="search" value="' . htmlspecialchars($search) . '" placeholder="' . rex_i18n::msg('feeds_search_term') . '" autofocus />
+                    <input class="form-control" type="text" name="search" value="' . htmlspecialchars($search) . '" placeholder="' . rex_i18n::msg('feeds_search_term') . '" />
                     <span class="input-group-btn">
                         <button class="btn btn-primary" type="submit"><i class="rex-icon fa-search"></i> ' . rex_i18n::msg('feeds_search') . '</button>
-                        ' . ($search ? '<a class="btn btn-default" href="' . rex_url::currentBackendPage() . '"><i class="rex-icon fa-times"></i> ' . rex_i18n::msg('feeds_clear') . '</a>' : '') . '
+                        ' . (($search || $namespace_filter) ? '<a class="btn btn-default" href="' . rex_url::currentBackendPage() . '"><i class="rex-icon fa-times"></i> ' . rex_i18n::msg('feeds_clear') . '</a>' : '') . '
                     </span>
                 </div>
             </div>
-            ' . ($search ? '
+            ' . (($search || $namespace_filter) ? '
             <div class="col-sm-12">
                 <div class="alert alert-info">
                     ' . rex_i18n::msg('feeds_search_results') . ': ' . $list->getRows() . ' 
