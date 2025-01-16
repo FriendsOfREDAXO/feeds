@@ -23,6 +23,17 @@ class rex_feeds_stream_rss extends rex_feeds_stream_abstract
         return 'rss_' . substr(md5($url), 0, 30);
     }
 
+    private function log($msg, $data = [])
+    {
+        rex_logger::factory()->log(
+            'notice', 
+            $msg . ': ' . print_r($data, true), 
+            [], 
+            __FILE__, 
+            __LINE__
+        );
+    }
+
     public function fetch()
     {
         $client = new \FeedIo\Adapter\Http\Client(new Symfony\Component\HttpClient\HttplugClient());
@@ -31,6 +42,8 @@ class rex_feeds_stream_rss extends rex_feeds_stream_abstract
 
         try {
             $result = $feedIo->read($this->typeParams['url']);
+            
+            $this->log('Starting feed import', ['url' => $this->typeParams['url']]);
 
             /** @var Item $rssItem */
             foreach ($result->getFeed() as $rssItem) {
@@ -67,11 +80,12 @@ class rex_feeds_stream_rss extends rex_feeds_stream_abstract
                     // Get all media elements
                     $medias = $rssItem->getMedias();
                     foreach ($medias as $media) {
-                        rex_logger::logError(E_NOTICE, 'Found media in feed', [
+                        $this->log('Checking media', [
                             'type' => $media->getType(),
                             'url' => $media->getUrl(),
                             'title' => $title
-                        ], __FILE__, __LINE__);
+                        ]);
+                        
                         if (strpos($media->getType(), 'image/') === 0) {
                             $mediaUrl = $media->getUrl();
                             break;
@@ -81,36 +95,48 @@ class rex_feeds_stream_rss extends rex_feeds_stream_abstract
                     // Get all elements
                     $elements = iterator_to_array($rssItem->getAllElements());
                     foreach ($elements as $element) {
-                        if ($element->getName() === 'media:content') {
-                            $attributes = $element->getAttributes();
-                            rex_logger::logError(E_NOTICE, 'Found media:content', [
-                                'name' => $element->getName(),
-                                'attributes' => $attributes,
-                                'title' => $title
-                            ], __FILE__, __LINE__);
-                            if (isset($attributes['url'])) {
-                                if (!isset($attributes['type']) || 
-                                    strpos($attributes['type'], 'image/') === 0 ||
-                                    (isset($attributes['medium']) && $attributes['medium'] === 'image')) {
-                                    $mediaUrl = $attributes['url'];
-                                    break;
-                                }
+                        $name = $element->getName();
+                        $value = $element->getValue();
+                        $attributes = $element->getAttributes();
+                        
+                        $this->log('Checking element', [
+                            'name' => $name,
+                            'attributes' => $attributes,
+                            'title' => $title
+                        ]);
+
+                        // Wenn es ein media:content Element ist
+                        if ($name === 'media:content' && isset($attributes['url'])) {
+                            // Wenn es ein Bild ist
+                            if (!isset($attributes['type']) || 
+                                strpos($attributes['type'], 'image/') === 0 || 
+                                (isset($attributes['medium']) && $attributes['medium'] === 'image')) {
+                                $mediaUrl = $attributes['url'];
+                                break;
                             }
+                        }
+                    }
+
+                    // Content nach Bildern durchsuchen als letzte Option
+                    if (!$mediaUrl && $content) {
+                        if (preg_match('/<img[^>]+src=[\'"]([^\'"]+)[\'"][^>]*>/i', $content, $matches)) {
+                            $mediaUrl = $matches[1];
+                            $this->log('Found image in content', ['url' => $mediaUrl]);
                         }
                     }
 
                     // Set media if found
                     if ($mediaUrl) {
-                        rex_logger::logError(E_NOTICE, 'Setting media URL', [
+                        $this->log('Setting media URL', [
                             'url' => $mediaUrl,
                             'title' => $title
-                        ], __FILE__, __LINE__);
+                        ]);
                         $item->setMedia($mediaUrl);
                         $item->setMediaSource($mediaUrl);
                     } else {
-                        rex_logger::logError(E_NOTICE, 'No media URL found', [
+                        $this->log('No media URL found', [
                             'title' => $title
-                        ], __FILE__, __LINE__);
+                        ]);
                     }
 
                     $this->updateCount($item);
