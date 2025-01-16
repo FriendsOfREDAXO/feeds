@@ -18,6 +18,56 @@ class rex_feeds_stream_rss extends rex_feeds_stream_abstract
         ];
     }
 
+    private function generateUid($url)
+    {
+        return 'rss_' . substr(md5($url), 0, 30);
+    }
+
+    private function findMediaUrl($rssItem, $title)
+    {
+        // 1. Prüfe zuerst media:content Elemente
+        $elements = iterator_to_array($rssItem->getAllElements());
+        foreach ($elements as $element) {
+            if ($element->getName() === 'media:content') {
+                $attributes = $element->getAttributes();
+                if (isset($attributes['url'])) {
+                    return $attributes['url'];
+                }
+            }
+        }
+
+        // 2. Prüfe die MediaItems
+        $medias = $rssItem->getMedias();
+        foreach ($medias as $media) {
+            $type = $media->getType();
+            if (strpos($type, 'image/') === 0) {
+                return $media->getUrl();
+            }
+        }
+
+        // 3. Prüfe enclosure Elemente
+        foreach ($elements as $element) {
+            if ($element->getName() === 'enclosure') {
+                $attributes = $element->getAttributes();
+                if (isset($attributes['url']) && isset($attributes['type'])) {
+                    if (strpos($attributes['type'], 'image/') === 0) {
+                        return $attributes['url'];
+                    }
+                }
+            }
+        }
+
+        // 4. Prüfe auf Bilder im Content
+        $content = $rssItem->getContent();
+        if ($content) {
+            if (preg_match('/<img[^>]+src=[\'"]([^\'"]+)[\'"][^>]*>/i', $content, $matches)) {
+                return $matches[1];
+            }
+        }
+
+        return null;
+    }
+
     public function fetch()
     {
         $client = new \FeedIo\Adapter\Http\Client(new Symfony\Component\HttpClient\HttplugClient());
@@ -26,107 +76,37 @@ class rex_feeds_stream_rss extends rex_feeds_stream_abstract
 
         try {
             $result = $feedIo->read($this->typeParams['url']);
-
+            
             /** @var Item $rssItem */
             foreach ($result->getFeed() as $rssItem) {
                 try {
-                    // Sichere Extraktion der PublicId
-                    $publicId = $rssItem->getPublicId();
-                    if (empty($publicId)) {
-                        $publicId = uniqid('feed_', true);
+                    $url = $rssItem->getLink() ?: $rssItem->getPublicId();
+                    if (empty($url)) {
+                        $url = uniqid('feed_', true);
                     }
                     
-                    $item = new rex_feeds_item($this->streamId, $publicId);
-
-                    // Titel mit Fallback
+                    $uid = $this->generateUid($url);
                     $title = $rssItem->getTitle();
+                    
+                    $item = new rex_feeds_item($this->streamId, $uid);
+
+                    // Basis-Felder setzen
                     $item->setTitle($title ?: '');
+                    $content = $rssItem->getContent() ?: '';
+                    $item->setContentRaw($content);
+                    $item->setContent(strip_tags($content));
+                    $item->setUrl($rssItem->getLink() ?: '');
 
-                    // Content mit Fallback
-                    $content = '';
-                    
-                    // Versuche alle möglichen Content-Quellen
-                    $elements = iterator_to_array($rssItem->getAllElements());
-                    
-                    foreach ($elements as $element) {
-                        if ($element->getName() === 'content:encoded') {
-                            $content = $element->getValue();
-                            break;
-                        }
-                    }
-
-                    if (empty($content)) {
-                        $content = $rssItem->getContent();
-                    }
-
-                    if (empty($content)) {
-                        foreach ($elements as $element) {
-                            if ($element->getName() === 'description') {
-                                $content = $element->getValue();
-                                break;
-                            }
-                        }
-                    }
-
-                    $item->setContentRaw($content ?: '');
-                    $item->setContent($content ? strip_tags($content) : '');
-
-                    // URL/Link mit Fallback
-                    $link = $rssItem->getLink();
-                    $item->setUrl($link ?: '');
-
-                    // Datum mit Null-Check
-                    $lastModified = $rssItem->getLastModified();
-                    if ($lastModified) {
+                    if ($lastModified = $rssItem->getLastModified()) {
                         $item->setDate($lastModified);
                     }
 
-                    // Author mit Null-Check
                     $author = $rssItem->getAuthor();
                     $authorName = ($author && method_exists($author, 'getName')) ? $author->getName() : '';
                     $item->setAuthor($authorName);
 
-                    // Media-Handling mit speziellem Mastodon Support
-                    $mediaUrl = null;
-
-                    // 1. Prüfe media:content für Mastodon
-                    foreach ($elements as $element) {
-                        if ($element->getName() === 'media:content') {
-                            $attributes = $element->getAttributes();
-                            if (isset($attributes['url']) && isset($attributes['type'])) {
-                                // Prüfe ob es ein Bild ist (type startet mit image/)
-                                if (strpos($attributes['type'], 'image/') === 0 && $attributes['url']) {
-                                    $mediaUrl = $attributes['url'];
-                                    break;
-                                }
-                            }
-                        }
-                    }
-
-                    // 2. Wenn kein media:content Bild gefunden, prüfe enclosure
-                    if (!$mediaUrl) {
-                        foreach ($elements as $element) {
-                            if ($element->getName() === 'enclosure') {
-                                $attributes = $element->getAttributes();
-                                if (isset($attributes['url']) && isset($attributes['type'])) {
-                                    if (strpos($attributes['type'], 'image/') === 0) {
-                                        $mediaUrl = $attributes['url'];
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    // 3. Suche nach img-Tags in description/content
-                    if (!$mediaUrl && $content) {
-                        if (preg_match('/<img[^>]+src=[\'"]([^\'"]+)[\'"][^>]*>/i', $content, $matches)) {
-                            $mediaUrl = $matches[1];
-                        }
-                    }
-
-                    // Setze das Bild wenn gefunden
-                    if ($mediaUrl) {
+                    // Media URL finden und setzen
+                    if ($mediaUrl = $this->findMediaUrl($rssItem, $title)) {
                         $item->setMedia($mediaUrl);
                         $item->setMediaSource($mediaUrl);
                     }
