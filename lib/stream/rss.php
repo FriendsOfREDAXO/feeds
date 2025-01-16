@@ -1,14 +1,5 @@
 <?php
 
-/**
- * This file is part of the Feeds package.
- *
- * @author FriendsOfREDAXO
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 class rex_feeds_stream_rss extends rex_feeds_stream_abstract
 {
     public function getTypeName()
@@ -27,12 +18,9 @@ class rex_feeds_stream_rss extends rex_feeds_stream_abstract
         ];
     }
 
-    /**
-     * Generiert eine eindeutige UID für ein Feed-Item
-     */
     private function generateUid($url)
     {
-        return 'rss_' . substr(md5($url), 0, 30);  // 34 Zeichen gesamt
+        return 'rss_' . substr(md5($url), 0, 30);
     }
 
     public function fetch()
@@ -47,90 +35,63 @@ class rex_feeds_stream_rss extends rex_feeds_stream_abstract
             /** @var Item $rssItem */
             foreach ($result->getFeed() as $rssItem) {
                 try {
-                    // Sichere Extraktion der PublicId
                     $url = $rssItem->getLink() ?: $rssItem->getPublicId();
                     if (empty($url)) {
                         $url = uniqid('feed_', true);
                     }
                     
-                    // Generiere eine fixe Länge UID
                     $uid = $this->generateUid($url);
                     
                     $item = new rex_feeds_item($this->streamId, $uid);
 
-                    // Titel mit Fallback
+                    // Standard Item Processing...
                     $title = $rssItem->getTitle();
+                    $content = $rssItem->getContent();
+                    
                     $item->setTitle($title ?: '');
-
-                    // Content mit Fallback
-                    $content = '';
-                    
-                    // Versuche alle möglichen Content-Quellen
-                    $elements = iterator_to_array($rssItem->getAllElements());
-                    
-                    foreach ($elements as $element) {
-                        if ($element->getName() === 'content:encoded') {
-                            $content = $element->getValue();
-                            break;
-                        }
-                    }
-
-                    if (empty($content)) {
-                        $content = $rssItem->getContent();
-                    }
-
-                    if (empty($content)) {
-                        foreach ($elements as $element) {
-                            if ($element->getName() === 'description') {
-                                $content = $element->getValue();
-                                break;
-                            }
-                        }
-                    }
-
                     $item->setContentRaw($content ?: '');
                     $item->setContent($content ? strip_tags($content) : '');
-
-                    // URL/Link mit Fallback
-                    $link = $rssItem->getLink();
-                    $item->setUrl($link ?: '');
-
-                    // Datum mit Null-Check
-                    $lastModified = $rssItem->getLastModified();
-                    if ($lastModified) {
+                    $item->setUrl($rssItem->getLink() ?: '');
+                    
+                    if ($lastModified = $rssItem->getLastModified()) {
                         $item->setDate($lastModified);
                     }
 
-                    // Author mit Null-Check
                     $author = $rssItem->getAuthor();
                     $authorName = ($author && method_exists($author, 'getName')) ? $author->getName() : '';
                     $item->setAuthor($authorName);
 
-                    // Media-Handling für Mastodon Feeds
+                    // Media Processing
                     $mediaUrl = null;
 
-                    // 1. Media:Content prüfen
-                    foreach ($elements as $element) {
-                        if ($element->getName() === 'media:content') {
-                            $attributes = $element->getAttributes();
-                            if (isset($attributes['url']) && 
-                                (
-                                    isset($attributes['medium']) && $attributes['medium'] === 'image' ||
-                                    isset($attributes['type']) && strpos($attributes['type'], 'image/') === 0
-                                )
-                            ) {
-                                $mediaUrl = $attributes['url'];
-                                break;
-                            }
+                    // Get all media elements
+                    $medias = $rssItem->getMedias();
+                    foreach ($medias as $media) {
+                        rex_logger::logError(E_NOTICE, 'Found media in feed', [
+                            'type' => $media->getType(),
+                            'url' => $media->getUrl(),
+                            'title' => $title
+                        ], __FILE__, __LINE__);
+                        if (strpos($media->getType(), 'image/') === 0) {
+                            $mediaUrl = $media->getUrl();
+                            break;
                         }
                     }
 
-                    // 2. Wenn kein Media:Content Bild gefunden, prüfe Enclosure
-                    if (!$mediaUrl) {
-                        foreach ($elements as $element) {
-                            if ($element->getName() === 'enclosure') {
-                                $attributes = $element->getAttributes();
-                                if (isset($attributes['url']) && isset($attributes['type']) && strpos($attributes['type'], 'image/') === 0) {
+                    // Get all elements
+                    $elements = iterator_to_array($rssItem->getAllElements());
+                    foreach ($elements as $element) {
+                        if ($element->getName() === 'media:content') {
+                            $attributes = $element->getAttributes();
+                            rex_logger::logError(E_NOTICE, 'Found media:content', [
+                                'name' => $element->getName(),
+                                'attributes' => $attributes,
+                                'title' => $title
+                            ], __FILE__, __LINE__);
+                            if (isset($attributes['url'])) {
+                                if (!isset($attributes['type']) || 
+                                    strpos($attributes['type'], 'image/') === 0 ||
+                                    (isset($attributes['medium']) && $attributes['medium'] === 'image')) {
                                     $mediaUrl = $attributes['url'];
                                     break;
                                 }
@@ -138,17 +99,18 @@ class rex_feeds_stream_rss extends rex_feeds_stream_abstract
                         }
                     }
 
-                    // 3. Im Content suchen als letzte Option
-                    if (!$mediaUrl && $content) {
-                        if (preg_match('/<img[^>]+src=[\'"]([^\'"]+)[\'"][^>]*>/i', $content, $matches)) {
-                            $mediaUrl = $matches[1];
-                        }
-                    }
-
-                    // Setze das Bild wenn gefunden
+                    // Set media if found
                     if ($mediaUrl) {
+                        rex_logger::logError(E_NOTICE, 'Setting media URL', [
+                            'url' => $mediaUrl,
+                            'title' => $title
+                        ], __FILE__, __LINE__);
                         $item->setMedia($mediaUrl);
                         $item->setMediaSource($mediaUrl);
+                    } else {
+                        rex_logger::logError(E_NOTICE, 'No media URL found', [
+                            'title' => $title
+                        ], __FILE__, __LINE__);
                     }
 
                     $this->updateCount($item);
