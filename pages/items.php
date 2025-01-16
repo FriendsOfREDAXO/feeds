@@ -90,7 +90,7 @@ if ('' == $func) {
         <div class="row">
             <div class="col-sm-4">
                 <div class="form-group">
-                    <select class="form-control" name="namespace_filter" onchange="this.form.submit()">
+                    <select class="form-control select-picker" name="namespace_filter" onchange="this.form.submit()">
                         <option value="">' . rex_i18n::msg('feeds_all_namespaces') . '</option>';
                         foreach ($namespaces as $n) {
                             $searchForm .= '<option value="' . htmlspecialchars($n['namespace']) . '"' 
