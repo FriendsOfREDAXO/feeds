@@ -23,15 +23,49 @@ class rex_feeds_stream_rss extends rex_feeds_stream_abstract
         return 'rss_' . substr(md5($url), 0, 30);
     }
 
-    private function log($msg, $data = [])
+    private function findMediaUrl($rssItem, $title)
     {
-        rex_logger::factory()->log(
-            'notice', 
-            $msg . ': ' . print_r($data, true), 
-            [], 
-            __FILE__, 
-            __LINE__
-        );
+        // 1. Prüfe zuerst media:content Elemente
+        $elements = iterator_to_array($rssItem->getAllElements());
+        foreach ($elements as $element) {
+            if ($element->getName() === 'media:content') {
+                $attributes = $element->getAttributes();
+                if (isset($attributes['url'])) {
+                    return $attributes['url'];
+                }
+            }
+        }
+
+        // 2. Prüfe die MediaItems
+        $medias = $rssItem->getMedias();
+        foreach ($medias as $media) {
+            $type = $media->getType();
+            if (strpos($type, 'image/') === 0) {
+                return $media->getUrl();
+            }
+        }
+
+        // 3. Prüfe enclosure Elemente
+        foreach ($elements as $element) {
+            if ($element->getName() === 'enclosure') {
+                $attributes = $element->getAttributes();
+                if (isset($attributes['url']) && isset($attributes['type'])) {
+                    if (strpos($attributes['type'], 'image/') === 0) {
+                        return $attributes['url'];
+                    }
+                }
+            }
+        }
+
+        // 4. Prüfe auf Bilder im Content
+        $content = $rssItem->getContent();
+        if ($content) {
+            if (preg_match('/<img[^>]+src=[\'"]([^\'"]+)[\'"][^>]*>/i', $content, $matches)) {
+                return $matches[1];
+            }
+        }
+
+        return null;
     }
 
     public function fetch()
@@ -43,8 +77,6 @@ class rex_feeds_stream_rss extends rex_feeds_stream_abstract
         try {
             $result = $feedIo->read($this->typeParams['url']);
             
-            $this->log('Starting feed import', ['url' => $this->typeParams['url']]);
-
             /** @var Item $rssItem */
             foreach ($result->getFeed() as $rssItem) {
                 try {
@@ -54,18 +86,17 @@ class rex_feeds_stream_rss extends rex_feeds_stream_abstract
                     }
                     
                     $uid = $this->generateUid($url);
+                    $title = $rssItem->getTitle();
                     
                     $item = new rex_feeds_item($this->streamId, $uid);
 
-                    // Standard Item Processing...
-                    $title = $rssItem->getTitle();
-                    $content = $rssItem->getContent();
-                    
+                    // Basis-Felder setzen
                     $item->setTitle($title ?: '');
-                    $item->setContentRaw($content ?: '');
-                    $item->setContent($content ? strip_tags($content) : '');
+                    $content = $rssItem->getContent() ?: '';
+                    $item->setContentRaw($content);
+                    $item->setContent(strip_tags($content));
                     $item->setUrl($rssItem->getLink() ?: '');
-                    
+
                     if ($lastModified = $rssItem->getLastModified()) {
                         $item->setDate($lastModified);
                     }
@@ -74,69 +105,10 @@ class rex_feeds_stream_rss extends rex_feeds_stream_abstract
                     $authorName = ($author && method_exists($author, 'getName')) ? $author->getName() : '';
                     $item->setAuthor($authorName);
 
-                    // Media Processing
-                    $mediaUrl = null;
-
-                    // Get all media elements
-                    $medias = $rssItem->getMedias();
-                    foreach ($medias as $media) {
-                        $this->log('Checking media', [
-                            'type' => $media->getType(),
-                            'url' => $media->getUrl(),
-                            'title' => $title
-                        ]);
-                        
-                        if (strpos($media->getType(), 'image/') === 0) {
-                            $mediaUrl = $media->getUrl();
-                            break;
-                        }
-                    }
-
-                    // Get all elements
-                    $elements = iterator_to_array($rssItem->getAllElements());
-                    foreach ($elements as $element) {
-                        $name = $element->getName();
-                        $value = $element->getValue();
-                        $attributes = $element->getAttributes();
-                        
-                        $this->log('Checking element', [
-                            'name' => $name,
-                            'attributes' => $attributes,
-                            'title' => $title
-                        ]);
-
-                        // Wenn es ein media:content Element ist
-                        if ($name === 'media:content' && isset($attributes['url'])) {
-                            // Wenn es ein Bild ist
-                            if (!isset($attributes['type']) || 
-                                strpos($attributes['type'], 'image/') === 0 || 
-                                (isset($attributes['medium']) && $attributes['medium'] === 'image')) {
-                                $mediaUrl = $attributes['url'];
-                                break;
-                            }
-                        }
-                    }
-
-                    // Content nach Bildern durchsuchen als letzte Option
-                    if (!$mediaUrl && $content) {
-                        if (preg_match('/<img[^>]+src=[\'"]([^\'"]+)[\'"][^>]*>/i', $content, $matches)) {
-                            $mediaUrl = $matches[1];
-                            $this->log('Found image in content', ['url' => $mediaUrl]);
-                        }
-                    }
-
-                    // Set media if found
-                    if ($mediaUrl) {
-                        $this->log('Setting media URL', [
-                            'url' => $mediaUrl,
-                            'title' => $title
-                        ]);
+                    // Media URL finden und setzen
+                    if ($mediaUrl = $this->findMediaUrl($rssItem, $title)) {
                         $item->setMedia($mediaUrl);
                         $item->setMediaSource($mediaUrl);
-                    } else {
-                        $this->log('No media URL found', [
-                            'title' => $title
-                        ]);
                     }
 
                     $this->updateCount($item);
