@@ -1,4 +1,5 @@
 <?php
+
 class rex_feeds_stream_rss extends rex_feeds_stream_abstract
 {
     public function getTypeName()
@@ -85,26 +86,16 @@ class rex_feeds_stream_rss extends rex_feeds_stream_abstract
                     $authorName = ($author && method_exists($author, 'getName')) ? $author->getName() : '';
                     $item->setAuthor($authorName);
 
-                    // Media-Handling für Instagram RSS Feed
+                    // Media-Handling mit speziellem Mastodon Support
                     $mediaUrl = null;
 
-                    // 1. Prüfe enclosure
+                    // 1. Prüfe media:content für Mastodon
                     foreach ($elements as $element) {
-                        if ($element->getName() === 'enclosure') {
+                        if ($element->getName() === 'media:content') {
                             $attributes = $element->getAttributes();
-                            if (isset($attributes['url'])) {
-                                $mediaUrl = $attributes['url'];
-                                break;
-                            }
-                        }
-                    }
-
-                    // 2. Prüfe media:content wenn noch kein Bild gefunden
-                    if (!$mediaUrl) {
-                        foreach ($elements as $element) {
-                            if ($element->getName() === 'media:content') {
-                                $attributes = $element->getAttributes();
-                                if (isset($attributes['url'])) {
+                            if (isset($attributes['url']) && isset($attributes['type'])) {
+                                // Prüfe ob es ein Bild ist (type startet mit image/)
+                                if (strpos($attributes['type'], 'image/') === 0 && $attributes['url']) {
                                     $mediaUrl = $attributes['url'];
                                     break;
                                 }
@@ -112,7 +103,22 @@ class rex_feeds_stream_rss extends rex_feeds_stream_abstract
                         }
                     }
 
-                    // 3. Suche nach Bildern in description 
+                    // 2. Wenn kein media:content Bild gefunden, prüfe enclosure
+                    if (!$mediaUrl) {
+                        foreach ($elements as $element) {
+                            if ($element->getName() === 'enclosure') {
+                                $attributes = $element->getAttributes();
+                                if (isset($attributes['url']) && isset($attributes['type'])) {
+                                    if (strpos($attributes['type'], 'image/') === 0) {
+                                        $mediaUrl = $attributes['url'];
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    // 3. Suche nach img-Tags in description/content
                     if (!$mediaUrl && $content) {
                         if (preg_match('/<img[^>]+src=[\'"]([^\'"]+)[\'"][^>]*>/i', $content, $matches)) {
                             $mediaUrl = $matches[1];
@@ -122,6 +128,7 @@ class rex_feeds_stream_rss extends rex_feeds_stream_abstract
                     // Setze das Bild wenn gefunden
                     if ($mediaUrl) {
                         $item->setMedia($mediaUrl);
+                        $item->setMediaSource($mediaUrl);
                     }
 
                     $this->updateCount($item);
