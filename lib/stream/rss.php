@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * This file is part of the Feeds package.
+ *
+ * @author FriendsOfREDAXO
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 class rex_feeds_stream_rss extends rex_feeds_stream_abstract
 {
     public function getTypeName()
@@ -18,6 +27,14 @@ class rex_feeds_stream_rss extends rex_feeds_stream_abstract
         ];
     }
 
+    /**
+     * Generiert eine eindeutige UID für ein Feed-Item
+     */
+    private function generateUid($url)
+    {
+        return 'rss_' . substr(md5($url), 0, 30);  // 34 Zeichen gesamt
+    }
+
     public function fetch()
     {
         $client = new \FeedIo\Adapter\Http\Client(new Symfony\Component\HttpClient\HttplugClient());
@@ -31,12 +48,15 @@ class rex_feeds_stream_rss extends rex_feeds_stream_abstract
             foreach ($result->getFeed() as $rssItem) {
                 try {
                     // Sichere Extraktion der PublicId
-                    $publicId = $rssItem->getPublicId();
-                    if (empty($publicId)) {
-                        $publicId = uniqid('feed_', true);
+                    $url = $rssItem->getLink() ?: $rssItem->getPublicId();
+                    if (empty($url)) {
+                        $url = uniqid('feed_', true);
                     }
                     
-                    $item = new rex_feeds_item($this->streamId, $publicId);
+                    // Generiere eine fixe Länge UID
+                    $uid = $this->generateUid($url);
+                    
+                    $item = new rex_feeds_item($this->streamId, $uid);
 
                     // Titel mit Fallback
                     $title = $rssItem->getTitle();
@@ -86,49 +106,47 @@ class rex_feeds_stream_rss extends rex_feeds_stream_abstract
                     $authorName = ($author && method_exists($author, 'getName')) ? $author->getName() : '';
                     $item->setAuthor($authorName);
 
-                    // Media-Handling
+                    // Media-Handling für Mastodon Feeds
                     $mediaUrl = null;
-                    $mediaItems = [];
 
                     // 1. Media:Content prüfen
                     foreach ($elements as $element) {
                         if ($element->getName() === 'media:content') {
                             $attributes = $element->getAttributes();
-                            if (isset($attributes['url']) && (!isset($attributes['type']) || str_starts_with($attributes['type'], 'image/'))) {
-                                $mediaItems[] = [
-                                    'url' => $attributes['url'],
-                                    'type' => $attributes['type'] ?? 'image/jpeg'
-                                ];
+                            if (isset($attributes['url']) && 
+                                (
+                                    isset($attributes['medium']) && $attributes['medium'] === 'image' ||
+                                    isset($attributes['type']) && strpos($attributes['type'], 'image/') === 0
+                                )
+                            ) {
+                                $mediaUrl = $attributes['url'];
+                                break;
                             }
                         }
                     }
 
-                    // 2. Enclosure prüfen
-                    foreach ($elements as $element) {
-                        if ($element->getName() === 'enclosure') {
-                            $attributes = $element->getAttributes();
-                            if (isset($attributes['url']) && (!isset($attributes['type']) || str_starts_with($attributes['type'], 'image/'))) {
-                                $mediaItems[] = [
-                                    'url' => $attributes['url'],
-                                    'type' => $attributes['type'] ?? 'image/jpeg'
-                                ];
+                    // 2. Wenn kein Media:Content Bild gefunden, prüfe Enclosure
+                    if (!$mediaUrl) {
+                        foreach ($elements as $element) {
+                            if ($element->getName() === 'enclosure') {
+                                $attributes = $element->getAttributes();
+                                if (isset($attributes['url']) && isset($attributes['type']) && strpos($attributes['type'], 'image/') === 0) {
+                                    $mediaUrl = $attributes['url'];
+                                    break;
+                                }
                             }
                         }
                     }
 
-                    // 3. Im Content suchen
-                    if (empty($mediaItems) && $content) {
+                    // 3. Im Content suchen als letzte Option
+                    if (!$mediaUrl && $content) {
                         if (preg_match('/<img[^>]+src=[\'"]([^\'"]+)[\'"][^>]*>/i', $content, $matches)) {
-                            $mediaItems[] = [
-                                'url' => $matches[1],
-                                'type' => 'image/jpeg'
-                            ];
+                            $mediaUrl = $matches[1];
                         }
                     }
 
-                    // Erstes gefundenes Bild verwenden
-                    if (!empty($mediaItems)) {
-                        $mediaUrl = $mediaItems[0]['url'];
+                    // Setze das Bild wenn gefunden
+                    if ($mediaUrl) {
                         $item->setMedia($mediaUrl);
                         $item->setMediaSource($mediaUrl);
                     }
