@@ -57,8 +57,8 @@ class rex_feeds_item
                 AND     `uid` = :uid
                 LIMIT       1',
                 [
-                'stream_id' => $this->streamId,
-                'uid' => $this->uid,
+                    'stream_id' => $this->streamId,
+                    'uid' => $this->uid,
                 ]
             );
 
@@ -139,7 +139,7 @@ class rex_feeds_item
     {
         return $this->content;
     }
-    
+
     /**
      * Get database Id
      * @return int Id
@@ -148,7 +148,7 @@ class rex_feeds_item
     {
         return $this->primaryId;
     }
-    
+
     /**
      * Get URL
      * @return string URL
@@ -212,14 +212,46 @@ class rex_feeds_item
     public function getMediaManagerUrl($type, $escape = true)
     {
         if (!rex_addon::get('media_manager')->isAvailable()) {
-            throw new rex_exception(__CLASS__.'::getMediaManagerUrl() can be used only when media_manager is activated.');
+            throw new rex_exception(__CLASS__ . '::getMediaManagerUrl() can be used only when media_manager is activated.');
         }
 
         if (!$this->primaryId) {
             return null;
         }
 
-        return rex_media_manager::getUrl($type, $this->primaryId .'.feeds', $this->date ? $this->date->getTimestamp() : null, $escape);
+        return rex_media_manager::getUrl($type, $this->primaryId . '.feeds', $this->date ? $this->date->getTimestamp() : null, $escape);
+    }
+
+    /**
+     * Get media information including dimensions and format
+     * @param string $type Media Manager type
+     * @return array|null Array containing media information or null if not available
+     * @throws rex_exception If media_manager addon is not available
+     */
+    public function getMediaInfo($type)
+    {
+        if (!rex_addon::get('media_manager')->isAvailable()) {
+            throw new rex_exception(__CLASS__ . '::getMediaInfo() can be used only when media_manager is activated.');
+        }
+
+        if (!$this->primaryId) {
+            return null;
+        }
+
+        $file = $this->primaryId . '.feeds';
+        $media = rex_media_manager::create($type, $file)->getMedia();
+
+        if (!$media) {
+            return null;
+        }
+
+        return [
+            'format' => $media->getFormat(),
+            'width' => $media->getWidth(),
+            'height' => $media->getHeight(),
+            'filename' => $file,
+            'type' => $type
+        ];
     }
 
     /**
@@ -230,7 +262,7 @@ class rex_feeds_item
     {
         return $this->raw;
     }
-    
+
     public function setTitle($value)
     {
         $this->title = $value;
