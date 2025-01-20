@@ -57,7 +57,9 @@ $items = $stream->getPreloadedItems(); // Standard gibt 5 Einträge zurück, son
         // Titel ermitteln und alles verlinken
         print '<a href="'. $item->getUrl() .'" title="'. rex_escape($stream->getTitle()) .'">';
         // Bild ausgeben
+        if($item->getMediaFilename()) {
         print '<img src="'.rex_media_manager::getUrl($media_manager_type,$item->getId() .'.feeds').'"  alt="'. rex_escape($item->getTitle()) .'" title="'. rex_escape($item->getTitle()) .'">';
+        }
        print '<p>'.rex_escape($item->getContent()).'</p>';
        print '</a>';
     }
