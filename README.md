@@ -80,6 +80,18 @@ $media_url = $item->getMediaManagerUrl('feeds_thumb');
 echo '<img src="'.$media_url.'" alt="Mein Bild">';
 ```
 
+Ermitteln der Medie-Infos: 
+
+```php
+$mediaInfo = $item->getMediaInfo('mein_media_type'); 
+if ($mediaInfo) {
+    echo "Breite: " . $mediaInfo['width'];
+    echo "Höhe: " . $mediaInfo['height'];
+    echo "Format: " . $mediaInfo['format'];
+}
+```
+
+
 ### 2. Direkt über de Mediamanager
 
 Dies ist die traditionelle Methode zur Ausgabe des Mediums.
