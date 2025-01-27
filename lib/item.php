@@ -230,28 +230,33 @@ class rex_feeds_item
      */
     public function getMediaInfo($type)
     {
-        if (!rex_addon::get('media_manager')->isAvailable()) {
-            throw new rex_exception(__CLASS__ . '::getMediaInfo() can be used only when media_manager is activated.');
-        }
+    if (!rex_addon::get('media_manager')->isAvailable()) {
+        throw new rex_exception(__CLASS__ . '::getMediaInfo() can be used only when media_manager is activated.');
+    }
 
-        if (!$this->primaryId) {
-            return null;
-        }
+    if (!$this->primaryId) {
+        return null;
+    }
 
-        $file = $this->primaryId . '.feeds';
-        $media = rex_media_manager::create($type, $file)->getMedia();
+    // Get the actual media filename from the database
+    if (!$this->media_filename) {
+        return null;
+    }
 
-        if (!$media) {
-            return null;
-        }
+    // Use the actual media filename instead of {id}.feeds
+    $media = rex_media_manager::create($type, $this->media_filename)->getMedia();
 
-        return [
-            'format' => $media->getFormat(),
-            'width' => $media->getWidth(),
-            'height' => $media->getHeight(),
-            'filename' => $file,
-            'type' => $type
-        ];
+    if (!$media) {
+        return null;
+    }
+
+    return [
+        'format' => pathinfo($this->media_filename, PATHINFO_EXTENSION),
+        'width' => $media->getWidth(),
+        'height' => $media->getHeight(),
+        'filename' => $this->media_filename,
+        'type' => $type
+    ];
     }
 
     /**
