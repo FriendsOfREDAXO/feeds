@@ -206,10 +206,11 @@ class rex_feeds_item
     /**
      * Get media manager url
      * @param string $type Media Manager type
+     * @param bool $useOriginalFilename Whether to use the original filename instead of ID.feeds
      * @param bool $escape Whether to escape the URL
      * @return string|null Media Manager URL
      */
-    public function getMediaManagerUrl($type, $escape = true)
+    public function getMediaManagerUrl($type, $useOriginalFilename = false, $escape = true)
     {
         if (!rex_addon::get('media_manager')->isAvailable()) {
             throw new rex_exception(__CLASS__ . '::getMediaManagerUrl() can be used only when media_manager is activated.');
@@ -219,7 +220,16 @@ class rex_feeds_item
             return null;
         }
 
-        return rex_media_manager::getUrl($type, $this->primaryId . '.feeds', $this->date ? $this->date->getTimestamp() : null, $escape);
+        $filename = $useOriginalFilename && $this->media_filename
+            ? $this->media_filename
+            : $this->primaryId . '.feeds';
+
+        return rex_media_manager::getUrl(
+            $type,
+            $filename,
+            $this->date ? $this->date->getTimestamp() : null,
+            $escape
+        );
     }
 
     /**
@@ -238,18 +248,23 @@ class rex_feeds_item
             return null;
         }
 
-        $file = $this->primaryId . '.feeds';
-        $media = rex_media_manager::create($type, $file)->getMedia();
+        // Get the actual media filename from the database
+        if (!$this->media_filename) {
+            return null;
+        }
+
+        // Use the actual media filename instead of {id}.feeds
+        $media = rex_media_manager::create($type, $this->media_filename)->getMedia();
 
         if (!$media) {
             return null;
         }
 
         return [
-            'format' => $media->getFormat(),
+            'format' => pathinfo($this->media_filename, PATHINFO_EXTENSION),
             'width' => $media->getWidth(),
             'height' => $media->getHeight(),
-            'filename' => $file,
+            'filename' => $this->media_filename,
             'type' => $type
         ];
     }
