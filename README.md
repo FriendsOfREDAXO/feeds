@@ -80,7 +80,7 @@ $media_url = $item->getMediaManagerUrl('feeds_thumb');
 echo '<img src="'.$media_url.'" alt="Mein Bild">';
 ```
 
-Ermitteln der Medie-Infos: 
+Ermitteln der Medien-Infos: 
 
 ```php
 $mediaInfo = $item->getMediaInfo('mein_media_type'); 
