@@ -86,11 +86,11 @@ public static function saveMediaFile($url, $streamId, $itemId)
                 }
             } else {
                 // Log invalid image
-                rex_logger::logError(E_WARNING, 'Invalid image file from URL: ' . $url, __FILE__, __LINE__);
+                // rex_logger::logError(E_WARNING, 'Invalid image file from URL: ' . $url, __FILE__, __LINE__);
             }
         } else {
             // Log failed download
-            rex_logger::logError(E_WARNING, 'Failed to download image from URL: ' . $url, __FILE__, __LINE__);
+            // rex_logger::logError(E_WARNING, 'Failed to download image from URL: ' . $url, __FILE__, __LINE__);
         }
     } catch (Exception $e) {
         rex_logger::logException($e);
