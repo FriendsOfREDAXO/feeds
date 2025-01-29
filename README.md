@@ -92,7 +92,7 @@ if ($mediaInfo) {
 ```
 
 
-### 2. Direkt über de Mediamanager
+### 2. Direkt über den Mediamanager
 
 Dies ist die traditionelle Methode zur Ausgabe des Mediums.
 Wichtig hierbei die Endung `.feeds`. 
