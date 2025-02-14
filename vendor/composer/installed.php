@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'fa22ba34fdd869ed67d620803c3cb6e40221de61',
+        'reference' => '95a8dcd5e868a84e2d7ef63fdfe8aee60aca2a64',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'fa22ba34fdd869ed67d620803c3cb6e40221de61',
+            'reference' => '95a8dcd5e868a84e2d7ef63fdfe8aee60aca2a64',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -131,8 +131,8 @@
         'psr/http-factory-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '*',
-                1 => '1.0',
+                0 => '1.0',
+                1 => '*',
             ),
         ),
         'psr/http-message' => array(
@@ -144,8 +144,8 @@
         'psr/http-message-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '*',
-                1 => '1.0',
+                0 => '1.0',
+                1 => '*',
             ),
         ),
         'psr/log' => array(
@@ -164,9 +164,9 @@
             'dev_requirement' => false,
         ),
         'symfony/http-client' => array(
-            'pretty_version' => 'v7.2.2',
-            'version' => '7.2.2.0',
-            'reference' => '339ba21476eb184290361542f732ad12c97591ec',
+            'pretty_version' => 'v7.2.3',
+            'version' => '7.2.3.0',
+            'reference' => '7ce6078c79a4a7afff931c413d2959d3bffbfb8d',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/http-client',
             'aliases' => array(),
