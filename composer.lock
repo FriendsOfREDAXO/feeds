@@ -830,16 +830,16 @@
         },
         {
             "name": "vimeo/vimeo-api",
-            "version": "3.0.10",
+            "version": "3.0.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/vimeo.php.git",
-                "reference": "79885b642594b17f6c356dc949d3e4a58c356c9b"
+                "reference": "55dfb9752ec0a5b5cbc4757a3fc52a8a51da69e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/vimeo.php/zipball/79885b642594b17f6c356dc949d3e4a58c356c9b",
-                "reference": "79885b642594b17f6c356dc949d3e4a58c356c9b",
+                "url": "https://api.github.com/repos/vimeo/vimeo.php/zipball/55dfb9752ec0a5b5cbc4757a3fc52a8a51da69e5",
+                "reference": "55dfb9752ec0a5b5cbc4757a3fc52a8a51da69e5",
                 "shasum": ""
             },
             "require": {
@@ -877,9 +877,9 @@
             ],
             "support": {
                 "issues": "https://github.com/vimeo/vimeo.php/issues",
-                "source": "https://github.com/vimeo/vimeo.php/tree/3.0.10"
+                "source": "https://github.com/vimeo/vimeo.php/tree/3.0.12"
             },
-            "time": "2022-02-18T14:05:55+00:00"
+            "time": "2025-06-04T18:14:29+00:00"
         }
     ],
     "packages-dev": [],
