@@ -88,11 +88,14 @@ class Stream
             return self::$streams;
         }
 
-        $files = glob(__DIR__ . '/stream/' . '*.php');
+        $files = glob(__DIR__ . '/Stream/' . '*.php');
         if ($files) {
             foreach ($files as $file) {
-                $type = substr(basename($file), 0, -4);
-                self::$streams[$type] = 'FriendsOfRedaxo\\Feeds\\Stream\\' . ucfirst($type);
+                $filename = basename($file, '.php');
+                if ($filename !== 'AbstractStream') {
+                    $type = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $filename));
+                    self::$streams[$type] = 'FriendsOfRedaxo\\Feeds\\Stream\\' . $filename;
+                }
             }
         }
         $loaded = true;
