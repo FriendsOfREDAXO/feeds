@@ -1,17 +1,28 @@
 <?php
 
-class rex_feeds_stream_rss extends rex_feeds_stream_abstract
+/**
+ * This file is part of the Feeds package.
+ *
+ * @author FriendsOfREDAXO
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace FriendsOfRedaxo\Feeds\Stream;
+
+class Rss extends AbstractStream
 {
     public function getTypeName()
     {
-        return rex_i18n::msg('feeds_rss_feed');
+        return \rex_i18n::msg('feeds_rss_feed');
     }
 
     public function getTypeParams()
     {
         return [
             [
-                'label' => rex_i18n::msg('feeds_rss_url'),
+                'label' => \rex_i18n::msg('feeds_rss_url'),
                 'name' => 'url',
                 'type' => 'string',
             ],
@@ -88,7 +99,7 @@ class rex_feeds_stream_rss extends rex_feeds_stream_abstract
                     $uid = $this->generateUid($url);
                     $title = $rssItem->getTitle();
                     
-                    $item = new rex_feeds_item($this->streamId, $uid);
+                    $item = new \FriendsOfRedaxo\Feeds\Item($this->streamId, $uid);
 
                     // Basis-Felder setzen
                     $item->setTitle($title ?: '');
@@ -114,17 +125,17 @@ class rex_feeds_stream_rss extends rex_feeds_stream_abstract
                     $this->updateCount($item);
                     $item->save();
 
-                } catch (Exception $e) {
-                    rex_logger::logException($e);
+                } catch (\Exception $e) {
+                    \rex_logger::logException($e);
                     continue;
                 }
             }
 
             self::registerExtensionPoint($this->streamId);
 
-        } catch (Exception $e) {
-            rex_logger::logException($e);
-            echo rex_view::error($e->getMessage());
+        } catch (\Exception $e) {
+            \rex_logger::logException($e);
+            echo \rex_view::error($e->getMessage());
         }
     }
 }

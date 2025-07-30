@@ -9,14 +9,16 @@
  * file that was distributed with this source code.
  */
 
-class rex_feeds_stream
+namespace FriendsOfRedaxo\Feeds;
+
+class Stream
 {
     private static $streams = [];
 
     /**
      * @param int $id
      *
-     * @return rex_feeds_stream_abstract|null
+     * @return \FriendsOfRedaxo\Feeds\Stream\AbstractStream|null
      */
     public static function get($id)
     {
@@ -32,20 +34,20 @@ class rex_feeds_stream
     }
 
     /**
-     * @return rex_feeds_stream_abstract[]
+     * @return \FriendsOfRedaxo\Feeds\Stream\AbstractStream[]
      */
     public static function getAllActivated()
     {
         $sql = rex_sql::factory();
         $data = $sql->getArray('SELECT * FROM ' . self::table() . ' WHERE `status` = 1');
 
-        return array_map('rex_feeds_stream::create', $data);
+        return array_map('FriendsOfRedaxo\Feeds\Stream::create', $data);
     }
 
     /**
      * @param array $data
      *
-     * @return rex_feeds_stream_abstract
+     * @return \FriendsOfRedaxo\Feeds\Stream\AbstractStream
      * @throws rex_exception
      */
     public static function create(array $data)
@@ -60,7 +62,7 @@ class rex_feeds_stream
             throw new rex_exception('The feeds stream type is not supported');
         }
 
-        /** @var rex_feeds_stream_abstract $stream */
+        /** @var \FriendsOfRedaxo\Feeds\Stream\AbstractStream $stream */
         $stream = new $streams[$type]();
         if (isset($data['type_params'])) {
             $stream->setTypeParams(json_decode($data['type_params'], true));
@@ -90,7 +92,7 @@ class rex_feeds_stream
         if ($files) {
             foreach ($files as $file) {
                 $type = substr(basename($file), 0, -4);
-                self::$streams[$type] = 'rex_feeds_stream_'.$type;
+                self::$streams[$type] = 'FriendsOfRedaxo\\Feeds\\Stream\\' . ucfirst($type);
             }
         }
         $loaded = true;
@@ -100,7 +102,7 @@ class rex_feeds_stream
 
     public static function addStream($class, $type = null)
     {
-        $type = $type ?: str_replace(['rex_', 'feeds_', 'stream_'], '', $class);
+        $type = $type ?: str_replace(['FriendsOfRedaxo\\Feeds\\Stream\\'], '', $class);
         self::$streams[$type] = $class;
     }
 }

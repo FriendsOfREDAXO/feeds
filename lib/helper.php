@@ -9,7 +9,9 @@
  * file that was distributed with this source code.
  */
 
-class rex_feeds_helper
+namespace FriendsOfRedaxo\Feeds;
+
+class Helper
 {
     /**
      * Generates the data uri for a remote resource
@@ -20,7 +22,7 @@ class rex_feeds_helper
      */
     public static function getDataUri($url)
     {
-        $response = rex_socket::factoryUrl($url)->doGet();
+        $response = \rex_socket::factoryUrl($url)->doGet();
         $mimeType = $response->getHeader('content-type');
         $uri = 'data:'.$mimeType;
 

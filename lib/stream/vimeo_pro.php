@@ -9,38 +9,40 @@
  * file that was distributed with this source code.
  */
 
+namespace FriendsOfRedaxo\Feeds\Stream;
+
 use Vimeo\Vimeo;
 
-class rex_feeds_stream_vimeo_pro extends rex_feeds_stream_abstract
+class VimeoPro extends AbstractStream
 {
     public function getTypeName()
     {
-        return rex_i18n::msg('feeds_vimeo_pro_user');
+        return \rex_i18n::msg('feeds_vimeo_pro_user');
     }
 
     public function getTypeParams()
     {
         return [
             [
-                'label' => rex_i18n::msg('feeds_vimeo_user_id'),
+                'label' => \rex_i18n::msg('feeds_vimeo_user_id'),
                 'name' => 'client_id',
                 'type' => 'string',
             ],
             [
-                'label' => rex_i18n::msg('feeds_vimeo_access_token'),
+                'label' => \rex_i18n::msg('feeds_vimeo_access_token'),
                 'name' => 'access_token',
                 'type' => 'string',
             ],
             [
-                'label' => rex_i18n::msg('feeds_vimeo_client_secret'),
+                'label' => \rex_i18n::msg('feeds_vimeo_client_secret'),
                 'name' => 'client_secret',
                 'type' => 'string',
             ],
             [
-                'label' => rex_i18n::msg('feeds_vimeo_view'),
+                'label' => \rex_i18n::msg('feeds_vimeo_view'),
                 'name' => 'view',
                 'type' => 'select',
-                'options' => ['' => rex_i18n::msg('feeds_vimeo_all'), 'public' => rex_i18n::msg('feeds_vimeo_public')],
+                'options' => ['' => \rex_i18n::msg('feeds_vimeo_all'), 'public' => \rex_i18n::msg('feeds_vimeo_public')],
                 'default' => 'public',
             ],
         ];
@@ -67,7 +69,7 @@ class rex_feeds_stream_vimeo_pro extends rex_feeds_stream_abstract
         foreach ($videos as $video) {
             $uri = $video['uri'];
             $uri = str_replace("/videos/", "", $uri);
-            $item = new rex_feeds_item($this->streamId, $uri);
+            $item = new \FriendsOfRedaxo\Feeds\Item($this->streamId, $uri);
 
             if ($this->typeParams['view'] === 'public') {
                 // only Videos with View-Right

@@ -9,7 +9,9 @@
  * file that was distributed with this source code.
  */
 
-class rex_feeds_item
+namespace FriendsOfRedaxo\Feeds;
+
+class Item
 {
     private $streamId;
     private $uid;
@@ -80,34 +82,34 @@ class rex_feeds_item
 
     /**
      * Read object stored in database
-     * @param rex_feeds_item $rex_feeds_item
-     * @return rex_feeds_item Feeds item or null if not found
+     * @param \FriendsOfRedaxo\Feeds\Item $item
+     * @return \FriendsOfRedaxo\Feeds\Item|null Feeds item or null if not found
      */
     public static function get($id)
     {
-        $rex_feeds_item = new rex_feeds_item();
-        $rex_feeds_item->primaryId = $id;
+        $item = new Item();
+        $item->primaryId = $id;
 
         $sql = rex_sql::factory();
         $sql->setQuery('SELECT * FROM ' . self::table() . ' WHERE `id` = ' . $id);
 
         if ($sql->getRows()) {
-            $rex_feeds_item->changedByUser = $sql->getValue('changed_by_user') == '1' ? true : false;
-            $rex_feeds_item->exists = $sql->getValue('changed_by_user') == '1' ? false : true;
-            $rex_feeds_item->streamId = $sql->getValue('stream_id');
-            $rex_feeds_item->uid = $sql->getValue('uid');
-            $rex_feeds_item->title = $sql->getValue('title');
-            $rex_feeds_item->content = $sql->getValue('content');
-            $rex_feeds_item->contentRaw = $sql->getValue('content_raw');
-            $rex_feeds_item->url = $sql->getValue('url');
-            $rex_feeds_item->date = new DateTimeImmutable($sql->getValue('date'));
-            $rex_feeds_item->author = $sql->getValue('author');
-            $rex_feeds_item->username = $sql->getValue('username');
-            $rex_feeds_item->language = $sql->getValue('language');
-            $rex_feeds_item->media_filename = $sql->getValue('media_filename');
-            $rex_feeds_item->raw = $sql->getValue('raw');
-            $rex_feeds_item->status = $sql->getValue('changed_by_user') == '1' ? true : false;
-            return $rex_feeds_item;
+            $item->changedByUser = $sql->getValue('changed_by_user') == '1' ? true : false;
+            $item->exists = $sql->getValue('changed_by_user') == '1' ? false : true;
+            $item->streamId = $sql->getValue('stream_id');
+            $item->uid = $sql->getValue('uid');
+            $item->title = $sql->getValue('title');
+            $item->content = $sql->getValue('content');
+            $item->contentRaw = $sql->getValue('content_raw');
+            $item->url = $sql->getValue('url');
+            $item->date = new \DateTimeImmutable($sql->getValue('date'));
+            $item->author = $sql->getValue('author');
+            $item->username = $sql->getValue('username');
+            $item->language = $sql->getValue('language');
+            $item->media_filename = $sql->getValue('media_filename');
+            $item->raw = $sql->getValue('raw');
+            $item->status = $sql->getValue('changed_by_user') == '1' ? true : false;
+            return $item;
         } else {
             return null;
         }
@@ -160,7 +162,7 @@ class rex_feeds_item
 
     /**
      * Get datetime object
-     * @return DateTimeInterface Date
+     * @return \DateTimeInterface Date
      */
     public function getDateTime()
     {
@@ -303,7 +305,7 @@ class rex_feeds_item
         $this->url = $value;
     }
 
-    public function setDate(DateTimeInterface $value)
+    public function setDate(\DateTimeInterface $value)
     {
         $this->date = $value;
     }
@@ -331,14 +333,14 @@ class rex_feeds_item
     {
         // Delete old media file if exists
         if ($this->media_filename) {
-            $filepath = rex_feeds_media_helper::getMediaPath() . '/' . $this->media_filename;
+            $filepath = \FriendsOfRedaxo\Feeds\MediaHelper::getMediaPath() . '/' . $this->media_filename;
             if (file_exists($filepath)) {
                 unlink($filepath);
             }
         }
 
         // Save new media file
-        $this->media_filename = rex_feeds_media_helper::saveMediaFile($url, $this->streamId, $this->uid);
+        $this->media_filename = \FriendsOfRedaxo\Feeds\MediaHelper::saveMediaFile($url, $this->streamId, $this->uid);
     }
 
     public function setMediaSource($value)

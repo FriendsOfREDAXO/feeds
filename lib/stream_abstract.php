@@ -9,7 +9,9 @@
  * file that was distributed with this source code.
  */
 
-abstract class rex_feeds_stream_abstract
+namespace FriendsOfRedaxo\Feeds\Stream;
+
+abstract class AbstractStream
 {
     protected $typeParams = [];
     protected $streamId;
@@ -38,7 +40,7 @@ abstract class rex_feeds_stream_abstract
 	/**
 	 * Get in Feeds database stored items belonging to this stream orderd by date.
 	 * @param int $number Number of items to be returned
-	 * @return \rex_feeds_item[] Array with item objects
+	 * @return \FriendsOfRedaxo\Feeds\Item[] Array with item objects
 	 */
 	public function getPreloadedItems($number = 5, $orderBy = 'date')
 	{
@@ -47,7 +49,7 @@ abstract class rex_feeds_stream_abstract
 		$result->setQuery('SELECT id FROM '. rex::getTablePrefix() .'feeds_item WHERE status = 1 AND stream_id = '. $this->streamId .' ORDER BY '.$orderBy.' DESC LIMIT 0, '. $number .';');
 
 		for ($i = 0; $i < $result->getRows(); $i++) {
-			$item = rex_feeds_item::get($result->getValue('id'));
+			$item = \FriendsOfRedaxo\Feeds\Item::get($result->getValue('id'));
 			if($item != null) {
 				$items[] = $item;
 			}
@@ -105,7 +107,7 @@ abstract class rex_feeds_stream_abstract
 
     abstract public function fetch();
 
-    protected function updateCount(rex_feeds_item $item)
+    protected function updateCount(\FriendsOfRedaxo\Feeds\Item $item)
     {
         if ($item->changedByUser()) {
             ++$this->countNotUpdatedChangedByUser;

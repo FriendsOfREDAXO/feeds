@@ -9,7 +9,9 @@
  * file that was distributed with this source code.
  */
 
-class rex_cronjob_feeds extends rex_cronjob
+namespace FriendsOfRedaxo\Feeds;
+
+class Cronjob extends \rex_cronjob
 {
     public function execute()
     {
@@ -20,7 +22,7 @@ class rex_cronjob_feeds extends rex_cronjob
             $streamlist = explode('|', $this->getParam('stream_list'));
         }
 
-        foreach (rex_feeds_stream::getAllActivated() as $stream) {
+        foreach (Stream::getAllActivated() as $stream) {
 
             if (in_array($stream->getStreamId(),  $streamlist) || !$this->getParam('stream_list') || $this->getParam('stream_list') === '') {
                 $streams[] = $stream;
@@ -64,7 +66,7 @@ class rex_cronjob_feeds extends rex_cronjob
     public function getParamFields()
     {
         $options = [];
-        foreach (rex_feeds_stream::getAllActivated() as $stream) {
+        foreach (Stream::getAllActivated() as $stream) {
             $options[$stream->getStreamId()] = $stream->getTitle();
         }
 

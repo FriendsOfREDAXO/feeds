@@ -7,20 +7,23 @@
  * @author cukabeka
  *
  */
-class rex_feeds_stream_ics extends rex_feeds_stream_abstract
+
+namespace FriendsOfRedaxo\Feeds\Stream;
+
+class Ics extends AbstractStream
 {
     public function getTypeName()
     {
-        return rex_i18n::msg('feeds_ical_calendar');
+        return \rex_i18n::msg('feeds_ical_calendar');
     }
 
     public function getTypeParams()
     {
         return [
             [
-                'label' => rex_i18n::msg('feeds_ical_url'),
+                'label' => \rex_i18n::msg('feeds_ical_url'),
                 'name' => 'url',
-                'lang' => rex_i18n::msg('feeds_ical_lang'),
+                'lang' => \rex_i18n::msg('feeds_ical_lang'),
                 'type' => 'string',
             ],
         ];
@@ -33,12 +36,12 @@ class rex_feeds_stream_ics extends rex_feeds_stream_abstract
     try {
         $icsData = file_get_contents($url);
         if ($icsData === false) {
-            throw new Exception("Fehler beim Abruf der ICS-Datei.");
+            throw new \Exception("Fehler beim Abruf der ICS-Datei.");
         }
 
         $events = $this->parseIcs($icsData);
         foreach ($events as $event) {
-            $item = new rex_feeds_item($this->streamId, $event['UID']);
+            $item = new \FriendsOfRedaxo\Feeds\Item($this->streamId, $event['UID']);
             $item->setTitle($event['SUMMARY']);
             $item->setContent(isset($event['DESCRIPTION']) ? $event['DESCRIPTION'] : '');
             $item->setUrl(isset($event['URL']) ? $event['URL'] : '');
@@ -52,8 +55,8 @@ class rex_feeds_stream_ics extends rex_feeds_stream_abstract
             $this->updateCount($item);
             $item->save();
         }
-    } catch (Exception $e) {
-        echo rex_view::error($e->getMessage());
+    } catch (\Exception $e) {
+        echo \rex_view::error($e->getMessage());
     }
 }
 

@@ -42,6 +42,7 @@ class ComposerStaticInit2ab140e0e911df606a4d946200920c6b
         ),
         'F' => 
         array (
+            'FriendsOfRedaxo\\Feeds\\' => 22,
             'FeedIo\\' => 7,
         ),
     );
@@ -90,6 +91,10 @@ class ComposerStaticInit2ab140e0e911df606a4d946200920c6b
         'Http\\Client\\' => 
         array (
             0 => __DIR__ . '/..' . '/php-http/httplug/src',
+        ),
+        'FriendsOfRedaxo\\Feeds\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/lib',
         ),
         'FeedIo\\' => 
         array (

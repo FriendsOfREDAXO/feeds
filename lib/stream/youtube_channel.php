@@ -9,32 +9,34 @@
  * file that was distributed with this source code.
  */
 
+namespace FriendsOfRedaxo\Feeds\Stream;
+
 use Madcoda\Youtube\Youtube;
 
-class rex_feeds_stream_youtube_channel extends rex_feeds_stream_youtube_playlist
+class YoutubeChannel extends YoutubePlaylist
 {
     public function getTypeName()
     {
-        return rex_i18n::msg('feeds_youtube_channel');
+        return \rex_i18n::msg('feeds_youtube_channel');
     }
 
     public function getTypeParams()
     {
         return [
             [
-                'label' => rex_i18n::msg('feeds_youtube_channel_id'),
+                'label' => \rex_i18n::msg('feeds_youtube_channel_id'),
                 'name' => 'channel_id',
                 'type' => 'string',
-                'notice' => rex_i18n::msg('feeds_youtube_channel_id_notice')
+                'notice' => \rex_i18n::msg('feeds_youtube_channel_id_notice')
             ],
             [
-                'label' => rex_i18n::msg('feeds_youtube_api_key'),
+                'label' => \rex_i18n::msg('feeds_youtube_api_key'),
                 'name' => 'api_key',
                 'type' => 'string',
-                'notice' => rex_i18n::msg('feeds_youtube_api_key_notice')
+                'notice' => \rex_i18n::msg('feeds_youtube_api_key_notice')
             ],
             [
-                'label' => rex_i18n::msg('feeds_youtube_count'),
+                'label' => \rex_i18n::msg('feeds_youtube_count'),
                 'name' => 'count',
                 'type' => 'select',
                 'options' => [5 => 5, 10 => 10, 15 => 15, 20 => 20, 30 => 30, 50 => 50, 75 => 75, 100 => 100],
@@ -49,9 +51,9 @@ class rex_feeds_stream_youtube_channel extends rex_feeds_stream_youtube_playlist
             $channel = $youtube->getChannelById($this->typeParams['channel_id'], ['part' => 'contentDetails']);
             dump($channel);
             return $channel->contentDetails->relatedPlaylists->uploads;
-        } catch (exception $e) {
+        } catch (\Exception $e) {
             dump($e);
-            echo rex_view::error($e->getMessage());
+            echo \rex_view::error($e->getMessage());
             return false;
         }
       

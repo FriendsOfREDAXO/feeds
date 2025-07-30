@@ -9,7 +9,9 @@
  * file that was distributed with this source code.
  */
 
-class rex_feeds_media_helper
+namespace FriendsOfRedaxo\Feeds;
+
+class MediaHelper
 {
    /**
  * Stores a media file from a URL in the addon's assets directory
@@ -66,11 +68,11 @@ public static function saveMediaFile($url, $streamId, $itemId)
         // Create directory if it doesn't exist
         $mediaPath = self::getMediaPath();
         if (!is_dir($mediaPath)) {
-            rex_dir::create($mediaPath);
+            \rex_dir::create($mediaPath);
         }
 
         // Download and save file
-        $response = rex_socket::factoryUrl($url)->doGet();
+        $response = \rex_socket::factoryUrl($url)->doGet();
         if ($response->isOk()) {
             $filepath = $mediaPath . '/' . $filename;
             
@@ -80,8 +82,8 @@ public static function saveMediaFile($url, $streamId, $itemId)
             // Validate image
             if (@imagecreatefromstring($content)) {
                 // Use rex_file for safe file operations
-                if (rex_file::put($filepath, $content)) {
-                    @chmod($filepath, rex::getFilePerm());
+                if (\rex_file::put($filepath, $content)) {
+                    @chmod($filepath, \rex::getFilePerm());
                     return $filename;
                 }
             } else {
@@ -92,8 +94,8 @@ public static function saveMediaFile($url, $streamId, $itemId)
             // Log failed download
             // rex_logger::logError(E_WARNING, 'Failed to download image from URL: ' . $url, __FILE__, __LINE__);
         }
-    } catch (Exception $e) {
-        rex_logger::logException($e);
+    } catch (\Exception $e) {
+        \rex_logger::logException($e);
     }
 
     return null;
@@ -106,7 +108,7 @@ public static function saveMediaFile($url, $streamId, $itemId)
      */
     public static function getMediaPath()
     {
-        return rex_path::addonData('feeds', 'media');
+        return \rex_path::addonData('feeds', 'media');
     }
 
     /**
@@ -122,7 +124,7 @@ public static function saveMediaFile($url, $streamId, $itemId)
         }
         
         $filepath = self::getMediaPath() . '/' . $filename;
-        return rex_file::delete($filepath);
+        return \rex_file::delete($filepath);
     }
 
     /**
@@ -151,7 +153,7 @@ public static function saveMediaFile($url, $streamId, $itemId)
 
         $success = true;
         foreach ($files as $file) {
-            if (!rex_file::delete($file)) {
+            if (!\rex_file::delete($file)) {
                 $success = false;
             }
         }
@@ -177,17 +179,17 @@ public static function saveMediaFile($url, $streamId, $itemId)
         }
 
         $deletedCount = 0;
-        $sql = rex_sql::factory();
+        $sql = \rex_sql::factory();
 
         foreach ($files as $file) {
             $filename = basename($file);
             
             // Check if file is referenced in database
-            $query = 'SELECT id FROM ' . rex_feeds_item::table() . ' WHERE media_filename = ?';
+            $query = 'SELECT id FROM ' . Item::table() . ' WHERE media_filename = ?';
             $sql->setQuery($query, [$filename]);
             
             if (0 === $sql->getRows()) {
-                if (rex_file::delete($file)) {
+                if (\rex_file::delete($file)) {
                     $deletedCount++;
                 }
             }

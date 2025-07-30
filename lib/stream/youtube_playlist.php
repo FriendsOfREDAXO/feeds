@@ -9,32 +9,34 @@
  * file that was distributed with this source code.
  */
 
+namespace FriendsOfRedaxo\Feeds\Stream;
+
 use Madcoda\Youtube\Youtube;
 
-class rex_feeds_stream_youtube_playlist extends rex_feeds_stream_abstract
+class YoutubePlaylist extends AbstractStream
 {
     public function getTypeName()
     {
-        return rex_i18n::msg('feeds_youtube_playlist');
+        return \rex_i18n::msg('feeds_youtube_playlist');
     }
 
     public function getTypeParams()
     {
         return [
             [
-                'label' => rex_i18n::msg('feeds_youtube_playlist_id'),
+                'label' => \rex_i18n::msg('feeds_youtube_playlist_id'),
                 'name' => 'playlist_id',
                 'type' => 'string',
-                'notice' => rex_i18n::msg('feeds_youtube_playlist_id_notice')
+                'notice' => \rex_i18n::msg('feeds_youtube_playlist_id_notice')
             ],
             [
-                'label' => rex_i18n::msg('feeds_youtube_api_key'),
+                'label' => \rex_i18n::msg('feeds_youtube_api_key'),
                 'name' => 'api_key',
                 'type' => 'string',
-                'notice' => rex_i18n::msg('feeds_youtube_api_key_notice')
+                'notice' => \rex_i18n::msg('feeds_youtube_api_key_notice')
             ],
             [
-                'label' => rex_i18n::msg('feeds_youtube_count'),
+                'label' => \rex_i18n::msg('feeds_youtube_count'),
                 'name' => 'count',
                 'type' => 'select',
                 'options' => [5 => 5, 10 => 10, 15 => 15, 20 => 20, 30 => 30, 50 => 50],
@@ -56,7 +58,7 @@ class rex_feeds_stream_youtube_playlist extends rex_feeds_stream_abstract
             ini_set('arg_separator.output', $argSeparator);
 
             foreach ($videos as $video) {
-                $item = new rex_feeds_item($this->streamId, $video->contentDetails->videoId);
+                $item = new \FriendsOfRedaxo\Feeds\Item($this->streamId, $video->contentDetails->videoId);
     
                 $item->setTitle($video->snippet->title);
                 $item->setContentRaw($video->snippet->description);
@@ -83,7 +85,7 @@ class rex_feeds_stream_youtube_playlist extends rex_feeds_stream_abstract
       
         } catch (exception $e) {
             dump($e);
-            echo rex_view::error($e->getMessage());
+            echo \rex_view::error($e->getMessage());
         }
         self::registerExtensionPoint($this->streamId);
  

@@ -23,6 +23,11 @@
         "symfony/polyfill-php82": "*",
         "symfony/polyfill-php83": "*"
     },
+    "autoload": {
+        "psr-4": {
+            "FriendsOfRedaxo\\Feeds\\": "lib/"
+        }
+    },
     "config": {
         "allow-plugins": {
             "php-http/discovery": true
