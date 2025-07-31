@@ -105,7 +105,7 @@ class Stream
 
     public static function addStream($class, $type = null)
     {
-        $type = $type ?: str_replace(['FriendsOfRedaxo\\Feeds\\Stream\\'], '', $class);
+        $type = $type ?: end(explode('\\', $class));
         self::$streams[$type] = $class;
     }
 }
