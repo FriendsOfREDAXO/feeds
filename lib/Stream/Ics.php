@@ -36,7 +36,7 @@ class Ics extends AbstractStream
     try {
         $icsData = file_get_contents($url);
         if ($icsData === false) {
-            throw new \Exception("Fehler beim Abruf der ICS-Datei.");
+            throw new \Exception(\rex_i18n::msg('feeds_error_fetch_ics'));
         }
 
         $events = $this->parseIcs($icsData);
