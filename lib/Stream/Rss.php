@@ -11,6 +11,8 @@
 
 namespace FriendsOfRedaxo\Feeds\Stream;
 
+use FriendsOfRedaxo\Feeds\Item;
+
 class Rss extends AbstractStream
 {
     public function getTypeName()
@@ -99,7 +101,7 @@ class Rss extends AbstractStream
                     $uid = $this->generateUid($url);
                     $title = $rssItem->getTitle();
                     
-                    $item = new \FriendsOfRedaxo\Feeds\Item($this->streamId, $uid);
+                    $item = new Item($this->streamId, $uid);
 
                     // Basis-Felder setzen
                     $item->setTitle($title ?: '');

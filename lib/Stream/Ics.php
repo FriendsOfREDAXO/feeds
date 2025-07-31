@@ -10,6 +10,8 @@
 
 namespace FriendsOfRedaxo\Feeds\Stream;
 
+use FriendsOfRedaxo\Feeds\Item;
+
 class Ics extends AbstractStream
 {
     public function getTypeName()
@@ -42,12 +44,12 @@ class Ics extends AbstractStream
 
         $events = $this->parseIcs($icsData);
         foreach ($events as $event) {
-            $item = new \FriendsOfRedaxo\Feeds\Item($this->streamId, $event['UID']);
+            $item = new Item($this->streamId, $event['UID']);
             $item->setTitle($event['SUMMARY']);
-            $item->setContent(isset($event['DESCRIPTION']) ? $event['DESCRIPTION'] : '');
-            $item->setUrl(isset($event['URL']) ? $event['URL'] : '');
+            $item->setContent($event['DESCRIPTION'] ?? '');
+            $item->setUrl($event['URL'] ?? '');
             $item->setDate(new DateTime($event['DTSTART']));
-            $item->setRaw(isset($event['DESCRIPTION']));
+            $item->setRaw((bool) ($event['DESCRIPTION'] ?? null));
 
             // Spracheinstellung, hier als Beispiel fest auf "de" gesetzt, evtl in die
             // Da ICS-Dateien normalerweise keine Sprachinformationen enthalten, müssen Sie entscheiden, wie Sie die Sprache bestimmen möchten

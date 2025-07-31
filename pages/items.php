@@ -132,29 +132,16 @@ if ('' == $func) {
         $type = explode('_', $list->getValue('stream_type'));
         $icon = 'fa-paper-plane-o';
         if (isset($type[0])) {
-            switch ($type[0]) {
-                case 'rss':
-                    $icon = 'fa-rss';
-                    break;
-                case 'twitter':
-                    $icon = 'fa-twitter';
-                    break;
-                case 'facebook':
-                    $icon = 'fa-facebook';
-                    break;
-                case 'youtube':
-                    $icon = 'fa-youtube';
-                    break;
-                case 'instagram':
-                    $icon = 'fa-instagram';
-                    break;
-                case 'google':
-                    $icon = 'fa-google';
-                    break;
-                case 'vimeo':
-                    $icon = 'fa-video-camera';
-                    break;
-            }
+            $icon = match ($type[0]) {
+                'rss' => 'fa-rss',
+                'twitter' => 'fa-twitter',
+                'facebook' => 'fa-facebook',
+                'youtube' => 'fa-youtube',
+                'instagram' => 'fa-instagram',
+                'google' => 'fa-google',
+                'vimeo' => 'fa-video-camera',
+                default => $icon,
+            };
             return $list->getColumnLink('', '<i class="rex-icon ' . $icon . (($list->getValue('status')) ? '' : ' text-muted') . '"></i>');
         }
     });

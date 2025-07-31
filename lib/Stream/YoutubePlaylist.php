@@ -11,6 +11,7 @@
 
 namespace FriendsOfRedaxo\Feeds\Stream;
 
+use FriendsOfRedaxo\Feeds\Item;
 use Madcoda\Youtube\Youtube;
 
 class YoutubePlaylist extends AbstractStream
@@ -58,7 +59,7 @@ class YoutubePlaylist extends AbstractStream
             ini_set('arg_separator.output', $argSeparator);
 
             foreach ($videos as $video) {
-                $item = new \FriendsOfRedaxo\Feeds\Item($this->streamId, $video->contentDetails->videoId);
+                $item = new Item($this->streamId, $video->contentDetails->videoId);
     
                 $item->setTitle($video->snippet->title);
                 $item->setContentRaw($video->snippet->description);

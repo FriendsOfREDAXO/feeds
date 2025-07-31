@@ -41,7 +41,7 @@ class Stream
         $sql = rex_sql::factory();
         $data = $sql->getArray('SELECT * FROM ' . self::table() . ' WHERE `status` = 1');
 
-        return array_map('FriendsOfRedaxo\Feeds\Stream::create', $data);
+        return array_map(self::create(...), $data);
     }
 
     /**

@@ -65,29 +65,16 @@ if ('' == $func) {
         $type = explode('_', $list->getValue('type'));
         $icon = 'fa-paper-plane-o';
         if (isset($type[0])) {
-            switch ($type[0]) {
-                case 'rss':
-                    $icon = 'fa-rss';
-                    break;
-                case 'twitter':
-                    $icon = 'fa-twitter';
-                    break;
-                case 'facebook':
-                    $icon = 'fa-facebook';
-                    break;
-                case 'youtube':
-                    $icon = 'fa-youtube';
-                    break;
-                case 'instagram':
-                    $icon = 'fa-instagram';
-                    break;
-                case 'google':
-                    $icon = 'fa-google';
-                    break;
-                case 'vimeo':
-                    $icon = 'fa-video-camera';
-                    break;
-            }
+            $icon = match ($type[0]) {
+                'rss' => 'fa-rss',
+                'twitter' => 'fa-twitter',
+                'facebook' => 'fa-facebook',
+                'youtube' => 'fa-youtube',
+                'instagram' => 'fa-instagram',
+                'google' => 'fa-google',
+                'vimeo' => 'fa-video-camera',
+                default => $icon,
+            };
             return $list->getColumnLink($thIcon, '<i class="rex-icon ' . $icon . '"></i>');
         }
     });
@@ -217,11 +204,8 @@ if ('' == $func) {
 
         foreach ($streamParams as $param) {
             $name = $param['name'];
-            $value = isset($param['default']) ? $param['default'] : null;
-            $attributes = [];
-            if (isset($param['attributes'])) {
-                $attributes = $param['attributes'];
-            }
+            $value = $param['default'] ?? null;
+            $attributes = $param['attributes'] ?? [];
 
             switch ($param['type']) {
 case 'int':
