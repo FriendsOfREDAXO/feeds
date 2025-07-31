@@ -102,7 +102,19 @@ class Item
             $item->content = $sql->getValue('content');
             $item->contentRaw = $sql->getValue('content_raw');
             $item->url = $sql->getValue('url');
-            $item->date = new \DateTimeImmutable($sql->getValue('date'));
+            $dateValue = $sql->getValue('date');
+            if (!empty($dateValue)) {
+                try {
+                    $item->date = new \DateTimeImmutable($dateValue);
+                } catch (\Exception $e) {
+                    // Handle invalid date format gracefully
+                    $item->date = null;
+                    // Optionally log the error
+                    // error_log('Invalid date format: ' . $dateValue);
+                }
+            } else {
+                $item->date = null;
+            }
             $item->author = $sql->getValue('author');
             $item->username = $sql->getValue('username');
             $item->language = $sql->getValue('language');
