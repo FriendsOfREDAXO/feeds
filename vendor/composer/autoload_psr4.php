@@ -18,5 +18,5 @@ return array(
     'Http\\Discovery\\' => array($vendorDir . '/php-http/discovery/src'),
     'Http\\Client\\' => array($vendorDir . '/php-http/httplug/src'),
     'FriendsOfRedaxo\\Feeds\\' => array($baseDir . '/lib'),
-    'FeedIo\\' => array($vendorDir . '/debril/feed-io/src/FeedIo'),
+    'FeedIo\\' => array($vendorDir . '/php-feed-io/feed-io/src/FeedIo'),
 );

@@ -1,9 +1,9 @@
 {
     "require": {
-        "madcoda/php-youtube-api": "*",
-        "vimeo/vimeo-api": "*",
-        "debril/feed-io": "*",
-        "symfony/http-client": "*"
+        "madcoda/php-youtube-api": "^1.0",
+        "vimeo/vimeo-api": "^3.0",
+        "php-feed-io/feed-io": "^6.0",
+        "symfony/http-client": "^7.0"
     },
     "replace": {
         "psr/log": "*",
