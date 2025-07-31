@@ -47,7 +47,7 @@ class Ics extends AbstractStream
             $item->setContent($event['DESCRIPTION'] ?? '');
             $item->setUrl($event['URL'] ?? '');
             $item->setDate(new DateTime($event['DTSTART']));
-            $item->setRaw(isset($event['DESCRIPTION']));
+            $item->setRaw((bool) ($event['DESCRIPTION'] ?? null));
 
             // Spracheinstellung, hier als Beispiel fest auf "de" gesetzt, evtl in die
             // Da ICS-Dateien normalerweise keine Sprachinformationen enthalten, müssen Sie entscheiden, wie Sie die Sprache bestimmen möchten
