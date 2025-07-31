@@ -44,8 +44,8 @@ class Ics extends AbstractStream
         foreach ($events as $event) {
             $item = new \FriendsOfRedaxo\Feeds\Item($this->streamId, $event['UID']);
             $item->setTitle($event['SUMMARY']);
-            $item->setContent(isset($event['DESCRIPTION']) ? $event['DESCRIPTION'] : '');
-            $item->setUrl(isset($event['URL']) ? $event['URL'] : '');
+            $item->setContent($event['DESCRIPTION'] ?? '');
+            $item->setUrl($event['URL'] ?? '');
             $item->setDate(new DateTime($event['DTSTART']));
             $item->setRaw(isset($event['DESCRIPTION']));
 

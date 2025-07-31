@@ -42,25 +42,14 @@ public static function saveMediaFile($url, $streamId, $itemId)
         
         // If no extension found, try to get from mime type
         if (!$extension || !in_array($extension, ['jpg', 'jpeg', 'png', 'gif', 'webp', 'avif'])) {
-            switch ($mime) {
-                case 'image/jpeg':
-                    $extension = 'jpg';
-                    break;
-                case 'image/png':
-                    $extension = 'png';
-                    break;
-                case 'image/gif':
-                    $extension = 'gif';
-                    break;
-                case 'image/webp':
-                    $extension = 'webp';
-                    break;
-                case 'image/avif':
-                    $extension = 'avif';
-                    break;
-                default:
-                    $extension = 'jpg';
-            }
+            $extension = match ($mime) {
+                'image/jpeg' => 'jpg',
+                'image/png' => 'png',
+                'image/gif' => 'gif',
+                'image/webp' => 'webp',
+                'image/avif' => 'avif',
+                default => 'jpg',
+            };
         }
         
         $filename = sprintf('%d_%s.%s', $streamId, $itemId, $extension);
