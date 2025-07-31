@@ -11,6 +11,7 @@
 
 namespace FriendsOfRedaxo\Feeds\Stream;
 
+use FriendsOfRedaxo\Feeds\Item;
 use Vimeo\Vimeo;
 
 class VimeoPro extends AbstractStream
@@ -69,7 +70,7 @@ class VimeoPro extends AbstractStream
         foreach ($videos as $video) {
             $uri = $video['uri'];
             $uri = str_replace("/videos/", "", $uri);
-            $item = new \FriendsOfRedaxo\Feeds\Item($this->streamId, $uri);
+            $item = new Item($this->streamId, $uri);
 
             if ($this->typeParams['view'] === 'public') {
                 // only Videos with View-Right

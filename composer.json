@@ -32,5 +32,8 @@
         "allow-plugins": {
             "php-http/discovery": true
         }
+    },
+    "require-dev": {
+        "redaxo/php-cs-fixer-config": "*"
     }
 }

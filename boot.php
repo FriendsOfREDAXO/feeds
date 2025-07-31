@@ -23,6 +23,6 @@ if (\rex_addon::get('watson')->isAvailable()) {
       return $subject;
     }
 
- \rex_extension::register('WATSON_PROVIDER', 'feedsearch', \rex_extension::LATE); 
+ \rex_extension::register('WATSON_PROVIDER', feedsearch(...), \rex_extension::LATE); 
 
 }

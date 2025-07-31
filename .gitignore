@@ -1,6 +1,8 @@
 .DS_Store
 .definition
-vendor/bin/
+vendor/
 test/
 bin/
+*.zip~
+.php-cs-fixer.cache
 

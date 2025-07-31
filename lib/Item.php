@@ -345,14 +345,14 @@ class Item
     {
         // Delete old media file if exists
         if ($this->media_filename) {
-            $filepath = \FriendsOfRedaxo\Feeds\MediaHelper::getMediaPath() . '/' . $this->media_filename;
+            $filepath = MediaHelper::getMediaPath() . '/' . $this->media_filename;
             if (file_exists($filepath)) {
                 unlink($filepath);
             }
         }
 
         // Save new media file
-        $this->media_filename = \FriendsOfRedaxo\Feeds\MediaHelper::saveMediaFile($url, $this->streamId, $this->uid);
+        $this->media_filename = MediaHelper::saveMediaFile($url, $this->streamId, $this->uid);
     }
 
     public function setMediaSource($value)
