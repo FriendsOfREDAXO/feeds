@@ -59,7 +59,7 @@ if (\rex_addon::get('cronjob')->isAvailable()) {
 
 if (\rex_addon::get('watson')->isAvailable()) {
  
-    function feedsearch(rex_extension_point $ep){
+    function feedsearch(\rex_extension_point $ep){
       $subject = $ep->getSubject();
       $subject[] = 'Watson\Workflows\Feeds\FeedProvider';
       return $subject;
