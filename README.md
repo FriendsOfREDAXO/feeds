@@ -14,6 +14,43 @@ REDAXO Feed Aggregator
 * Feeds können in Watson gesucht werden `feed suchbegriff`
 * Abruf aller oder einzelner Feeds per Cronjob
 
+## Migration zu Namespaces (REDAXO 6 Vorbereitung)
+
+Das Feeds-AddOn wurde für REDAXO 6 vorbereitet und nutzt jetzt moderne PHP-Namespaces. Die alten `rex_` Klassen sind weiterhin verfügbar, werden aber als deprecated markiert.
+
+### Neue Namespace-Struktur
+
+Alle Klassen wurden in den `FriendsOfRedaxo\Feeds` Namespace migriert:
+
+| Alte Klasse | Neue Klasse |
+|-------------|-------------|
+| `rex_feeds_stream` | `FriendsOfRedaxo\Feeds\Stream` |
+| `rex_feeds_item` | `FriendsOfRedaxo\Feeds\Item` |
+| `rex_feeds_stream_abstract` | `FriendsOfRedaxo\Feeds\Stream\AbstractStream` |
+| `rex_cronjob_feeds` | `FriendsOfRedaxo\Feeds\Cronjob` |
+| `rex_feeds_helper` | `FriendsOfRedaxo\Feeds\Helper` |
+
+Stream-Implementierungen befinden sich im `FriendsOfRedaxo\Feeds\Stream` Namespace:
+- `rex_feeds_stream_rss` → `FriendsOfRedaxo\Feeds\Stream\Rss`
+- `rex_feeds_stream_youtube_playlist` → `FriendsOfRedaxo\Feeds\Stream\YoutubePlaylist`
+- `rex_feeds_stream_youtube_channel` → `FriendsOfRedaxo\Feeds\Stream\YoutubeChannel`
+- `rex_feeds_stream_ics` → `FriendsOfRedaxo\Feeds\Stream\Ics`
+- `rex_feeds_stream_vimeo_pro` → `FriendsOfRedaxo\Feeds\Stream\VimeoPro`
+
+### Sanfte Migration
+
+Die alten Klassennamen funktionieren weiterhin, sind aber als deprecated markiert:
+
+```php
+// ✅ Funktioniert weiterhin (deprecated)
+$stream = rex_feeds_stream::get($stream_id);
+
+// ✅ Moderne Schreibweise (empfohlen)
+$stream = \FriendsOfRedaxo\Feeds\Stream::get($stream_id);
+```
+
+**Empfehlung:** Migrieren Sie Ihren Code schrittweise zu den neuen Namespace-Klassen. Die alten Klassen werden in zukünftigen Versionen entfernt.
+
 ## Installation
 
 Im REDAXO-Backend unter `Installer` abrufen und installieren
@@ -48,10 +85,16 @@ Um ein Feed auszugeben, können die Inhalte in einem Modul oder Template per SQL
 
 ```php
 <?php 
+use FriendsOfRedaxo\Feeds\Stream;
+
 $stream_id = 1;
 // Mediamanager Typ mit feeds als erster Effekt
 $media_manager_type = 'feeds_thumb';
-$stream = rex_feeds_stream::get($stream_id);
+
+// Moderne Schreibweise (empfohlen)
+$stream = Stream::get($stream_id);
+// Alternativ: $stream = rex_feeds_stream::get($stream_id); // Weiterhin möglich, aber deprecated
+
 $items = $stream->getPreloadedItems(); // Standard gibt 5 Einträge zurück, sonst gewünschte Anzahl übergeben
     foreach($items as $item) {
         // Titel ermitteln und alles verlinken
@@ -108,11 +151,16 @@ echo '<img src="'.$media_url.'" alt="Mein Bild">';
 
 ```php
 <?php 
+use FriendsOfRedaxo\Feeds\Stream;
+
 $stream_id = 1;
 // Media Manager Typ wo der Feeds-Effekt als erster Effekt eingerichtet ist
 $media_manager_type = 'feeds_thumb';
 
-$stream = rex_feeds_stream::get($stream_id);
+// Moderne Schreibweise (empfohlen)
+$stream = Stream::get($stream_id);
+// Alternativ: $stream = rex_feeds_stream::get($stream_id); // Weiterhin möglich, aber deprecated
+
 $items = $stream->getPreloadedItems(); // Standard gibt 5 Einträge zurück
 
 foreach($items as $item) {
@@ -165,12 +213,41 @@ Vorteil: Wenn viele Posts immer geladen werden, kann sich die die DB sehr schnel
 
 Feeds kann Inhalte auch anderer Quellen als die der mitglieferten Provider annehmen.
 
-Hierzu erstellt man eine extended Class der `rex_feeds_stream_abstract` im lib Ordner des eigenen AddOns oder des project-AddOns an,  z.B.: `rex_feeds_stream_my_class`. Man kann sich dabei an die mitgelieferten Classes im Ordner `/lib/streams` halten. Alle möglichen Methoden findet man in der `rex_feeds_stream_abstract` -Class unter `/lib/stream_abstract.php`. Dort ruft man die Streamdaten ab und ordnet diese den Tabellenspalten zu. 
+### Moderne Schreibweise (empfohlen)
 
-Anschließend meldet man den neuen Provider wie folgt in der boot.php an: 
+Hierzu erstellt man eine extended Class der `FriendsOfRedaxo\Feeds\Stream\AbstractStream` im lib Ordner des eigenen AddOns oder des project-AddOns an, z.B.: `MyCustomStream`. Man kann sich dabei an die mitgelieferten Classes im Ordner `/lib/Stream` halten.
+
+```php
+<?php
+use FriendsOfRedaxo\Feeds\Stream\AbstractStream;
+
+class MyCustomStream extends AbstractStream
+{
+    // Ihre Implementierung hier
+}
+```
+
+Anschließend meldet man den neuen Provider wie folgt in der boot.php an:
 
 ```php 
-rex_feeds_stream::addStream("rex_feeds_stream_meine_klasse");
+use FriendsOfRedaxo\Feeds\Stream;
+
+Stream::addStream("MyCustomStream");
+```
+
+### Legacy-Schreibweise (deprecated)
+
+Die alte Schreibweise funktioniert weiterhin:
+
+```php
+// Erstellen einer extended Class der `rex_feeds_stream_abstract`
+class rex_feeds_stream_my_class extends rex_feeds_stream_abstract
+{
+    // Ihre Implementierung hier
+}
+
+// Anmelden in der boot.php
+rex_feeds_stream::addStream("rex_feeds_stream_my_class");
 ```
 
 
