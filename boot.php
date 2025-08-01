@@ -16,13 +16,13 @@ if (\rex_addon::get('cronjob')->isAvailable()) {
 \rex_media_manager::addEffect(\FriendsOfRedaxo\Feeds\MediaManagerEffect::class);
 
 if (\rex_addon::get('watson')->isAvailable()) {
- 
-    function feedsearch(\rex_extension_point $ep){
-      $subject = $ep->getSubject();
-      $subject[] = 'Watson\Workflows\Feeds\FeedProvider';
-      return $subject;
-    }
-
- \rex_extension::register('WATSON_PROVIDER', feedsearch(...), \rex_extension::LATE); 
-
+    \rex_extension::register(
+        'WATSON_PROVIDER',
+        static function (\rex_extension_point $ep) {
+            $subject = $ep->getSubject();
+            $subject[] = 'Watson\Workflows\Feeds\FeedProvider';
+            return $subject;
+        },
+        \rex_extension::LATE
+    );
 }
