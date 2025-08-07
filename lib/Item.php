@@ -11,6 +11,20 @@
 
 namespace FriendsOfRedaxo\Feeds;
 
+use DateTimeImmutable;
+use Exception;
+use rex;
+use rex_addon;
+use rex_exception;
+use rex_extension;
+use rex_extension_point;
+use rex_media_manager;
+use rex_sql;
+
+use function defined;
+
+use const PATHINFO_EXTENSION;
+
 class Item
 {
     private $streamId;
@@ -42,7 +56,7 @@ class Item
      */
     public function __construct($streamId = false, $uid = false)
     {
-        if ($streamId !== false && $uid !== false) {
+        if (false !== $streamId && false !== $uid) {
             $this->primaryId = 0;
             $this->streamId = (int) $streamId;
             $this->uid = $uid;
@@ -61,11 +75,11 @@ class Item
                 [
                     'stream_id' => $this->streamId,
                     'uid' => $this->uid,
-                ]
+                ],
             );
 
             if ($sql->getRows()) {
-                if ($sql->getValue('changed_by_user') == '1') {
+                if ('1' == $sql->getValue('changed_by_user')) {
                     $this->changedByUser = true;
                 } else {
                     $this->primaryId = $sql->getValue('id');
@@ -81,21 +95,20 @@ class Item
     }
 
     /**
-     * Read object stored in database
-     * @param \FriendsOfRedaxo\Feeds\Item $item
-     * @return \FriendsOfRedaxo\Feeds\Item|null Feeds item or null if not found
+     * Read object stored in database.
+     * @return Item|null Feeds item or null if not found
      */
     public static function get($id)
     {
-        $item = new Item();
+        $item = new self();
         $item->primaryId = $id;
 
         $sql = rex_sql::factory();
         $sql->setQuery('SELECT * FROM ' . self::table() . ' WHERE `id` = ' . $id);
 
         if ($sql->getRows()) {
-            $item->changedByUser = $sql->getValue('changed_by_user') == '1' ? true : false;
-            $item->exists = $sql->getValue('changed_by_user') == '1' ? false : true;
+            $item->changedByUser = '1' == $sql->getValue('changed_by_user') ? true : false;
+            $item->exists = '1' == $sql->getValue('changed_by_user') ? false : true;
             $item->streamId = $sql->getValue('stream_id');
             $item->uid = $sql->getValue('uid');
             $item->title = $sql->getValue('title');
@@ -105,8 +118,8 @@ class Item
             $dateValue = $sql->getValue('date');
             if (!empty($dateValue)) {
                 try {
-                    $item->date = new \DateTimeImmutable($dateValue);
-                } catch (\Exception $e) {
+                    $item->date = new DateTimeImmutable($dateValue);
+                } catch (Exception $e) {
                     // Handle invalid date format gracefully
                     $item->date = null;
                     // Optionally log the error
@@ -120,15 +133,14 @@ class Item
             $item->language = $sql->getValue('language');
             $item->media_filename = $sql->getValue('media_filename');
             $item->raw = $sql->getValue('raw');
-            $item->status = $sql->getValue('changed_by_user') == '1' ? true : false;
+            $item->status = '1' == $sql->getValue('changed_by_user') ? true : false;
             return $item;
-        } else {
-            return null;
         }
+        return null;
     }
 
     /**
-     * Get item title
+     * Get item title.
      * @return string title
      */
     public function getTitle()
@@ -137,7 +149,7 @@ class Item
     }
 
     /**
-     * Get raw content
+     * Get raw content.
      * @return string Raw content
      */
     public function getContentRaw()
@@ -146,7 +158,7 @@ class Item
     }
 
     /**
-     * Get content
+     * Get content.
      * @return string Content
      */
     public function getContent()
@@ -155,7 +167,7 @@ class Item
     }
 
     /**
-     * Get database Id
+     * Get database Id.
      * @return int Id
      */
     public function getId()
@@ -164,7 +176,7 @@ class Item
     }
 
     /**
-     * Get URL
+     * Get URL.
      * @return string URL
      */
     public function getUrl()
@@ -173,7 +185,7 @@ class Item
     }
 
     /**
-     * Get datetime object
+     * Get datetime object.
      * @return \DateTimeInterface Date
      */
     public function getDateTime()
@@ -182,7 +194,7 @@ class Item
     }
 
     /**
-     * Get author
+     * Get author.
      * @return string Authors name
      */
     public function getAuthor()
@@ -191,7 +203,7 @@ class Item
     }
 
     /**
-     * Get username
+     * Get username.
      * @return string username
      */
     public function getUsername()
@@ -200,7 +212,7 @@ class Item
     }
 
     /**
-     * Get language
+     * Get language.
      * @return string Language
      */
     public function getLanguage()
@@ -209,7 +221,7 @@ class Item
     }
 
     /**
-     * Get media filename
+     * Get media filename.
      * @return string|null Media filename
      */
     public function getMediaFilename()
@@ -218,7 +230,7 @@ class Item
     }
 
     /**
-     * Get media manager url
+     * Get media manager url.
      * @param string $type Media Manager type
      * @param bool $useOriginalFilename Whether to use the original filename instead of ID.feeds
      * @param bool $escape Whether to escape the URL
@@ -242,15 +254,15 @@ class Item
             $type,
             $filename,
             $this->date ? $this->date->getTimestamp() : null,
-            $escape
+            $escape,
         );
     }
 
     /**
-     * Get media information including dimensions and format
+     * Get media information including dimensions and format.
      * @param string $type Media Manager type
-     * @return array|null Array containing media information or null if not available
      * @throws rex_exception If media_manager addon is not available
+     * @return array|null Array containing media information or null if not available
      */
     public function getMediaInfo($type)
     {
@@ -279,7 +291,7 @@ class Item
             'width' => $media->getWidth(),
             'height' => $media->getHeight(),
             'filename' => $this->media_filename,
-            'type' => $type
+            'type' => $type,
         ];
     }
 
@@ -338,7 +350,7 @@ class Item
     }
 
     /**
-     * Set media from URL
+     * Set media from URL.
      * @param string $url URL of the media file
      */
     public function setMedia($url)
@@ -422,7 +434,7 @@ class Item
         if ($this->language) {
             $sql->setValue('language', $this->language);
         }
-        if ($this->media_filename !== null) {
+        if (null !== $this->media_filename) {
             $sql->setValue('media_filename', $this->media_filename);
         }
         if ($this->mediasource) {
@@ -455,7 +467,7 @@ class Item
         rex_extension::registerPoint(new rex_extension_point(
             'FEEDS_ITEM_SAVED',
             null,
-            ['stream_id' => $this->streamId, 'uid' => $this->uid]
+            ['stream_id' => $this->streamId, 'uid' => $this->uid],
         ));
     }
 }

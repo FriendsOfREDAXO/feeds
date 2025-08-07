@@ -11,26 +11,34 @@
 
 namespace FriendsOfRedaxo\Feeds;
 
-class Cronjob extends \rex_cronjob
+use Exception;
+use rex_addon;
+use rex_cronjob;
+use rex_i18n;
+use Throwable;
+
+use function count;
+use function in_array;
+use function sprintf;
+
+class Cronjob extends rex_cronjob
 {
     public function execute()
     {
         $streams = [];
         $streamlist = [];
 
-        if ($this->getParam('stream_list') && $this->getParam('stream_list') !== '') {
+        if ($this->getParam('stream_list') && '' !== $this->getParam('stream_list')) {
             $streamlist = explode('|', $this->getParam('stream_list'));
         }
 
         foreach (Stream::getAllActivated() as $stream) {
-
-            if (in_array($stream->getStreamId(),  $streamlist) || !$this->getParam('stream_list') || $this->getParam('stream_list') === '') {
+            if (in_array($stream->getStreamId(), $streamlist) || !$this->getParam('stream_list') || '' === $this->getParam('stream_list')) {
                 $streams[] = $stream;
             } else {
                 continue;
             }
         }
-
 
         $errors = [];
         $countAdded = 0;
@@ -39,9 +47,9 @@ class Cronjob extends \rex_cronjob
         foreach ($streams as $stream) {
             try {
                 $stream->fetch();
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $errors[] = $stream->getTitle();
-            } catch (\Throwable $e) {
+            } catch (Throwable $e) {
                 $errors[] = $stream->getTitle();
             }
             $countAdded += $stream->getAddedCount();
@@ -54,7 +62,7 @@ class Cronjob extends \rex_cronjob
             $errors ? ' (' . implode(', ', $errors) . ')' : '',
             $countAdded,
             $countUpdated,
-            $countNotUpdatedChangedByUser
+            $countNotUpdatedChangedByUser,
         ));
         return empty($errors);
     }
@@ -63,6 +71,7 @@ class Cronjob extends \rex_cronjob
     {
         return rex_addon::get('feeds')->i18n('feeds_cronjob');
     }
+
     public function getParamFields()
     {
         $options = [];

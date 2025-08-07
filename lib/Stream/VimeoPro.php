@@ -11,39 +11,41 @@
 
 namespace FriendsOfRedaxo\Feeds\Stream;
 
+use DateTime;
 use FriendsOfRedaxo\Feeds\Item;
+use rex_i18n;
 use Vimeo\Vimeo;
 
 class VimeoPro extends AbstractStream
 {
     public function getTypeName()
     {
-        return \rex_i18n::msg('feeds_vimeo_pro_user');
+        return rex_i18n::msg('feeds_vimeo_pro_user');
     }
 
     public function getTypeParams()
     {
         return [
             [
-                'label' => \rex_i18n::msg('feeds_vimeo_user_id'),
+                'label' => rex_i18n::msg('feeds_vimeo_user_id'),
                 'name' => 'client_id',
                 'type' => 'string',
             ],
             [
-                'label' => \rex_i18n::msg('feeds_vimeo_access_token'),
+                'label' => rex_i18n::msg('feeds_vimeo_access_token'),
                 'name' => 'access_token',
                 'type' => 'string',
             ],
             [
-                'label' => \rex_i18n::msg('feeds_vimeo_client_secret'),
+                'label' => rex_i18n::msg('feeds_vimeo_client_secret'),
                 'name' => 'client_secret',
                 'type' => 'string',
             ],
             [
-                'label' => \rex_i18n::msg('feeds_vimeo_view'),
+                'label' => rex_i18n::msg('feeds_vimeo_view'),
                 'name' => 'view',
                 'type' => 'select',
-                'options' => ['' => \rex_i18n::msg('feeds_vimeo_all'), 'public' => \rex_i18n::msg('feeds_vimeo_public')],
+                'options' => ['' => rex_i18n::msg('feeds_vimeo_all'), 'public' => rex_i18n::msg('feeds_vimeo_public')],
                 'default' => 'public',
             ],
         ];
@@ -59,7 +61,7 @@ class VimeoPro extends AbstractStream
             $videos = $vimeo->request('/me/videos?per_page=100');
             // $videos = $videos['body'];
             $videos_data = $videos['body']['data'];
-            while ($videos['body']['paging']['next'] != "") {
+            while ('' != $videos['body']['paging']['next']) {
                 $videos = $vimeo->request($videos['body']['paging']['next']);
                 $videos_data = array_merge($videos_data, $videos['body']['data']);
             }
@@ -69,12 +71,12 @@ class VimeoPro extends AbstractStream
 
         foreach ($videos as $video) {
             $uri = $video['uri'];
-            $uri = str_replace("/videos/", "", $uri);
+            $uri = str_replace('/videos/', '', $uri);
             $item = new Item($this->streamId, $uri);
 
-            if ($this->typeParams['view'] === 'public') {
+            if ('public' === $this->typeParams['view']) {
                 // only Videos with View-Right
-                if ($video['privacy']['view'] === 'anybody') {
+                if ('anybody' === $video['privacy']['view']) {
                 } else {
                     continue;
                 }
@@ -89,7 +91,7 @@ class VimeoPro extends AbstractStream
             $item->setMedia($video['pictures']['base_link']);
             $item->setDate(new DateTime($video['created_time']));
 
-            //$item->setAuthor($video->snippet->channelTitle);
+            // $item->setAuthor($video->snippet->channelTitle);
             $item->setRaw($video);
             $this->updateCount($item);
             $item->save();
@@ -97,14 +99,17 @@ class VimeoPro extends AbstractStream
 
         self::registerExtensionPoint($this->streamId);
     }
+
     protected function getVimeoClientID()
     {
         return $this->typeParams['client_id'];
     }
+
     protected function getVimeoAccessToken()
     {
         return $this->typeParams['access_token'];
     }
+
     protected function getVimeoClientSecret()
     {
         return $this->typeParams['client_secret'];
