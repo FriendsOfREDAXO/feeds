@@ -39,7 +39,7 @@ class Stream
     }
 
     /**
-     * @return array<AbstractStream>
+     * @return AbstractStream[]
      */
     public static function getAllActivated()
     {
