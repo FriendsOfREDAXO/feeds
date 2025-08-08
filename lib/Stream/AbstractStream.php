@@ -46,7 +46,7 @@ abstract class AbstractStream
     /**
      * Get in Feeds database stored items belonging to this stream orderd by date.
      * @param int $number Number of items to be returned
-     * @return array<Item> Array with item objects
+     * @return Item[] Array with item objects
      */
     public function getPreloadedItems($number = 5, $orderBy = 'date')
     {
