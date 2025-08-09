@@ -11,6 +11,11 @@
 
 namespace FriendsOfRedaxo\Feeds;
 
+use FriendsOfRedaxo\Feeds\Stream\AbstractStream;
+use rex;
+use rex_exception;
+use rex_sql;
+
 class Stream
 {
     private static $streams = [];
@@ -18,7 +23,7 @@ class Stream
     /**
      * @param int $id
      *
-     * @return \FriendsOfRedaxo\Feeds\Stream\AbstractStream|null
+     * @return AbstractStream|null
      */
     public static function get($id)
     {
@@ -34,7 +39,7 @@ class Stream
     }
 
     /**
-     * @return \FriendsOfRedaxo\Feeds\Stream\AbstractStream[]
+     * @return AbstractStream[]
      */
     public static function getAllActivated()
     {
@@ -45,10 +50,8 @@ class Stream
     }
 
     /**
-     * @param array $data
-     *
-     * @return \FriendsOfRedaxo\Feeds\Stream\AbstractStream
      * @throws rex_exception
+     * @return AbstractStream
      */
     public static function create(array $data)
     {
@@ -62,7 +65,7 @@ class Stream
             throw new rex_exception('The feeds stream type is not supported');
         }
 
-        /** @var \FriendsOfRedaxo\Feeds\Stream\AbstractStream $stream */
+        /** @var AbstractStream $stream */
         $stream = new $streams[$type]();
         if (isset($data['type_params'])) {
             $stream->setTypeParams(json_decode($data['type_params'], true));
@@ -88,11 +91,11 @@ class Stream
             return self::$streams;
         }
 
-        $files = glob(__DIR__ . '/Stream/' . '*.php');
+        $files = glob(__DIR__ . '/Stream/*.php');
         if ($files) {
             foreach ($files as $file) {
                 $filename = basename($file, '.php');
-                if ($filename !== 'AbstractStream') {
+                if ('AbstractStream' !== $filename) {
                     $type = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $filename));
                     self::$streams[$type] = 'FriendsOfRedaxo\\Feeds\\Stream\\' . $filename;
                 }

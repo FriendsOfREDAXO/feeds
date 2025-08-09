@@ -9,13 +9,17 @@
  * file that was distributed with this source code.
  */
 
+use FriendsOfRedaxo\Feeds\Item;
+use FriendsOfRedaxo\Feeds\MediaHelper;
+use FriendsOfRedaxo\Feeds\Stream;
+
 $func = rex_request('func', 'string');
 $id = rex_request('id', 'integer');
 
-if ($func == 'setstatus') {
+if ('setstatus' == $func) {
     $status = (rex_request('oldstatus', 'int') + 1) % 2;
     rex_sql::factory()
-        ->setTable(rex_feeds_stream::table())
+        ->setTable(Stream::table())
         ->setWhere('id = :id', ['id' => $id])
         ->setValue('status', $status)
         ->addGlobalUpdateFields()
@@ -25,7 +29,7 @@ if ($func == 'setstatus') {
 }
 
 if ('fetch' === $func) {
-    $stream = rex_feeds_stream::get($id);
+    $stream = Stream::get($id);
     $stream->fetch();
     echo rex_view::success($this->i18n('stream_fetched', $stream->getAddedCount(), $stream->getUpdateCount(), $stream->getChangedByUserCount()));
     $func = '';
@@ -33,33 +37,33 @@ if ('fetch' === $func) {
 
 if ('delete' === $func) {
     // 1. Alle Media-Files für diesen Stream löschen
-    rex_feeds_media_helper::deleteStreamMedia($id);
-    
+    MediaHelper::deleteStreamMedia($id);
+
     // 2. Erst Items löschen (wird zwar automatisch durch FK gemacht, aber so haben wir die richtige Reihenfolge)
     rex_sql::factory()
-        ->setTable(rex_feeds_item::table())
+        ->setTable(Item::table())
         ->setWhere(['stream_id' => $id])
         ->delete();
-    
-    // 3. Dann den Stream löschen  
+
+    // 3. Dann den Stream löschen
     rex_sql::factory()
-        ->setTable(rex_feeds_stream::table())
+        ->setTable(Stream::table())
         ->setWhere(['id' => $id])
         ->delete();
-        
+
     echo rex_view::success($this->i18n('stream_deleted'));
     $func = '';
 }
 
 if ('' == $func) {
-    $query = 'SELECT `id`, `namespace`, `type`, `title`, `status` FROM ' . rex_feeds_stream::table() . ' ORDER BY `type`, `namespace`';
+    $query = 'SELECT `id`, `namespace`, `type`, `title`, `status` FROM ' . Stream::table() . ' ORDER BY `type`, `namespace`';
     $list = rex_list::factory($query);
     $list->addTableAttribute('class', 'table-striped');
 
     $tdIcon = '<i class="rex-icon fa-twitter"></i>';
     $thIcon = '<a href="' . $list->getUrl(['func' => 'add']) . '"' . rex::getAccesskey($this->i18n('add'), 'add') . '><i class="rex-icon rex-icon-add-article"></i></a>';
     $list->addColumn($thIcon, $tdIcon, 0, ['<th class="rex-table-icon">###VALUE###</th>', '<td class="rex-table-icon">###VALUE###</td>']);
-    $list->setColumnFormat($thIcon, 'custom', function ($params) use ($thIcon) {
+    $list->setColumnFormat($thIcon, 'custom', static function ($params) use ($thIcon) {
         /** @var rex_list $list */
         $list = $params['list'];
         $type = explode('_', $list->getValue('type'));
@@ -92,7 +96,7 @@ if ('' == $func) {
     $list->setColumnFormat('status', 'custom', function ($params) {
         /** @var rex_list $list */
         $list = $params['list'];
-        if ($list->getValue('status') == 1) {
+        if (1 == $list->getValue('status')) {
             $str = $list->getColumnLink('status', '<span class="rex-online"><i class="rex-icon rex-icon-active-true"></i> ' . $this->i18n('stream_status_activated') . '</span>');
         } else {
             $str = $list->getColumnLink('status', '<span class="rex-offline"><i class="rex-icon rex-icon-active-false"></i> ' . $this->i18n('stream_status_deactivated') . '</span>');
@@ -121,15 +125,15 @@ if ('' == $func) {
 
     echo $content;
 } else {
-    $streams = rex_feeds_stream::getSupportedStreams();
+    $streams = Stream::getSupportedStreams();
 
-    $title = $func == 'edit' ? $this->i18n('stream_edit') : $this->i18n('stream_add');
+    $title = 'edit' == $func ? $this->i18n('stream_edit') : $this->i18n('stream_add');
 
-    $form = rex_form::factory(rex_feeds_stream::table(), '', 'id = ' . $id, 'post', false);
+    $form = rex_form::factory(Stream::table(), '', 'id = ' . $id, 'post', false);
     $form->addParam('id', $id);
     $form->setApplyUrl(rex_url::currentBackendPage());
-    $form->setEditMode($func == 'edit');
-    $add = $func != 'edit';
+    $form->setEditMode('edit' == $func);
+    $add = 'edit' != $func;
 
     $form->addFieldset($this->i18n('stream_general'));
 
@@ -153,7 +157,7 @@ if ('' == $func) {
     $select->setSize(1);
     $select->addOption($this->i18n('stream_status_activated'), 1);
     $select->addOption($this->i18n('stream_status_deactivated'), 0);
-    if ($func == 'add') {
+    if ('add' == $func) {
         $select->setSelected(1);
     }
 
@@ -208,67 +212,67 @@ if ('' == $func) {
             $attributes = $param['attributes'] ?? [];
 
             switch ($param['type']) {
-case 'int':
-case 'float':
-case 'string':
-$type = 'text';
-$field = $fieldContainer->addGroupedField($group, $type, $name, $value, $attributes);
-$field->setLabel($param['label']);
-$field->setAttribute('id', "feeds $name $type");
-$field->setAttribute('disabled', 'true');
-if (!empty($param['notice'])) {
-    $field->setNotice($param['notice']);
-}
-if (!empty($param['prefix'])) {
-    $field->setPrefix($param['prefix']);
-}
-if (!empty($param['suffix'])) {
-    $field->setSuffix($param['suffix']);
-}
-break;
-case 'select':
-$type = $param['type'];
-/** @var rex_form_select_element $field */
-$field = $fieldContainer->addGroupedField($group, $type, $name, $value, $attributes);
-$field->setLabel($param['label']);
-$field->setAttribute('id', "feeds $name $type");
-$field->setAttribute('disabled', 'true');
-if (!empty($param['notice'])) {
-    $field->setNotice($param['notice']);
-}
-if (!empty($param['prefix'])) {
-    $field->setPrefix($param['prefix']);
-}
-if (!empty($param['suffix'])) {
-    $field->setSuffix($param['suffix']);
-}
+                case 'int':
+                case 'float':
+                case 'string':
+                    $type = 'text';
+                    $field = $fieldContainer->addGroupedField($group, $type, $name, $value, $attributes);
+                    $field->setLabel($param['label']);
+                    $field->setAttribute('id', "feeds $name $type");
+                    $field->setAttribute('disabled', 'true');
+                    if (!empty($param['notice'])) {
+                        $field->setNotice($param['notice']);
+                    }
+                    if (!empty($param['prefix'])) {
+                        $field->setPrefix($param['prefix']);
+                    }
+                    if (!empty($param['suffix'])) {
+                        $field->setSuffix($param['suffix']);
+                    }
+                    break;
+                case 'select':
+                    $type = $param['type'];
+                    /** @var rex_form_select_element $field */
+                    $field = $fieldContainer->addGroupedField($group, $type, $name, $value, $attributes);
+                    $field->setLabel($param['label']);
+                    $field->setAttribute('id', "feeds $name $type");
+                    $field->setAttribute('disabled', 'true');
+                    if (!empty($param['notice'])) {
+                        $field->setNotice($param['notice']);
+                    }
+                    if (!empty($param['prefix'])) {
+                        $field->setPrefix($param['prefix']);
+                    }
+                    if (!empty($param['suffix'])) {
+                        $field->setSuffix($param['suffix']);
+                    }
 
-$select = $field->getSelect();
-if (isset($attributes['multiple'])) {
-    $select->setMultiple();
-}
-$select->addOptions($param['options']);
-break;
-case 'media':
-$type = $param['type'];
-$field = $fieldContainer->addGroupedField($group, $type, $name, $value, $attributes);
-$field->setLabel($param['label']);
-$field->setAttribute('id', "feeds $name $type");
-$field->setAttribute('disabled', 'true');
-if (!empty($param['notice'])) {
-    $field->setNotice($param['notice']);
-}
-if (!empty($param['prefix'])) {
-    $field->setPrefix($param['prefix']);
-}
-if (!empty($param['suffix'])) {
-    $field->setSuffix($param['suffix']);
-}
-break;
-default:
-throw new rex_exception('Unexpected param type "' . $param['type'] .
-'"');
-}
+                    $select = $field->getSelect();
+                    if (isset($attributes['multiple'])) {
+                        $select->setMultiple();
+                    }
+                    $select->addOptions($param['options']);
+                    break;
+                case 'media':
+                    $type = $param['type'];
+                    $field = $fieldContainer->addGroupedField($group, $type, $name, $value, $attributes);
+                    $field->setLabel($param['label']);
+                    $field->setAttribute('id', "feeds $name $type");
+                    $field->setAttribute('disabled', 'true');
+                    if (!empty($param['notice'])) {
+                        $field->setNotice($param['notice']);
+                    }
+                    if (!empty($param['prefix'])) {
+                        $field->setPrefix($param['prefix']);
+                    }
+                    if (!empty($param['suffix'])) {
+                        $field->setSuffix($param['suffix']);
+                    }
+                    break;
+                default:
+                    throw new rex_exception('Unexpected param type "' . $param['type'] .
+                    '"');
+            }
         }
     }
 

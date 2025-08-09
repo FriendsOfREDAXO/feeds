@@ -11,10 +11,12 @@
 
 namespace FriendsOfRedaxo\Feeds;
 
+use rex_socket;
+
 class Helper
 {
     /**
-     * Generates the data uri for a remote resource
+     * Generates the data uri for a remote resource.
      *
      * @param string $url
      *
@@ -22,14 +24,14 @@ class Helper
      */
     public static function getDataUri($url)
     {
-        $response = \rex_socket::factoryUrl($url)->doGet();
+        $response = rex_socket::factoryUrl($url)->doGet();
         $mimeType = $response->getHeader('content-type');
-        $uri = 'data:'.$mimeType;
+        $uri = 'data:' . $mimeType;
 
-        if (0 === strpos($mimeType, 'text/')) {
-            $uri .= ','.rawurlencode($response->getBody());
+        if (str_starts_with($mimeType, 'text/')) {
+            $uri .= ',' . rawurlencode($response->getBody());
         } else {
-            $uri .= ';base64,'.base64_encode($response->getBody());
+            $uri .= ';base64,' . base64_encode($response->getBody());
         }
 
         return $uri;

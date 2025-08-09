@@ -11,7 +11,12 @@
 
 namespace FriendsOfRedaxo\Feeds;
 
-class MediaManagerEffect extends \rex_effect_abstract
+use rex_effect_abstract;
+use rex_i18n;
+use rex_path;
+use rex_sql;
+
+class MediaManagerEffect extends rex_effect_abstract
 {
     public function execute()
     {
@@ -24,42 +29,42 @@ class MediaManagerEffect extends \rex_effect_abstract
         if (preg_match('/^(\d+)\.feeds$/', $filename, $match)) {
             // Handle ID-based format
             $id = $match[1];
-            
+
             // Get the item from database
-            $sql = \rex_sql::factory()
+            $sql = rex_sql::factory()
                 ->setTable(Item::table())
                 ->setWhere(['id' => $id, 'status' => 1])
                 ->select('media_filename');
-                
+
             if (!$sql->getRows()) {
                 return;
             }
-            
+
             $mediaFilename = $sql->getValue('media_filename');
             if (!$mediaFilename) {
                 return;
             }
         } else {
             // Handle direct filename format
-            $sql = \rex_sql::factory()
+            $sql = rex_sql::factory()
                 ->setTable(Item::table())
                 ->setWhere(['media_filename' => $filename, 'status' => 1])
                 ->select('media_filename');
-                
+
             if (!$sql->getRows()) {
                 return;
             }
-            
+
             $mediaFilename = $filename;
         }
 
         // Set the media path to the feeds media file
-        $mediaPath = \rex_path::addonData('feeds', 'media/' . $mediaFilename);
+        $mediaPath = rex_path::addonData('feeds', 'media/' . $mediaFilename);
         $this->media->setMediaPath($mediaPath);
     }
 
     public function getName()
     {
-        return \rex_i18n::msg('feeds_media_manager_effect');
+        return rex_i18n::msg('feeds_media_manager_effect');
     }
 }

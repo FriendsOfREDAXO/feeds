@@ -9,13 +9,16 @@
  * file that was distributed with this source code.
  */
 
+use FriendsOfRedaxo\Feeds\Item;
+use FriendsOfRedaxo\Feeds\Stream;
+
 $func = rex_request('func', 'string');
 $id = rex_request('id', 'integer');
 
-if ($func == 'setstatus') {
+if ('setstatus' == $func) {
     $status = (rex_request('oldstatus', 'int') + 1) % 2;
     rex_sql::factory()
-        ->setTable(rex_feeds_item::table())
+        ->setTable(Item::table())
         ->setWhere('id = :id', ['id' => $id])
         ->setValue('status', $status)
         ->addGlobalUpdateFields()
@@ -31,7 +34,7 @@ if ('' == $func) {
 
     // Hole verfügbare Namespaces für den Filter
     $sql = rex_sql::factory();
-    $namespaces = $sql->getArray('SELECT DISTINCT namespace FROM ' . rex_feeds_stream::table() . ' ORDER BY namespace');
+    $namespaces = $sql->getArray('SELECT DISTINCT namespace FROM ' . Stream::table() . ' ORDER BY namespace');
 
     // Base Query
     $query = "SELECT
@@ -49,32 +52,32 @@ if ('' == $func) {
                 i.author,
                 s.type as stream_type
             FROM
-                " . rex_feeds_item::table() . " AS i
+                " . Item::table() . ' AS i
                 LEFT JOIN
-                    " . rex_feeds_stream::table() . " AS s
-                    ON  i.stream_id = s.id";
+                    ' . Stream::table() . ' AS s
+                    ON  i.stream_id = s.id';
 
     // WHERE Bedingungen
     $where = [];
     if ($search) {
-        $where[] = "(i.title LIKE '%". $search ."%' 
-                    OR i.content LIKE '%". $search ."%' 
-                    OR s.namespace LIKE '%". $search ."%' 
-                    OR i.author LIKE '%". $search ."%')";
+        $where[] = "(i.title LIKE '%" . $search . "%'
+                    OR i.content LIKE '%" . $search . "%'
+                    OR s.namespace LIKE '%" . $search . "%'
+                    OR i.author LIKE '%" . $search . "%')";
     }
     if ($namespace_filter) {
-        $where[] = "s.namespace = '". $namespace_filter ."'";
+        $where[] = "s.namespace = '" . $namespace_filter . "'";
     }
 
     // WHERE Bedingungen zusammenführen
     if (!empty($where)) {
-        $query .= " WHERE " . implode(' AND ', $where);
+        $query .= ' WHERE ' . implode(' AND ', $where);
     }
 
-    $query .= " ORDER BY i.date DESC, id DESC";
+    $query .= ' ORDER BY i.date DESC, id DESC';
 
     $list = rex_list::factory($query);
-    
+
     // Parameter an Liste übergeben
     if ($search) {
         $list->addParam('search', $search);
@@ -92,11 +95,11 @@ if ('' == $func) {
                 <div class="form-group">
                     <select class="form-control selectpicker" data-live-search="true" name="namespace_filter" onchange="this.form.submit()">
                         <option value="">' . rex_i18n::msg('feeds_all_namespaces') . '</option>';
-                        foreach ($namespaces as $n) {
-                            $searchForm .= '<option value="' . htmlspecialchars($n['namespace']) . '"' 
-                                . ($namespace_filter == $n['namespace'] ? ' selected' : '') 
-                                . '>' . htmlspecialchars($n['namespace']) . '</option>';
-                        }
+    foreach ($namespaces as $n) {
+        $searchForm .= '<option value="' . htmlspecialchars($n['namespace']) . '"'
+            . ($namespace_filter == $n['namespace'] ? ' selected' : '')
+            . '>' . htmlspecialchars($n['namespace']) . '</option>';
+    }
     $searchForm .= '</select>
                 </div>
             </div>
@@ -112,7 +115,7 @@ if ('' == $func) {
             ' . (($search || $namespace_filter) ? '
             <div class="col-sm-12">
                 <div class="alert alert-info">
-                    ' . rex_i18n::msg('feeds_search_results') . ': ' . $list->getRows() . ' 
+                    ' . rex_i18n::msg('feeds_search_results') . ': ' . $list->getRows() . '
                 </div>
             </div>' : '') . '
         </div>
@@ -126,7 +129,7 @@ if ('' == $func) {
 
     $list->addColumn('', '', 0, ['<th class="rex-table-icon">###VALUE###</th>', '<td class="rex-table-icon">###VALUE###</td>']);
     $list->setColumnParams('', ['func' => 'edit', 'id' => '###id###']);
-    $list->setColumnFormat('', 'custom', function ($params) {
+    $list->setColumnFormat('', 'custom', static function ($params) {
         /** @var rex_list $list */
         $list = $params['list'];
         $type = explode('_', $list->getValue('stream_type'));
@@ -151,7 +154,7 @@ if ('' == $func) {
     $list->removeColumn('stream_type');
 
     $list->setColumnLabel('date', $this->i18n('item_date'));
-    $list->setColumnFormat('date', 'custom', function ($params) {
+    $list->setColumnFormat('date', 'custom', static function ($params) {
         /** @var rex_list $list */
         $list = $params['list'];
         return rex_formatter::strftime($list->getValue('date'), 'datetime');
@@ -159,7 +162,7 @@ if ('' == $func) {
     $list->setColumnSortable('date');
 
     $list->setColumnLabel('namespace', $this->i18n('stream_namespace'));
-    $list->setColumnFormat('namespace', 'custom', function ($params) {
+    $list->setColumnFormat('namespace', 'custom', static function ($params) {
         /** @var rex_list $list */
         $list = $params['list'];
         $namespace = $list->getValue('namespace');
@@ -171,42 +174,42 @@ if ('' == $func) {
     $list->setColumnSortable('namespace');
 
     $list->setColumnLabel('title', $this->i18n('item_title'));
-    $list->setColumnFormat('title', 'custom', function ($params) {
+    $list->setColumnFormat('title', 'custom', static function ($params) {
         /** @var rex_list $list */
         $list = $params['list'];
         $title = $list->getValue('title');
-        if ($title === null) {
+        if (null === $title) {
             $title = '';
         }
         $title = rex_formatter::truncate($title, ['length' => 140]);
-        $title .= ($list->getValue('url') != '') ? '<br /><small><a href="' . $list->getValue('url') . '" target="_blank">' . $list->getValue('url') . '</a></small>' : '';
+        $title .= ('' != $list->getValue('url')) ? '<br /><small><a href="' . $list->getValue('url') . '" target="_blank">' . $list->getValue('url') . '</a></small>' : '';
         $title = '<div class="rex-word-break"><span class="title' . (($list->getValue('status')) ? '' : ' text-muted') . '">' . $title . '</span></div>';
         return $title;
     });
 
     $list->setColumnLabel('media_filename', $this->i18n('item_media'));
-    $list->setColumnFormat('media_filename', 'custom', function ($params) {
+    $list->setColumnFormat('media_filename', 'custom', static function ($params) {
         /** @var rex_list $list */
         $list = $params['list'];
-        $item = rex_feeds_item::get($list->getValue('id'));
-        
+        $item = Item::get($list->getValue('id'));
+
         if ($item && $item->getMediaFilename()) {
             $media_url = $item->getMediaManagerUrl('feeds_thumb');
-            return '<img class="thumbnail" src="'. $media_url.'" width="60" height="60" alt="" title="" loading="lazy">';
+            return '<img class="thumbnail" src="' . $media_url . '" width="60" height="60" alt="" title="" loading="lazy">';
         }
         return '';
     });
 
     $list->setColumnLabel('author', $this->i18n('item_author'));
     $list->setColumnSortable('author');
-    
+
     $list->setColumnLabel('status', $this->i18n('status'));
     $list->setColumnParams('status', ['func' => 'setstatus', 'oldstatus' => '###status###', 'id' => '###id###']);
     $list->setColumnLayout('status', ['<th class="rex-table-action">###VALUE###</th>', '<td class="rex-table-action">###VALUE###</td>']);
     $list->setColumnFormat('status', 'custom', function ($params) {
         /** @var rex_list $list */
         $list = $params['list'];
-        if ($list->getValue('status') == 1) {
+        if (1 == $list->getValue('status')) {
             $str = $list->getColumnLink('status', '<span class="rex-online"><i class="rex-icon rex-icon-active-true"></i> ' . $this->i18n('item_status_online') . '</span>');
         } else {
             $str = $list->getColumnLink('status', '<span class="rex-offline"><i class="rex-icon rex-icon-active-false"></i> ' . $this->i18n('item_status_offline') . '</span>');
@@ -228,13 +231,13 @@ if ('' == $func) {
     echo $searchPanel;
     echo $content;
 } else {
-    $title = $func == 'edit' ? $this->i18n('item_edit') : $this->i18n('item_add');
+    $title = 'edit' == $func ? $this->i18n('item_edit') : $this->i18n('item_add');
 
-    $form = rex_form::factory(rex_feeds_item::table(), '', 'id = ' . $id, 'post', false);
+    $form = rex_form::factory(Item::table(), '', 'id = ' . $id, 'post', false);
     $form->addParam('id', $id);
     $form->setApplyUrl(rex_url::currentBackendPage());
-    $form->setEditMode($func == 'edit');
-    $add = $func != 'edit';
+    $form->setEditMode('edit' == $func);
+    $add = 'edit' != $func;
 
     $field = $form->addHiddenField('changed_by_user', 1);
 
@@ -278,9 +281,9 @@ if ('' == $func) {
         $field = $form->addTextField('mediasource');
         $field->setLabel($this->i18n('item_mediasource'));
     }
-    
+
     if ($form->isEditMode()) {
-        $item = rex_feeds_item::get($id);
+        $item = Item::get($id);
         if ($item && $item->getMediaFilename()) {
             $form->addRawField('<div class="text-center"><img class="img-responsive" src="' . $item->getMediaManagerUrl('feeds_thumb') . '"></div>');
         }

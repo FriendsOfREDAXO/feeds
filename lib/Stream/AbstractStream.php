@@ -12,6 +12,10 @@
 namespace FriendsOfRedaxo\Feeds\Stream;
 
 use FriendsOfRedaxo\Feeds\Item;
+use rex;
+use rex_extension;
+use rex_extension_point;
+use rex_sql;
 
 abstract class AbstractStream
 {
@@ -39,27 +43,27 @@ abstract class AbstractStream
         $this->title = $value;
     }
 
-	/**
-	 * Get in Feeds database stored items belonging to this stream orderd by date.
-	 * @param int $number Number of items to be returned
-	 * @return Item[] Array with item objects
-	 */
-	public function getPreloadedItems($number = 5, $orderBy = 'date')
-	{
-		$items = [];
-		$result = \rex_sql::factory();
-		$result->setQuery('SELECT id FROM '. rex::getTablePrefix() .'feeds_item WHERE status = 1 AND stream_id = '. $this->streamId .' ORDER BY '.$orderBy.' DESC LIMIT 0, '. $number .';');
+    /**
+     * Get in Feeds database stored items belonging to this stream orderd by date.
+     * @param int $number Number of items to be returned
+     * @return Item[] Array with item objects
+     */
+    public function getPreloadedItems($number = 5, $orderBy = 'date')
+    {
+        $items = [];
+        $result = rex_sql::factory();
+        $result->setQuery('SELECT id FROM ' . rex::getTablePrefix() . 'feeds_item WHERE status = 1 AND stream_id = ' . $this->streamId . ' ORDER BY ' . $orderBy . ' DESC LIMIT 0, ' . $number . ';');
 
-		for ($i = 0; $i < $result->getRows(); $i++) {
-			$item = Item::get($result->getValue('id'));
-			if($item != null) {
-				$items[] = $item;
-			}
-			$result->next();
-		}
-		return $items;
-	}
-    
+        for ($i = 0; $i < $result->getRows(); ++$i) {
+            $item = Item::get($result->getValue('id'));
+            if (null != $item) {
+                $items[] = $item;
+            }
+            $result->next();
+        }
+        return $items;
+    }
+
     public function getStreamId()
     {
         return $this->streamId;
@@ -80,13 +84,13 @@ abstract class AbstractStream
         $this->lastModified = $value;
     }
 
-
-    protected function registerExtensionPoint($stream_id) {
-        return \rex_extension::registerPoint(new \rex_extension_point(
-        'FEEDS_STREAM_FETCHED',
-        null, ['stream_id' => $stream_id]
+    protected function registerExtensionPoint($stream_id)
+    {
+        return rex_extension::registerPoint(new rex_extension_point(
+            'FEEDS_STREAM_FETCHED',
+            null, ['stream_id' => $stream_id],
         ));
-    }   
+    }
 
     public function getAddedCount()
     {
