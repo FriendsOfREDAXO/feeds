@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "637effdaf498fc39a6ae828c55d7ec6c",
+    "content-hash": "a9c331942a9960fc3cf56cdd1fd5bc7d",
     "packages": [
         {
             "name": "madcoda/php-youtube-api",
@@ -140,16 +140,16 @@
         },
         {
             "name": "php-feed-io/feed-io",
-            "version": "v6.0.3",
+            "version": "v6.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-feed-io/feed-io.git",
-                "reference": "0bde9ae2a611d7d36c5ba5afb291b174c2cccb27"
+                "reference": "b810297aa631aed9a3df9df82c56e245233fd05b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-feed-io/feed-io/zipball/0bde9ae2a611d7d36c5ba5afb291b174c2cccb27",
-                "reference": "0bde9ae2a611d7d36c5ba5afb291b174c2cccb27",
+                "url": "https://api.github.com/repos/php-feed-io/feed-io/zipball/b810297aa631aed9a3df9df82c56e245233fd05b",
+                "reference": "b810297aa631aed9a3df9df82c56e245233fd05b",
                 "shasum": ""
             },
             "require": {
@@ -167,8 +167,9 @@
                 "friendsofphp/php-cs-fixer": "^3.5",
                 "monolog/monolog": "1.*|2.*",
                 "php-http/mock-client": "^1.5",
-                "phpstan/phpstan": "^0.12.81",
-                "phpunit/phpunit": "~9.3.0"
+                "phpstan/phpstan": "^2.1.22",
+                "phpunit/phpunit": "~9.3.0",
+                "rector/rector": "^2.1"
             },
             "suggest": {
                 "monolog/monolog": "Allows to handle logs",
@@ -189,12 +190,16 @@
             ],
             "authors": [
                 {
+                    "name": "Benjamin Brahmer",
+                    "email": "info@b-brahmer.de"
+                },
+                {
                     "name": "Alexandre Debril",
                     "email": "alex.debril@gmail.com"
                 }
             ],
             "description": "PHP library built to consume and serve JSONFeed / RSS / Atom feeds",
-            "homepage": "https://feed-io.net",
+            "homepage": "https://php-feed-io.github.io/feed-io/",
             "keywords": [
                 "atom",
                 "cli",
@@ -205,9 +210,16 @@
                 "rss"
             ],
             "support": {
-                "source": "https://github.com/php-feed-io/feed-io/tree/v6.0.3"
+                "issues": "https://github.com/php-feed-io/feed-io/issues",
+                "source": "https://github.com/php-feed-io/feed-io/tree/v6.1.1"
             },
-            "time": "2023-10-16T14:12:49+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/Grotax",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-08-16T08:31:13+00:00"
         },
         {
             "name": "php-http/discovery",
