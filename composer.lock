@@ -140,16 +140,16 @@
         },
         {
             "name": "php-feed-io/feed-io",
-            "version": "v6.1.1",
+            "version": "v6.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-feed-io/feed-io.git",
-                "reference": "b810297aa631aed9a3df9df82c56e245233fd05b"
+                "reference": "d82d09b92148612657e8203906a6f0b95a194ce7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-feed-io/feed-io/zipball/b810297aa631aed9a3df9df82c56e245233fd05b",
-                "reference": "b810297aa631aed9a3df9df82c56e245233fd05b",
+                "url": "https://api.github.com/repos/php-feed-io/feed-io/zipball/d82d09b92148612657e8203906a6f0b95a194ce7",
+                "reference": "d82d09b92148612657e8203906a6f0b95a194ce7",
                 "shasum": ""
             },
             "require": {
@@ -166,6 +166,7 @@
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^3.5",
                 "monolog/monolog": "1.*|2.*",
+                "php-http/guzzle7-adapter": "^1.1",
                 "php-http/mock-client": "^1.5",
                 "phpstan/phpstan": "^2.1.22",
                 "phpunit/phpunit": "~9.3.0",
@@ -211,7 +212,7 @@
             ],
             "support": {
                 "issues": "https://github.com/php-feed-io/feed-io/issues",
-                "source": "https://github.com/php-feed-io/feed-io/tree/v6.1.1"
+                "source": "https://github.com/php-feed-io/feed-io/tree/v6.1.2"
             },
             "funding": [
                 {
@@ -219,7 +220,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-08-16T08:31:13+00:00"
+            "time": "2025-09-29T06:16:27+00:00"
         },
         {
             "name": "php-http/discovery",
