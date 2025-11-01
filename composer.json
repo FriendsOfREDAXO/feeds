@@ -1,7 +1,7 @@
 {
     "require": {
         "madcoda/php-youtube-api": "^1.0",
-        "vimeo/vimeo-api": "^3.0",
+        "vimeo/vimeo-api": "^4.0",
         "php-feed-io/feed-io": "^6.1",
         "symfony/http-client": "^7.0"
     },
