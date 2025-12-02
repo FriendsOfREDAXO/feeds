@@ -93,6 +93,11 @@ class VimeoPro extends AbstractStream
 
             // $item->setAuthor($video->snippet->channelTitle);
             $item->setRaw($video);
+
+            if (!$this->filter($item)) {
+                continue;
+            }
+
             $this->updateCount($item);
             $item->save();
         }

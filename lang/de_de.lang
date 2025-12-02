@@ -90,3 +90,22 @@ feeds_ical_url = Url
 feeds_ical_lang = Sprache 
 
 feeds_help = Hilfe
+
+feeds_mastodon = Mastodon
+feeds_mastodon_instance = Instanz
+feeds_mastodon_instance_notice = z.B. mastodon.social
+feeds_mastodon_username = Benutzername
+feeds_mastodon_username_notice = Ohne @ am Anfang
+
+feeds_podcast = Podcast
+feeds_podcast_url = Feed-URL
+feeds_podcast_count = Anzahl der Einträge
+
+feeds_stream_truncate = Einträge löschen
+feeds_stream_truncate_question = Wirklich alle Einträge dieses Streams löschen?
+feeds_stream_truncated = Alle Einträge des Streams wurden gelöscht.
+
+feeds_stream_whitelist = Whitelist
+feeds_stream_whitelist_notice = Kommagetrennte Begriffe. Wenn gesetzt, muss ein Beitrag mindestens einen dieser Begriffe enthalten.
+feeds_stream_blacklist = Blacklist
+feeds_stream_blacklist_notice = Kommagetrennte Begriffe. Wenn gesetzt, darf ein Beitrag keinen dieser Begriffe enthalten.

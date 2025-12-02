@@ -58,6 +58,10 @@ class Ics extends AbstractStream
                 // Da ICS-Dateien normalerweise keine Sprachinformationen enthalten, müssen Sie entscheiden, wie Sie die Sprache bestimmen möchten
                 $item->setLanguage($this->typeParams['lang']);
 
+                if (!$this->filter($item)) {
+                    continue;
+                }
+
                 $this->updateCount($item);
                 $item->save();
             }

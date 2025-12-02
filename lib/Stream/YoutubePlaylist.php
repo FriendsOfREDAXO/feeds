@@ -84,11 +84,14 @@ class YoutubePlaylist extends AbstractStream
 
                 $item->setRaw($video);
 
+                if (!$this->filter($item)) {
+                    continue;
+                }
+
                 $this->updateCount($item);
                 $item->save();
             }
         } catch (Exception $e) {
-            dump($e);
             echo rex_view::error($e->getMessage());
         }
         self::registerExtensionPoint($this->streamId);

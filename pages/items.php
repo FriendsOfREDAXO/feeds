@@ -193,9 +193,14 @@ if ('' == $func) {
         $list = $params['list'];
         $item = Item::get($list->getValue('id'));
 
-        if ($item && $item->getMediaFilename()) {
-            $media_url = $item->getMediaManagerUrl('feeds_thumb');
-            return '<img class="thumbnail" src="' . $media_url . '" width="60" height="60" alt="" title="" loading="lazy">';
+        if ($item) {
+            if ($item->getMediaFilename()) {
+                $media_url = $item->getMediaManagerUrl('feeds_thumb');
+                return '<img class="thumbnail" src="' . $media_url . '" width="60" height="60" alt="" title="" loading="lazy">';
+            }
+            if ($item->getMediaSource()) {
+                return '<img class="thumbnail" src="' . $item->getMediaSource() . '" width="60" height="60" alt="" title="" loading="lazy" style="object-fit: cover;">';
+            }
         }
         return '';
     });

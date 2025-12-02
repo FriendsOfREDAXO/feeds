@@ -22,6 +22,8 @@ abstract class AbstractStream
     protected $typeParams = [];
     protected $streamId;
     protected $title;
+    protected $whitelist;
+    protected $blacklist;
     protected $etag;
     protected $lastModified;
     protected $countAdded = 0;
@@ -105,6 +107,49 @@ abstract class AbstractStream
     public function getChangedByUserCount()
     {
         return $this->countNotUpdatedChangedByUser;
+    }
+
+    public function setWhitelist($value)
+    {
+        $this->whitelist = $value;
+    }
+
+    public function setBlacklist($value)
+    {
+        $this->blacklist = $value;
+    }
+
+    protected function filter(Item $item)
+    {
+        $whitelist = array_filter(explode(',', (string) $this->whitelist));
+        $blacklist = array_filter(explode(',', (string) $this->blacklist));
+
+        $text = $item->getTitle() . ' ' . $item->getContent() . ' ' . $item->getContentRaw();
+
+        // Whitelist check
+        if (!empty($whitelist)) {
+            $found = false;
+            foreach ($whitelist as $keyword) {
+                if (stripos($text, trim($keyword)) !== false) {
+                    $found = true;
+                    break;
+                }
+            }
+            if (!$found) {
+                return false;
+            }
+        }
+
+        // Blacklist check
+        if (!empty($blacklist)) {
+            foreach ($blacklist as $keyword) {
+                if (stripos($text, trim($keyword)) !== false) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     abstract public function getTypeName();

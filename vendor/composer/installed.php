@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => '__root__',
-        'pretty_version' => 'dev-copilot/fix-236',
-        'version' => 'dev-copilot/fix-236',
-        'reference' => 'd92f13a7673d929695c87ccc9c9923555aa8f445',
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => '675cd4fb08a4333eaaba392df541cf9d874e5ab5',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         '__root__' => array(
-            'pretty_version' => 'dev-copilot/fix-236',
-            'version' => 'dev-copilot/fix-236',
-            'reference' => 'd92f13a7673d929695c87ccc9c9923555aa8f445',
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '675cd4fb08a4333eaaba392df541cf9d874e5ab5',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -24,6 +24,33 @@
             'replaced' => array(
                 0 => '*',
             ),
+        ),
+        'guzzlehttp/guzzle' => array(
+            'pretty_version' => '7.10.0',
+            'version' => '7.10.0.0',
+            'reference' => 'b51ac707cfa420b7bfd4e4d5e510ba8008e822b4',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../guzzlehttp/guzzle',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'guzzlehttp/promises' => array(
+            'pretty_version' => '2.3.0',
+            'version' => '2.3.0.0',
+            'reference' => '481557b130ef3790cf82b713667b43030dc9c957',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../guzzlehttp/promises',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'guzzlehttp/psr7' => array(
+            'pretty_version' => '2.8.0',
+            'version' => '2.8.0.0',
+            'reference' => '21dc724a0583619cd1652f673303492272778051',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../guzzlehttp/psr7',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'madcoda/php-youtube-api' => array(
             'pretty_version' => 'v1.2.6',
@@ -44,9 +71,9 @@
             'dev_requirement' => false,
         ),
         'php-feed-io/feed-io' => array(
-            'pretty_version' => 'v6.0.3',
-            'version' => '6.0.3.0',
-            'reference' => '0bde9ae2a611d7d36c5ba5afb291b174c2cccb27',
+            'pretty_version' => 'v6.1.2',
+            'version' => '6.1.2.0',
+            'reference' => 'd82d09b92148612657e8203906a6f0b95a194ce7',
             'type' => 'library',
             'install_path' => __DIR__ . '/../php-feed-io/feed-io',
             'aliases' => array(),
@@ -153,6 +180,15 @@
             'replaced' => array(
                 0 => '*',
             ),
+        ),
+        'ralouphie/getallheaders' => array(
+            'pretty_version' => '3.0.3',
+            'version' => '3.0.3.0',
+            'reference' => '120b605dfeb996808c31b6477290a714d356e822',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../ralouphie/getallheaders',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'symfony/deprecation-contracts' => array(
             'pretty_version' => 'v3.6.0',
@@ -269,9 +305,9 @@
             'dev_requirement' => false,
         ),
         'vimeo/vimeo-api' => array(
-            'pretty_version' => '3.0.12',
-            'version' => '3.0.12.0',
-            'reference' => '55dfb9752ec0a5b5cbc4757a3fc52a8a51da69e5',
+            'pretty_version' => '4.0.1',
+            'version' => '4.0.1.0',
+            'reference' => '363c3a0d432890deea69cc5ce1933b1943732184',
             'type' => 'library',
             'install_path' => __DIR__ . '/../vimeo/vimeo-api',
             'aliases' => array(),

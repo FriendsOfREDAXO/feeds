@@ -230,6 +230,15 @@ class Item
     }
 
     /**
+     * Get media source URL.
+     * @return string|null Media source URL
+     */
+    public function getMediaSource()
+    {
+        return $this->mediasource;
+    }
+
+    /**
      * Get media manager url.
      * @param string $type Media Manager type
      * @param bool $useOriginalFilename Whether to use the original filename instead of ID.feeds

@@ -17,8 +17,8 @@ use rex_dir;
 use rex_file;
 use rex_logger;
 use rex_path;
-use rex_socket;
 use rex_sql;
+use Symfony\Component\HttpClient\HttpClient;
 
 use function in_array;
 use function is_array;
@@ -44,14 +44,22 @@ class MediaHelper
         }
 
         try {
-            // Get mime type from url
-            $mime = '';
-            $headers = get_headers($url, 1);
-            if (isset($headers['Content-Type'])) {
-                $mime = is_array($headers['Content-Type'])
-                    ? $headers['Content-Type'][0]
-                    : $headers['Content-Type'];
+            $client = HttpClient::create([
+                'headers' => [
+                    'User-Agent' => 'Mozilla/5.0 (compatible; REDAXO Feeds Addon; +https://github.com/FriendsOfREDAXO/feeds)',
+                ],
+                'max_redirects' => 5,
+                'timeout' => 10,
+            ]);
+
+            $response = $client->request('GET', $url);
+
+            if (200 !== $response->getStatusCode()) {
+                return null;
             }
+
+            $headers = $response->getHeaders();
+            $mime = $headers['content-type'][0] ?? '';
 
             // Create unique filename using stream ID and item ID
             $extension = strtolower(pathinfo(parse_url($url, PHP_URL_PATH), PATHINFO_EXTENSION));
@@ -76,27 +84,17 @@ class MediaHelper
                 rex_dir::create($mediaPath);
             }
 
-            // Download and save file
-            $response = rex_socket::factoryUrl($url)->doGet();
-            if ($response->isOk()) {
-                $filepath = $mediaPath . '/' . $filename;
+            $filepath = $mediaPath . '/' . $filename;
+            $content = $response->getContent();
 
-                // Get the image content
-                $content = $response->getBody();
-
-                // Validate image
-                if (@imagecreatefromstring($content)) {
-                    // Use rex_file for safe file operations
-                    if (rex_file::put($filepath, $content)) {
-                        @chmod($filepath, rex::getFilePerm());
-                        return $filename;
-                    }
+            // Validate image
+            if (@imagecreatefromstring($content)) {
+                // Use rex_file for safe file operations
+                if (rex_file::put($filepath, $content)) {
+                    @chmod($filepath, rex::getFilePerm());
+                    return $filename;
                 }
-                // Log invalid image
-                // rex_logger::logError(E_WARNING, 'Invalid image file from URL: ' . $url, __FILE__, __LINE__);
             }
-            // Log failed download
-            // rex_logger::logError(E_WARNING, 'Failed to download image from URL: ' . $url, __FILE__, __LINE__);
         } catch (Exception $e) {
             rex_logger::logException($e);
         }
@@ -183,15 +181,13 @@ class MediaHelper
 
         $deletedCount = 0;
         $sql = rex_sql::factory();
+        $dbFiles = $sql->getArray('SELECT media_filename FROM ' . Item::table() . ' WHERE media_filename != ""');
+        $dbFiles = array_column($dbFiles, 'media_filename');
 
         foreach ($files as $file) {
             $filename = basename($file);
 
-            // Check if file is referenced in database
-            $query = 'SELECT id FROM ' . Item::table() . ' WHERE media_filename = ?';
-            $sql->setQuery($query, [$filename]);
-
-            if (0 === $sql->getRows()) {
+            if (!in_array($filename, $dbFiles, true)) {
                 if (rex_file::delete($file)) {
                     ++$deletedCount;
                 }

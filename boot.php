@@ -9,6 +9,10 @@
  * file that was distributed with this source code.
  */
 
+if (file_exists(__DIR__ . '/vendor/autoload.php')) {
+    require_once __DIR__ . '/vendor/autoload.php';
+}
+
 if (\rex_addon::get('cronjob')->isAvailable()) {
     \rex_cronjob_manager::registerType(\FriendsOfRedaxo\Feeds\Cronjob::class);
 }

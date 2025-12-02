@@ -55,6 +55,20 @@ if ('delete' === $func) {
     $func = '';
 }
 
+if ('truncate' === $func) {
+    // 1. Alle Media-Files für diesen Stream löschen
+    MediaHelper::deleteStreamMedia($id);
+
+    // 2. Items löschen
+    rex_sql::factory()
+        ->setTable(Item::table())
+        ->setWhere(['stream_id' => $id])
+        ->delete();
+
+    echo rex_view::success($this->i18n('stream_truncated'));
+    $func = '';
+}
+
 if ('' == $func) {
     $query = 'SELECT `id`, `namespace`, `type`, `title`, `status` FROM ' . Stream::table() . ' ORDER BY `type`, `namespace`';
     $list = rex_list::factory($query);
@@ -116,6 +130,10 @@ if ('' == $func) {
     $list->setColumnParams('fetch', ['func' => 'fetch', 'id' => '###id###']);
     $list->addLinkAttribute('fetch', 'data-pjax', 'false');
 
+    $list->addColumn('truncate', $this->i18n('stream_truncate'), -1, ['', '<td class="rex-table-action">###VALUE###</td>']);
+    $list->setColumnParams('truncate', ['func' => 'truncate', 'id' => '###id###']);
+    $list->addLinkAttribute('truncate', 'onclick', "return confirm('" . $this->i18n('stream_truncate_question') . "');");
+
     $content = $list->get();
 
     $fragment = new rex_fragment();
@@ -150,6 +168,14 @@ if ('' == $func) {
     $field = $form->addMediaField('image');
     $field->setLabel($this->i18n('stream_image'));
     $field->setTypes('jpg,jpeg,gif,png');
+
+    $field = $form->addTextField('whitelist');
+    $field->setLabel($this->i18n('stream_whitelist'));
+    $field->setNotice($this->i18n('stream_whitelist_notice'));
+
+    $field = $form->addTextField('blacklist');
+    $field->setLabel($this->i18n('stream_blacklist'));
+    $field->setNotice($this->i18n('stream_blacklist_notice'));
 
     $field = $form->addSelectField('status');
     $field->setLabel($this->i18n('status'));

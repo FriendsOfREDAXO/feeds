@@ -25,6 +25,7 @@ class Cronjob extends rex_cronjob
 {
     public function execute()
     {
+        set_time_limit(0);
         $streams = [];
         $streamlist = [];
 

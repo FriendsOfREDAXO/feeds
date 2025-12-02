@@ -72,6 +72,8 @@ class Stream
         }
         $stream->setStreamId($data['id']);
         $stream->setTitle($data['title']);
+        $stream->setWhitelist($data['whitelist'] ?? '');
+        $stream->setBlacklist($data['blacklist'] ?? '');
         $stream->setEtag($data['etag']);
         $stream->setLastModified($data['last_modified']);
 

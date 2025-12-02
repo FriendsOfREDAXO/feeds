@@ -52,10 +52,8 @@ class YoutubeChannel extends YoutubePlaylist
     {
         try {
             $channel = $youtube->getChannelById($this->typeParams['channel_id'], ['part' => 'contentDetails']);
-            dump($channel);
             return $channel->contentDetails->relatedPlaylists->uploads;
         } catch (Exception $e) {
-            dump($e);
             echo rex_view::error($e->getMessage());
             return false;
         }

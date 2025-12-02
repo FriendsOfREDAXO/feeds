@@ -11,7 +11,12 @@
 
 namespace FriendsOfRedaxo\Feeds\Stream;
 
+use FeedIo\Adapter\Http\Client as FeedIoClient;
+use FeedIo\FeedIo;
 use FriendsOfRedaxo\Feeds\Item;
+use Psr\Log\NullLogger;
+use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Component\HttpClient\HttplugClient;
 
 class Rss extends AbstractStream
 {
@@ -62,8 +67,16 @@ class Rss extends AbstractStream
         foreach ($elements as $element) {
             if ($element->getName() === 'enclosure') {
                 $attributes = $element->getAttributes();
-                if (isset($attributes['url']) && isset($attributes['type'])) {
-                    if (strpos($attributes['type'], 'image/') === 0) {
+                if (isset($attributes['url'])) {
+                    // Check type if exists, otherwise check file extension
+                    $isImage = false;
+                    if (isset($attributes['type']) && strpos($attributes['type'], 'image/') === 0) {
+                        $isImage = true;
+                    } elseif (preg_match('/\.(jpg|jpeg|png|gif|webp|avif)(\?.*)?$/i', $attributes['url'])) {
+                        $isImage = true;
+                    }
+
+                    if ($isImage) {
                         return $attributes['url'];
                     }
                 }
@@ -71,7 +84,7 @@ class Rss extends AbstractStream
         }
 
         // 4. Prüfe auf Bilder im Content
-        $content = $rssItem->getContent();
+        $content = $rssItem->getContent() ?: $rssItem->getDescription();
         if ($content) {
             if (preg_match('/<img[^>]+src=[\'"]([^\'"]+)[\'"][^>]*>/i', $content, $matches)) {
                 return $matches[1];
@@ -83,14 +96,22 @@ class Rss extends AbstractStream
 
     public function fetch()
     {
-        $client = new \FeedIo\Adapter\Http\Client(new Symfony\Component\HttpClient\HttplugClient());
-        $logger = new \Psr\Log\NullLogger();
-        $feedIo = new \FeedIo\FeedIo($client, $logger);
+        $symfonyClient = HttpClient::create([
+            'headers' => [
+                'User-Agent' => 'Mozilla/5.0 (compatible; REDAXO Feeds Addon; +https://github.com/FriendsOfREDAXO/feeds)',
+            ],
+            'max_redirects' => 5,
+            'timeout' => 10,
+        ]);
+
+        $client = new FeedIoClient(new HttplugClient($symfonyClient));
+        $logger = new NullLogger();
+        $feedIo = new FeedIo($client, $logger);
 
         try {
             $result = $feedIo->read($this->typeParams['url']);
             
-            /** @var Item $rssItem */
+            /** @var \FeedIo\Feed\ItemInterface $rssItem */
             foreach ($result->getFeed() as $rssItem) {
                 try {
                     $url = $rssItem->getLink() ?: $rssItem->getPublicId();
@@ -105,7 +126,7 @@ class Rss extends AbstractStream
 
                     // Basis-Felder setzen
                     $item->setTitle($title ?: '');
-                    $content = $rssItem->getContent() ?: '';
+                    $content = $rssItem->getContent() ?: $rssItem->getDescription();
                     $item->setContentRaw($content);
                     $item->setContent(strip_tags($content));
                     $item->setUrl($rssItem->getLink() ?: '');
@@ -122,6 +143,10 @@ class Rss extends AbstractStream
                     if ($mediaUrl = $this->findMediaUrl($rssItem, $title)) {
                         $item->setMedia($mediaUrl);
                         $item->setMediaSource($mediaUrl);
+                    }
+
+                    if (!$this->filter($item)) {
+                        continue;
                     }
 
                     $this->updateCount($item);

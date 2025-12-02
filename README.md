@@ -6,13 +6,15 @@ REDAXO Feed Aggregator
 
 ## Features
 
-* Abruf von YouTube-, Vimeo- und RSS-Streams.
+* Abruf von YouTube-, Vimeo-, RSS-, Mastodon- und Podcast-Streams.
 * Dauerhaftes Speichern der Beiträge
 * Speicherung des Hauptmediums Im data-Ordner des AddOns
 * Nachträgliche Aktualisierung der Beiträge (z.B. nach einem Update / einer Korrektur)
 * Erweiterbar durch eigene Feed-Provider
 * Feeds können in Watson gesucht werden `feed suchbegriff`
 * Abruf aller oder einzelner Feeds per Cronjob
+* Bereinigen von Streams (Löschen aller Einträge) direkt im Backend
+* **Filterung:** Whitelist und Blacklist für jeden Stream konfigurierbar (z.B. nur Beiträge mit bestimmten Hashtags importieren)
 
 ## Migration zu Namespaces (REDAXO 6 Vorbereitung)
 
@@ -36,6 +38,8 @@ Stream-Implementierungen befinden sich im `FriendsOfRedaxo\Feeds\Stream` Namespa
 - `rex_feeds_stream_youtube_channel` → `FriendsOfRedaxo\Feeds\Stream\YoutubeChannel`
 - `rex_feeds_stream_ics` → `FriendsOfRedaxo\Feeds\Stream\Ics`
 - `rex_feeds_stream_vimeo_pro` → `FriendsOfRedaxo\Feeds\Stream\VimeoPro`
+- `rex_feeds_stream_mastodon` → `FriendsOfRedaxo\Feeds\Stream\Mastodon`
+- `rex_feeds_stream_podcast` → `FriendsOfRedaxo\Feeds\Stream\Podcast`
 
 ### Sanfte Migration
 
@@ -65,6 +69,17 @@ Im REDAXO-Backend unter `Installer` abrufen und installieren
 4. anschließend speichern.
 
 > **Hinweis:** Ggf. müssen zusätzlich in den Einstellungen von Feeds Zugangsdaten (bspw. API-Schlüssel) hinterlegt werden, bspw. bei Vimeo und YouTube.
+
+### Filtern von Beiträgen (Whitelist / Blacklist)
+
+Jeder Stream kann gefiltert werden, um nur bestimmte Beiträge zu importieren oder unerwünschte auszuschließen.
+
+*   **Whitelist:** Kommagetrennte Liste von Begriffen. Wenn gesetzt, wird ein Beitrag nur importiert, wenn er **mindestens einen** dieser Begriffe im Titel oder Inhalt enthält.
+*   **Blacklist:** Kommagetrennte Liste von Begriffen. Wenn gesetzt, wird ein Beitrag **ignoriert**, sobald er **einen** dieser Begriffe enthält.
+
+Beispiel:
+*   Whitelist: `#news, Wichtig` -> Importiert nur Beiträge, die "#news" ODER "Wichtig" enthalten.
+*   Blacklist: `Gewinnspiel, Intern` -> Ignoriert alle Beiträge, die "Gewinnspiel" ODER "Intern" enthalten.
 
 ### Feed aktualisieren
 
@@ -266,8 +281,55 @@ Weitere Infos zu Extension Points in REDAXO unter https://www.redaxo.org/doku/ma
 
 Gebe einfach die URL zum Feed ein. ;-) 
 
-> Tipp: Mastodon-Feed auslesen: https://phpc.social/@REDAXO.rss 
+## Mastodon
 
+Einfach die Instanz (z.B. `mastodon.social`) und den Benutzernamen (ohne `@`) angeben. Das AddOn nutzt den öffentlichen RSS-Feed des Profils.
+
+## Podcast
+
+Der Podcast-Stream ist speziell für Audio-Feeds optimiert.
+*   **Cover-Bild:** Wird bevorzugt aus `itunes:image` geladen.
+*   **Audio-Datei:** Die URL zur MP3-Datei wird **nicht** heruntergeladen (um Speicherplatz zu sparen und Statistiken nicht zu verfälschen), sondern in den Rohdaten gespeichert.
+*   **Anzahl:** Die Anzahl der abzurufenden Folgen kann begrenzt werden.
+
+### Ausgabe eines Podcasts
+
+Die Audio-URL und die Dauer befinden sich im `raw`-Datenfeld des Items.
+
+```php
+<?php
+use FriendsOfRedaxo\Feeds\Stream;
+
+$stream = Stream::get(1); // ID des Podcast-Streams
+$items = $stream->getPreloadedItems();
+
+foreach($items as $item) {
+    // Rohdaten abrufen (als Array)
+    $raw = json_decode($item->getRaw(), true);
+    $audioUrl = $raw['audio_url'] ?? '';
+    $duration = $raw['duration'] ?? '';
+
+    echo '<div class="podcast-episode">';
+    echo '<h3>' . rex_escape($item->getTitle()) . '</h3>';
+    
+    // Cover-Bild
+    if($item->getMediaFilename()) {
+        echo '<img src="'. $item->getMediaManagerUrl('feeds_thumb') .'" alt="">';
+    }
+
+    // Audio-Player
+    if ($audioUrl) {
+        echo '<audio controls src="' . rex_escape($audioUrl) . '"></audio>';
+    }
+    
+    if ($duration) {
+        echo '<small>Dauer: ' . rex_escape($duration) . '</small>';
+    }
+    
+    echo '</div>';
+}
+?>
+```
 
 ## Vimeo Pro
 
