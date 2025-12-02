@@ -105,7 +105,7 @@ feeds_stream_truncate = Einträge löschen
 feeds_stream_truncate_question = Wirklich alle Einträge dieses Streams löschen?
 feeds_stream_truncated = Alle Einträge des Streams wurden gelöscht.
 
-feeds_stream_whitelist = Whitelist
+feeds_stream_whitelist = Positivliste
 feeds_stream_whitelist_notice = Kommagetrennte Begriffe. Wenn gesetzt, muss ein Beitrag mindestens einen dieser Begriffe enthalten.
-feeds_stream_blacklist = Blacklist
+feeds_stream_blacklist = Negativliste
 feeds_stream_blacklist_notice = Kommagetrennte Begriffe. Wenn gesetzt, darf ein Beitrag keinen dieser Begriffe enthalten.

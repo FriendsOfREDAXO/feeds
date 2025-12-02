@@ -14,7 +14,7 @@ REDAXO Feed Aggregator
 * Feeds können in Watson gesucht werden `feed suchbegriff`
 * Abruf aller oder einzelner Feeds per Cronjob
 * Bereinigen von Streams (Löschen aller Einträge) direkt im Backend
-* **Filterung:** Whitelist und Blacklist für jeden Stream konfigurierbar (z.B. nur Beiträge mit bestimmten Hashtags importieren)
+* **Filterung:** Positivliste und Negativliste für jeden Stream konfigurierbar (z.B. nur Beiträge mit bestimmten Hashtags importieren)
 
 ## Migration zu Namespaces (REDAXO 6 Vorbereitung)
 
@@ -70,16 +70,16 @@ Im REDAXO-Backend unter `Installer` abrufen und installieren
 
 > **Hinweis:** Ggf. müssen zusätzlich in den Einstellungen von Feeds Zugangsdaten (bspw. API-Schlüssel) hinterlegt werden, bspw. bei Vimeo und YouTube.
 
-### Filtern von Beiträgen (Whitelist / Blacklist)
+### Filtern von Beiträgen (Positivliste / Negativliste)
 
 Jeder Stream kann gefiltert werden, um nur bestimmte Beiträge zu importieren oder unerwünschte auszuschließen.
 
-*   **Whitelist:** Kommagetrennte Liste von Begriffen. Wenn gesetzt, wird ein Beitrag nur importiert, wenn er **mindestens einen** dieser Begriffe im Titel oder Inhalt enthält.
-*   **Blacklist:** Kommagetrennte Liste von Begriffen. Wenn gesetzt, wird ein Beitrag **ignoriert**, sobald er **einen** dieser Begriffe enthält.
+*   **Positivliste:** Kommagetrennte Liste von Begriffen. Wenn gesetzt, wird ein Beitrag nur importiert, wenn er **mindestens einen** dieser Begriffe im Titel oder Inhalt enthält.
+*   **Negativliste:** Kommagetrennte Liste von Begriffen. Wenn gesetzt, wird ein Beitrag **ignoriert**, sobald er **einen** dieser Begriffe enthält.
 
 Beispiel:
-*   Whitelist: `#news, Wichtig` -> Importiert nur Beiträge, die "#news" ODER "Wichtig" enthalten.
-*   Blacklist: `Gewinnspiel, Intern` -> Ignoriert alle Beiträge, die "Gewinnspiel" ODER "Intern" enthalten.
+*   Positivliste: `#news, Wichtig` -> Importiert nur Beiträge, die "#news" ODER "Wichtig" enthalten.
+*   Negativliste: `Gewinnspiel, Intern` -> Ignoriert alle Beiträge, die "Gewinnspiel" ODER "Intern" enthalten.
 
 ### Feed aktualisieren
 
