@@ -1,0 +1,32 @@
+{
+  "name": "PHP Feed-IO",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "args": {
+      "VARIANT": "8.1"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "bmewburn.vscode-intelephense-client",
+        "xdebug.php-debug",
+        "neilbrayfield.php-docblocker",
+        "mehedidracula.php-namespace-resolver"
+      ],
+      "settings": {
+        "php.validate.executablePath": "/usr/local/bin/php",
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "terminal.integrated.profiles.linux": {
+          "bash": {
+            "path": "/bin/bash",
+            "args": ["-l"]
+          }
+        }
+      }
+    }
+  },
+  "forwardPorts": [8000],
+  "postCreateCommand": "composer install",
+  "remoteUser": "vscode"
+}

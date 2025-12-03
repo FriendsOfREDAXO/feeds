@@ -1,0 +1,26 @@
+site_name: feed-io Documentation
+theme:
+  name: material
+  features:
+    - content.code.copy
+
+
+nav:
+  - Home: index.md
+  - Code Quality: codecontributions.md
+  - Specification: specifications-support.md
+  - Upgrade:
+      - Upgrade to v3: upgrades/UPGRADE-3.0.md
+      - Upgrade to v4: upgrades/UPGRADE-4.0.md
+      - Upgrade to v5: upgrades/UPGRADE-5.0.md
+      - Upgrade to v6: upgrades/UPGRADE-6.0.md
+
+markdown_extensions:
+  - pymdownx.highlight:
+      use_pygments: true
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences

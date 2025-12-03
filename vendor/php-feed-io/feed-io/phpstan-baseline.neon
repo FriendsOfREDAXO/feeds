@@ -1,0 +1,7 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^PHPDoc tag @var with type FeedIo\\Reader\\FixerAbstract is not subtype of native type FeedIo\\Reader\\Fixer\\HttpLastModified\|FeedIo\\Reader\\Fixer\\PublicId\.$#'
+			identifier: varTag.nativeType
+			count: 1
+			path: src/FeedIo/Specification.php

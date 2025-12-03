@@ -1,0 +1,10 @@
+includes:
+	- phpstan-baseline.neon
+
+parameters:
+    errorFormat: table
+    level: 5
+    paths:
+        - %currentWorkingDirectory%/src
+    bootstrapFiles:
+        - %currentWorkingDirectory%/vendor/autoload.php

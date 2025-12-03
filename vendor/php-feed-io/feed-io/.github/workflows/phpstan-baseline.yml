@@ -1,0 +1,41 @@
+name: PHPStan Baseline Check
+
+on:
+  pull_request:
+    branches: [ main, master ]
+    paths:
+      - 'src/**/*.php'
+
+jobs:
+  phpstan:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        php-version: ['8.4']
+      fail-fast: false
+
+    steps:
+    - uses: actions/checkout@v5
+    
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php-version }}
+        extensions: dom, json, libxml
+        coverage: xdebug
+    
+    - name: Cache Composer packages
+      id: composer-cache
+      uses: actions/cache@v4
+      with:
+        path: vendor
+        key: ${{ runner.os }}-php-${{ matrix.php-version }}-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-php-${{ matrix.php-version }}-
+    
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-progress
+
+    - name: Run PHPStan with baseline
+      run: vendor/bin/phpstan analyse --error-format=github
