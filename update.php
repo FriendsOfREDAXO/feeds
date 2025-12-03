@@ -8,8 +8,12 @@
  * file that was distributed with this source code.
  */
 
-// Only run this update for versions < 5.0.0
 $addon = rex_addon::get('feeds');
+
+// Ensure all table structures are up to date
+require_once __DIR__ . '/lib/install_tables.php';
+
+// Only run this update for versions < 5.0.0
 $addonVersion = rex_string::versionCompare($addon->getVersion(), '5.0.0', '<');
 
 if ($addonVersion) {
@@ -18,11 +22,6 @@ if ($addonVersion) {
     if (!is_dir($mediaPath)) {
         mkdir($mediaPath, 0777, true);
     }
-    
-    // Add new column if it doesn't exist
-    rex_sql_table::get(rex::getTable('feeds_item'))
-        ->ensureColumn(new rex_sql_column('media_filename', 'varchar(255)'))
-        ->alter();
     
     // Get all items with media content
     $sql = rex_sql::factory();
