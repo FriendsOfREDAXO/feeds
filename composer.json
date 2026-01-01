@@ -3,7 +3,7 @@
         "madcoda/php-youtube-api": "^1.0",
         "vimeo/vimeo-api": "^4.0",
         "php-feed-io/feed-io": "^6.2",
-        "symfony/http-client": "^7.0"
+        "symfony/http-client": "^8.0"
     },
     "replace": {
         "enshrined/svg-sanitize": "*",
