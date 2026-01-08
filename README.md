@@ -124,13 +124,85 @@ $items = $stream->getPreloadedItems(); // Standard gibt 5 Einträge zurück, son
 ?>
 ```
 
+## Content-Helper (Hilfsmethoden)
+
+Dieses AddOn stellt mehrere praktische Helfer für die Verarbeitung von Content zur Verfügung. Die Methoden befinden sich in der Klasse `FriendsOfRedaxo\Feeds\Item` (Datei: `lib/Item.php`).
+
+- `hasMedia(): bool` — Prüft, ob ein `media_filename` gesetzt ist.
+- `getPlainTextContent(): string` — Liefert den Inhalt als reinen Text (HTML entfernt, Whitespace normalisiert).
+- `getTruncatedContent(int $length = 200, bool $endOnSentence = true, string $ellipsis = '…'): string` — Kürzt Text intelligent; bevorzugt Satzende, fällt zurück auf Wortgrenze.
+- `removeEmojis(string $text): string` — Entfernt gängige Emoji-Zeichen aus Text.
+- `removeHashtags(string $text): string` — Entfernt Hashtags (`#tag`) aus Text.
+- `sanitizeContent(array $options): string` — Convenience-Methode (Standard: Emojis entfernen, Hashtags optional).
+- `extractTitleFromContent(string $stopSign = '::', int $maxLength = 120, bool $fallbackToFirstLine = true): string` — Extrahiert einen Titel aus dem Content; nutzt ein Stop-Zeichen (z.B. `::`) oder als Fallback die erste Zeile.
+
+Anwendungsbeispiele:
+
+```php
+// $item ist ein FriendsOfRedaxo\Feeds\Item Objekt
+// Prüfen, ob ein Medium vorhanden ist
+if ($item->hasMedia()) {
+    echo 'Bild vorhanden: ' . $item->getMediaFilename();
+}
+
+// Reinen Text bekommen und kürzen
+$plain = $item->getPlainTextContent();
+$teaser = $item->getTruncatedContent(180);
+
+// Emojis und Hashtags entfernen
+$clean = $item->sanitizeContent(['remove_emojis' => true, 'remove_hashtags' => true]);
+
+// Titel anhand eines Stop-Zeichens extrahieren (z.B. "Titel :: Rest des Textes")
+$extractedTitle = $item->extractTitleFromContent('::', 120, true);
+if ($extractedTitle) {
+    // z.B. im Import-Workflow dem Redakteur als Vorschlag anzeigen
+}
+```
+
+Hinweis: Die Methoden arbeiten auf dem gespeicherten `content` oder `content_raw` des Items und sind bewusst einfach gehalten, damit Redakteure im REDAXO-Backend leicht damit arbeiten können.
+
+## Item-Klasse Referenz
+
+Kurzreferenz aller relevanten Methoden der Klasse `FriendsOfRedaxo\Feeds\Item` (Datei: [lib/Item.php](lib/Item.php)).
+
+| Methode | Rückgabe | Beschreibung |
+|---|---:|---|
+| `public static function table()` | `string` | Tabellenname für Items. |
+| `public static function get($id)` | `?Item` | Liefert ein `Item`-Objekt aus der DB oder `null`. |
+| `getTitle()` | `string` | Titel des Items. |
+| `getContentRaw()` | `string` | Rohinhalt (unverändert). |
+| `getContent()` | `string` | Aufbereiteter Inhalt. |
+| `getId()` | `int` | Datenbank-ID. |
+| `getUrl()` | `string` | Ursprung-URL des Eintrags. |
+| `getDateTime()` | `?\DateTimeInterface` | Datum des Eintrags. |
+| `getAuthor()` | `string` | Autor. |
+| `getUsername()` | `string` | Username (falls vorhanden). |
+| `getLanguage()` | `string` | Sprache. |
+| `getMediaFilename()` | `?string` | Dateiname des gespeicherten Mediums oder `null`. |
+| `getMediaSource()` | `?string` | Original-URL der Medienquelle. |
+| `getMediaManagerUrl(string $type, bool $useOriginalFilename = false, bool $escape = true)` | `?string` | URL aus dem Media Manager. |
+| `getMediaInfo(string $type)` | `?array` | Breite/Höhe/Format des Mediums oder `null`. |
+| `getRaw()` | `string` | JSON-String der Rohdaten. |
+| `hasMedia()` | `bool` | True, wenn ein `media_filename` gesetzt ist. |
+| `getPlainTextContent()` | `string` | Inhalt als reiner Text (HTML entfernt). |
+| `getTruncatedContent(int $length = 200, bool $endOnSentence = true, string $ellipsis = '…')` | `string` | Intelligentes Kürzen (Satz- oder Wortgrenze). |
+| `public static function removeEmojis(string $text)` | `string` | Entfernt Emojis aus Text. |
+| `public static function removeHashtags(string $text)` | `string` | Entfernt Hashtags (`#tag`). |
+| `sanitizeContent(array $options = [])` | `string` | Convenience-Sanitizer (Emojis/Hashtags/Whitespace). |
+| `extractTitleFromContent(string $stopSign = '::', int $maxLength = 120, bool $fallbackToFirstLine = true)` | `string` | Extrahiert einen Titel aus dem Content (Stop-Zeichen oder erste Zeile). |
+| Setter: `setTitle`, `setType`, `setContentRaw`, `setContent`, `setUrl`, `setDate`, `setAuthor`, `setUsername`, `setLanguage` | — | Setter für Item-Felder. |
+| Media/Raw: `setMedia`, `setMediaSource`, `setRaw`, `setOnline` | — | Methoden zur Medienbehandlung und Rohdaten. |
+| Status/Save: `isOnline`, `exists`, `changedByUser`, `save()` | — | Statusabfragen und Persistenz (save() speichert das Item). |
+
+Die obigen Signaturen und Beschreibungen sollen schnelle Orientierung geben; für Implementierungsdetails siehe [lib/Item.php](lib/Item.php).
+
+
 ## Bilder ausgeben mit dem Media Manager
 
 Die Bilder eines Feeds werden im AddOn-Data-Ordner unter `data/addons/feeds/media` gespeichert. Für die Ausgabe der Bilder stehen zwei gleichwertige Möglichkeiten zur Verfügung.
 
 ### 1. Methode des Feed-Items
 
-Neu seit 5.0.0
 
 ```php
 // Mit Media Manager Effekt

@@ -313,6 +313,187 @@ class Item
         return $this->raw;
     }
 
+    /**
+     * Prüft, ob ein Medium vorhanden ist.
+     * @return bool
+     */
+    public function hasMedia()
+    {
+        return (bool) $this->media_filename;
+    }
+
+    /**
+     * Liefert den Inhalt als reinen Text (HTML entfernt), bereinigt von überflüssigen Whitespaces.
+     * @return string
+     */
+    public function getPlainTextContent()
+    {
+        $text = $this->content ?? $this->contentRaw ?? '';
+        $text = strip_tags($text);
+        $text = html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $text = preg_replace('/\s+/u', ' ', $text);
+        return trim($text);
+    }
+
+    /**
+     * Kürzt den Inhalt intelligent.
+     * @param int $length Maximale Länge in Zeichen
+     * @param bool $endOnSentence Ob bis zum Satzende gekürzt werden soll (wenn möglich)
+     * @param string $ellipsis Auslassungszeichen
+     * @return string
+     */
+    public function getTruncatedContent($length = 200, $endOnSentence = true, $ellipsis = '…')
+    {
+        $text = $this->getPlainTextContent();
+        if (mb_strlen($text) <= $length) {
+            return $text;
+        }
+
+        $truncated = mb_substr($text, 0, $length);
+
+        if ($endOnSentence) {
+            $posArr = [mb_strrpos($truncated, '.'), mb_strrpos($truncated, '!'), mb_strrpos($truncated, '?')];
+            $posArr = array_map(function ($p) { return false === $p ? -1 : $p; }, $posArr);
+            $lastPos = max($posArr);
+            if ($lastPos > 0) {
+                return rtrim(mb_substr($truncated, 0, $lastPos + 1)) . $ellipsis;
+            }
+
+            $punctPos = [mb_strrpos($truncated, ','), mb_strrpos($truncated, ';')];
+            $punctPos = array_map(function ($p) { return false === $p ? -1 : $p; }, $punctPos);
+            $lastP = max($punctPos);
+            if ($lastP > 0) {
+                return rtrim(mb_substr($truncated, 0, $lastP + 1)) . $ellipsis;
+            }
+        }
+
+        $lastSpace = mb_strrpos($truncated, ' ');
+        if ($lastSpace > 0) {
+            return rtrim(mb_substr($truncated, 0, $lastSpace)) . $ellipsis;
+        }
+
+        return rtrim($truncated) . $ellipsis;
+    }
+
+    /**
+     * Entfernt Emojis aus einem Text.
+     * @param string $text
+     * @return string
+     */
+    public static function removeEmojis($text)
+    {
+        if (!$text) {
+            return '';
+        }
+
+        $regexPatterns = [
+            '/[\x{1F600}-\x{1F64F}]/u', // Emoticons
+            '/[\x{1F300}-\x{1F5FF}]/u', // Misc Symbols and Pictographs
+            '/[\x{1F680}-\x{1F6FF}]/u', // Transport and Map
+            '/[\x{1F1E6}-\x{1F1FF}]/u', // Flags
+            '/[\x{2600}-\x{26FF}]/u',   // Misc symbols
+            '/[\x{2700}-\x{27BF}]/u',   // Dingbats
+        ];
+
+        foreach ($regexPatterns as $pattern) {
+            $text = preg_replace($pattern, '', $text);
+        }
+
+        // remove remaining invisible characters
+        $text = preg_replace('/[\p{Cf}]+/u', '', $text);
+
+        return $text;
+    }
+
+    /**
+     * Entfernt Hashtags aus einem Text.
+     * @param string $text
+     * @return string
+     */
+    public static function removeHashtags($text)
+    {
+        if (!$text) {
+            return '';
+        }
+
+        // Entfernt #hashtag oder #hashtag123, lässt normale Wörter stehen
+        return preg_replace('/#([\p{L}0-9_\-]+)/u', '', $text);
+    }
+
+    /**
+     * Sanitizes content by removing emojis/hashtags and trimming.
+     * @param array $options [remove_emojis => bool, remove_hashtags => bool, normalize_whitespace => bool]
+     * @return string
+     */
+    public function sanitizeContent(array $options = [])
+    {
+        $defaults = [
+            'remove_emojis' => true,
+            'remove_hashtags' => false,
+            'normalize_whitespace' => true,
+        ];
+        $opts = array_merge($defaults, $options);
+
+        $text = $this->getPlainTextContent();
+
+        if ($opts['remove_emojis']) {
+            $text = self::removeEmojis($text);
+        }
+        if ($opts['remove_hashtags']) {
+            $text = self::removeHashtags($text);
+        }
+        if ($opts['normalize_whitespace']) {
+            $text = preg_replace('/\s+/u', ' ', $text);
+        }
+
+        return trim($text);
+    }
+
+    /**
+     * Extrahiert einen Titel aus dem Content. Wenn ein "Stop-Zeichen" (z.B. "::") verwendet wird,
+     * wird alles vor dem Stop-Zeichen als Titel genommen. Ansonsten kann die erste Zeile oder ein
+     * gekürzter Ausschnitt als Titel dienen.
+     * @param string $stopSign Stop-Zeichen, das das Ende des Titels markiert
+     * @param int $maxLength Maximale Länge des extrahierten Titels
+     * @param bool $fallbackToFirstLine Falls true, nimmt erste Zeile wenn kein Stop-Sign gefunden
+     * @return string
+     */
+    public function extractTitleFromContent($stopSign = '::', $maxLength = 120, $fallbackToFirstLine = true)
+    {
+        $text = $this->getPlainTextContent();
+        if (!$text) {
+            return '';
+        }
+
+        // Prüfe explizites Stop-Zeichen
+        if ($stopSign && false !== ($pos = mb_strpos($text, $stopSign))) {
+            $title = mb_substr($text, 0, $pos);
+            $title = trim($title);
+            return mb_substr($title, 0, $maxLength);
+        }
+
+        // Fallback: erste Zeile
+        if ($fallbackToFirstLine) {
+            $lines = preg_split('/\r?\n/', $text);
+            if (!empty($lines[0])) {
+                $first = trim($lines[0]);
+                if (mb_strlen($first) <= $maxLength) {
+                    return $first;
+                }
+                // sonst kürzen sauber an Wortgrenze
+                $tr = mb_substr($first, 0, $maxLength);
+                $lastSpace = mb_strrpos($tr, ' ');
+                if ($lastSpace > 0) {
+                    return rtrim(mb_substr($tr, 0, $lastSpace));
+                }
+                return rtrim($tr);
+            }
+        }
+
+        // Letzte Möglichkeit: vorhandenen Titel nutzen oder leeren String
+        return $this->title ? mb_substr(trim($this->title), 0, $maxLength) : '';
+    }
+
     public function setTitle($value)
     {
         $this->title = $value;
