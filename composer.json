@@ -1,4 +1,7 @@
 {
+    "name": "friendsofredaxo/feeds",
+    "description": "REDAXO Feed Aggregator",
+    "license": "MIT",
     "require": {
         "madcoda/php-youtube-api": "^1.0",
         "vimeo/vimeo-api": "^4.0",
