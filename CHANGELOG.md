@@ -12,3 +12,7 @@
 
 - Abhängigkeiten aktualisiert: `symfony/http-client` auf 8.x, `redaxo/php-cs-fixer-config` auf 2.19.0.
   - Keine Plattform-Inkompatibilitäten auf PHP 8.4 festgestellt.
+
+## 6.1.2 - 2026-01-08
+
+- Erhöhte minimale PHP-Version des AddOns auf `>=8.4` (erforderlich durch `symfony/http-client` 8.x).
