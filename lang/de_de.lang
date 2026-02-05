@@ -4,11 +4,16 @@ feeds_edit = bearbeiten
 feeds_delete = löschen
 feeds_delete_question = Wirklich löschen?
 
+perm_general_feeds[] = Feeds-Rechte
+perm_general_feeds[streams] = Streams verwalten
+perm_general_feeds[items] = Einträge bearbeiten
+
 feeds_search = Suche
 feeds_clear = Zurücksetzen
 feeds_search_term = Suchbegriff
 feeds_search_results = Gefunden:
 feeds_all_namespaces = Alle Namespaces
+feeds_all_status = Alle Status
 
 feeds_items = Einträge
 feeds_item_author = Autor
@@ -27,10 +32,29 @@ feeds_item_mediasource = MediaSource
 
 feeds_item_status_online = Online
 feeds_item_status_offline = Offline
+feeds_item_status_archived = Archiviert
 feeds_item_status_saved = Der Status wurde gespeichert.
 
 feeds_settings = Einstellungen
 feeds_settings_saved = Einstellungen wurden gespeichert.
+feeds_settings_save = Speichern
+feeds_settings_http = Netzwerk & Verbindungen
+feeds_settings_media = Medien-Downloads
+feeds_settings_logging = Protokollierung
+feeds_settings_http_timeout = HTTP Timeout
+feeds_settings_http_timeout_note = Timeout für einzelne HTTP-Requests (5-120 Sekunden). Bei langsamen Verbindungen erhöhen.
+feeds_settings_http_max_duration = Maximale Dauer
+feeds_settings_http_max_duration_note = Maximale Gesamtdauer inkl. Redirects in Sekunden. Muss größer als Timeout sein.
+feeds_settings_media_max_size = Maximale Mediengröße
+feeds_settings_media_max_size_note = Maximale Dateigröße für Medien-Downloads (1-500 MB). Größere Dateien werden übersprungen.
+feeds_settings_log_level = Log-Level
+feeds_settings_log_level_note = Bestimmt, welche Ereignisse protokolliert werden. "Info" kann bei vielen Feeds zu großen Log-Dateien führen.
+feeds_log_level_error = Nur kritische Fehler
+feeds_log_level_warning = Warnungen und Fehler (empfohlen)
+feeds_log_level_info = Alle Meldungen inkl. Netzwerkfehler
+feeds_settings_timeout_range = Der Timeout muss zwischen 5 und 120 Sekunden liegen.
+feeds_settings_duration_min = Die maximale Dauer muss größer als der Timeout sein.
+feeds_settings_media_size_range = Die Mediengröße muss zwischen 1 und 500 MB liegen.
 
 feeds_streams = Streams
 feeds_stream_add = Stream hinzufügen
@@ -52,6 +76,10 @@ feeds_stream_url = URL
 feeds_stream_status_activated = Aktiviert
 feeds_stream_status_deactivated = Deaktiviert
 feeds_stream_status_saved = Der Status wurde gespeichert.
+feeds_stream_health_check = Health-Check
+feeds_stream_truncate = Alle Einträge löschen
+feeds_stream_truncate_question = Wirklich alle Einträge dieses Streams löschen?
+feeds_stream_truncated = Alle Einträge wurden gelöscht.
 
 
 feeds_cronjob = Feeds: Feeds abrufen

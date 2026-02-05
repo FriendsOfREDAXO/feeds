@@ -98,6 +98,12 @@ class VimeoPro extends AbstractStream
                 continue;
             }
 
+            // Duplicate Detection
+            if ($item->getUrl() && Item::isDuplicate($item->getUrl(), $this->streamId, $item->getId())) {
+                \rex_logger::factory()->log('warning', sprintf('Feeds: Duplicate URL detected in stream %d: %s', $this->streamId, $item->getUrl()));
+                continue;
+            }
+
             $this->updateCount($item);
             $item->save();
         }

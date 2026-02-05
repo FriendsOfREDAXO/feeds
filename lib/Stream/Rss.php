@@ -96,10 +96,20 @@ class Rss extends AbstractStream
 
     public function fetch()
     {
+        $headers = [
+            'User-Agent' => 'Mozilla/5.0 (compatible; REDAXO Feeds Addon; +https://github.com/FriendsOfREDAXO/feeds)',
+        ];
+        
+        // Add conditional request headers if available
+        if (!empty($this->etag)) {
+            $headers['If-None-Match'] = $this->etag;
+        }
+        if (!empty($this->lastModified)) {
+            $headers['If-Modified-Since'] = $this->lastModified;
+        }
+        
         $symfonyClient = HttpClient::create([
-            'headers' => [
-                'User-Agent' => 'Mozilla/5.0 (compatible; REDAXO Feeds Addon; +https://github.com/FriendsOfREDAXO/feeds)',
-            ],
+            'headers' => $headers,
             'max_redirects' => 5,
             'timeout' => 10,
         ]);
@@ -110,6 +120,34 @@ class Rss extends AbstractStream
 
         try {
             $result = $feedIo->read($this->typeParams['url']);
+            
+            // Update Etag and Last-Modified from response
+            $response = $result->getResponse();
+            if ($response) {
+                $newEtag = $response->getHeader('ETag');
+                $newLastModified = $response->getHeader('Last-Modified');
+                
+                if ($newEtag && is_array($newEtag)) {
+                    $newEtag = reset($newEtag);
+                }
+                if ($newLastModified && is_array($newLastModified)) {
+                    $newLastModified = reset($newLastModified);
+                }
+                
+                // Save cache headers to database
+                if ($newEtag || $newLastModified) {
+                    $sql = \rex_sql::factory();
+                    $sql->setTable(\rex::getTable('feeds_stream'));
+                    $sql->setWhere(['id' => $this->streamId]);
+                    if ($newEtag) {
+                        $sql->setValue('etag', $newEtag);
+                    }
+                    if ($newLastModified) {
+                        $sql->setValue('last_modified', $newLastModified);
+                    }
+                    $sql->update();
+                }
+            }
             
             /** @var \FeedIo\Feed\ItemInterface $rssItem */
             foreach ($result->getFeed() as $rssItem) {

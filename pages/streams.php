@@ -35,6 +35,59 @@ if ('fetch' === $func) {
     $func = '';
 }
 
+if ('healthcheck' === $func) {
+    $stream = Stream::get($id);
+    // Hole gespeicherte type_params und type aus Datenbank
+    $sql = rex_sql::factory();
+    $sql->setQuery('SELECT type, type_params FROM ' . Stream::table() . ' WHERE id = :id', ['id' => $id]);
+    $stream_type = $sql->getValue('type');
+    $type_params = json_decode($sql->getValue('type_params'), true) ?: [];
+    $url = '';
+    
+    // URL ermitteln je nach Stream-Typ
+    $type = explode('_', $stream_type)[0];
+    switch ($type) {
+        case 'rss':
+        case 'podcast':
+        case 'ical':
+            $url = $type_params['url'] ?? '';
+            break;
+        case 'youtube':
+            if (str_contains($stream_type, 'channel')) {
+                $channelId = $type_params['channel_id'] ?? '';
+                $url = $channelId ? 'https://www.youtube.com/channel/' . $channelId : '';
+            } elseif (str_contains($stream_type, 'playlist')) {
+                $playlistId = $type_params['playlist_id'] ?? '';
+                $url = $playlistId ? 'https://www.youtube.com/playlist?list=' . $playlistId : '';
+            }
+            break;
+    }
+    
+    if ($url) {
+        try {
+            $client = \Symfony\Component\HttpClient\HttpClient::create([
+                'timeout' => rex_addon::get('feeds')->getConfig('http_timeout', 10),
+                'max_duration' => rex_addon::get('feeds')->getConfig('http_max_duration', 30),
+            ]);
+            $response = $client->request('GET', $url);
+            $statusCode = $response->getStatusCode();
+            
+            if ($statusCode >= 200 && $statusCode < 300) {
+                echo rex_view::success(sprintf('Stream ist erreichbar (HTTP %d)<br><small>%s</small>', $statusCode, htmlspecialchars($url)));
+            } else {
+                echo rex_view::warning(sprintf('Stream antwortet mit HTTP %d<br><small>%s</small>', $statusCode, htmlspecialchars($url)));
+            }
+        } catch (\Symfony\Component\HttpClient\Exception\TransportException $e) {
+            echo rex_view::error('Transport-Fehler: ' . $e->getMessage() . '<br><small>' . htmlspecialchars($url) . '</small>');
+        } catch (\Exception $e) {
+            echo rex_view::error('Fehler beim Health-Check: ' . $e->getMessage());
+        }
+    } else {
+        echo rex_view::warning('Keine URL für Health-Check gefunden. Stream-Typ: ' . $stream->getType());
+    }
+    $func = '';
+}
+
 if ('delete' === $func) {
     // 1. Alle Media-Files für diesen Stream löschen
     MediaHelper::deleteStreamMedia($id);
@@ -119,8 +172,12 @@ if ('' == $func) {
     });
 
     $list->addColumn($this->i18n('function'), $this->i18n('edit'));
-    $list->setColumnLayout($this->i18n('function'), ['<th class="rex-table-action" colspan="3">###VALUE###</th>', '<td class="rex-table-action">###VALUE###</td>']);
+    $list->setColumnLayout($this->i18n('function'), ['<th class="rex-table-action" colspan="4">###VALUE###</th>', '<td class="rex-table-action">###VALUE###</td>']);
     $list->setColumnParams($this->i18n('function'), ['func' => 'edit', 'id' => '###id###']);
+
+    $list->addColumn('healthcheck', '<i class="rex-icon fa-heartbeat"></i> ' . $this->i18n('stream_health_check'), -1, ['', '<td class="rex-table-action">###VALUE###</td>']);
+    $list->setColumnParams('healthcheck', ['func' => 'healthcheck', 'id' => '###id###']);
+    $list->addLinkAttribute('healthcheck', 'data-pjax', 'false');
 
     $list->addColumn('delete', $this->i18n('delete'), -1, ['', '<td class="rex-table-action">###VALUE###</td>']);
     $list->setColumnParams('delete', ['func' => 'delete', 'id' => '###id###']);

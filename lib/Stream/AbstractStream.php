@@ -52,17 +52,25 @@ abstract class AbstractStream
      */
     public function getPreloadedItems($number = 5, $orderBy = 'date')
     {
-        $items = [];
-        $result = rex_sql::factory();
-        $result->setQuery('SELECT id FROM ' . rex::getTablePrefix() . 'feeds_item WHERE status = 1 AND stream_id = ' . $this->streamId . ' ORDER BY ' . $orderBy . ' DESC LIMIT 0, ' . $number . ';');
-
-        for ($i = 0; $i < $result->getRows(); ++$i) {
-            $item = Item::get($result->getValue('id'));
-            if (null != $item) {
-                $items[] = $item;
-            }
-            $result->next();
+        $number = (int) $number;
+        
+        // Whitelist allowed order columns to prevent SQL injection
+        $allowedOrderColumns = ['date', 'id', 'title', 'created_at'];
+        if (!in_array($orderBy, $allowedOrderColumns, true)) {
+            $orderBy = 'date';
         }
+        
+        $sql = rex_sql::factory();
+        $data = $sql->getArray(
+            'SELECT * FROM ' . rex::getTablePrefix() . 'feeds_item WHERE status = 1 AND stream_id = :stream_id ORDER BY ' . $orderBy . ' DESC LIMIT :limit',
+            ['stream_id' => (int) $this->streamId, 'limit' => $number]
+        );
+
+        $items = [];
+        foreach ($data as $row) {
+            $items[] = Item::createFromDbRow($row);
+        }
+        
         return $items;
     }
 

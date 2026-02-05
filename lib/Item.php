@@ -95,48 +95,83 @@ class Item
     }
 
     /**
+     * Check if URL already exists in database for given stream.
+     * @param string $url URL to check
+     * @param int $streamId Stream ID to check within
+     * @param int|null $excludeId Optional Item ID to exclude from check (for updates)
+     * @return bool True if duplicate found, false otherwise
+     */
+    public static function isDuplicate($url, $streamId, $excludeId = null)
+    {
+        if (empty($url)) {
+            return false;
+        }
+        
+        $sql = rex_sql::factory();
+        $query = 'SELECT COUNT(*) as count FROM ' . self::table() . ' WHERE `url` = :url AND `stream_id` = :stream_id';
+        $params = ['url' => $url, 'stream_id' => (int) $streamId];
+        
+        if ($excludeId !== null) {
+            $query .= ' AND `id` != :exclude_id';
+            $params['exclude_id'] = (int) $excludeId;
+        }
+        
+        $sql->setQuery($query, $params);
+        return $sql->getValue('count') > 0;
+    }
+
+    /**
      * Read object stored in database.
      * @return Item|null Feeds item or null if not found
      */
     public static function get($id)
     {
         $item = new self();
-        $item->primaryId = $id;
+        $item->primaryId = (int) $id;
 
         $sql = rex_sql::factory();
-        $sql->setQuery('SELECT * FROM ' . self::table() . ' WHERE `id` = ' . $id);
+        $sql->setQuery('SELECT * FROM ' . self::table() . ' WHERE `id` = :id', ['id' => $item->primaryId]);
 
         if ($sql->getRows()) {
-            $item->changedByUser = '1' == $sql->getValue('changed_by_user') ? true : false;
-            $item->exists = '1' == $sql->getValue('changed_by_user') ? false : true;
-            $item->streamId = $sql->getValue('stream_id');
-            $item->uid = $sql->getValue('uid');
-            $item->title = $sql->getValue('title');
-            $item->content = $sql->getValue('content');
-            $item->contentRaw = $sql->getValue('content_raw');
-            $item->url = $sql->getValue('url');
-            $dateValue = $sql->getValue('date');
-            if (!empty($dateValue)) {
-                try {
-                    $item->date = new DateTimeImmutable($dateValue);
-                } catch (Exception $e) {
-                    // Handle invalid date format gracefully
-                    $item->date = null;
-                    // Optionally log the error
-                    // error_log('Invalid date format: ' . $dateValue);
-                }
-            } else {
-                $item->date = null;
-            }
-            $item->author = $sql->getValue('author');
-            $item->username = $sql->getValue('username');
-            $item->language = $sql->getValue('language');
-            $item->media_filename = $sql->getValue('media_filename');
-            $item->raw = $sql->getValue('raw');
-            $item->status = '1' == $sql->getValue('changed_by_user') ? true : false;
-            return $item;
+            return self::createFromDbRow($sql->getRow());
         }
         return null;
+    }
+
+    /**
+     * Create Item instance from database row.
+     * @internal
+     * @return Item
+     */
+    public static function createFromDbRow(array $row)
+    {
+        $item = new self();
+        $item->primaryId = $row['id'] ?? 0;
+        $item->changedByUser = '1' == ($row['changed_by_user'] ?? '0');
+        $item->exists = '1' != ($row['changed_by_user'] ?? '0');
+        $item->streamId = $row['stream_id'] ?? 0;
+        $item->uid = $row['uid'] ?? '';
+        $item->title = $row['title'] ?? '';
+        $item->content = $row['content'] ?? '';
+        $item->contentRaw = $row['content_raw'] ?? '';
+        $item->url = $row['url'] ?? '';
+        $dateValue = $row['date'] ?? null;
+        if (!empty($dateValue)) {
+            try {
+                $item->date = new DateTimeImmutable($dateValue);
+            } catch (Exception $e) {
+                $item->date = null;
+            }
+        } else {
+            $item->date = null;
+        }
+        $item->author = $row['author'] ?? '';
+        $item->username = $row['username'] ?? '';
+        $item->language = $row['language'] ?? '';
+        $item->media_filename = $row['media_filename'] ?? null;
+        $item->raw = $row['raw'] ?? '';
+        $item->status = '1' == ($row['status'] ?? '1');
+        return $item;
     }
 
     /**

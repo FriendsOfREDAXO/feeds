@@ -6,15 +6,59 @@ REDAXO Feed Aggregator
 
 ## Features
 
-* Abruf von YouTube-, Vimeo-, RSS-, Mastodon- und Podcast-Streams.
+* Abruf von YouTube-, Vimeo-, RSS-, Mastodon- und Podcast-Streams
 * Dauerhaftes Speichern der Beiträge
-* Speicherung des Hauptmediums Im data-Ordner des AddOns
+* Speicherung des Hauptmediums im data-Ordner des AddOns
 * Nachträgliche Aktualisierung der Beiträge (z.B. nach einem Update / einer Korrektur)
 * Erweiterbar durch eigene Feed-Provider
 * Feeds können in Watson gesucht werden `feed suchbegriff`
 * Abruf aller oder einzelner Feeds per Cronjob
 * Bereinigen von Streams (Löschen aller Einträge) direkt im Backend
 * **Filterung:** Positivliste und Negativliste für jeden Stream konfigurierbar (z.B. nur Beiträge mit bestimmten Hashtags importieren)
+* **Archivierung:** 3 Status-Zustände (Online/Offline/Archiviert) für Einträge
+* **Content-Preview:** Tooltip-Vorschau beim Hover über Titel
+* **Duplicate Detection:** Automatische Erkennung doppelter URLs beim Fetch
+* **Stream Health-Check:** Testen der Erreichbarkeit von Feed-Quellen
+* **Granulare Berechtigungen:** Separate Rechte für Streams und Einträge
+* **Konfigurierbare Einstellungen:** HTTP-Timeouts, Media-Größen, Log-Level
+* **Medien-Lightbox:** Klickbare Thumbnails mit Vollbild-Ansicht
+
+## Neu in Version 6.2.0
+
+### Status-Verwaltung
+- **3 Status-Zustände:** Online (1), Offline (0), Archiviert (2)
+- **Status-Filter:** Dropdown-Filter in der Einträge-Liste
+- **Quick-Toggle:** Durch Klick auf Status durch alle Zustände wechseln
+
+### Content-Vorschau
+- **Tooltip-Preview:** Erste 200 Zeichen des Contents beim Hover über Titel
+- **Gepunktete Unterstreichung:** Zeigt verfügbare Vorschau an
+
+### Duplicate Detection
+- **Automatische Prüfung:** Erkennt doppelte URLs beim Fetch
+- **Warning-Log:** Duplikate werden protokolliert aber nicht importiert
+- **Stream-spezifisch:** Prüft nur innerhalb des gleichen Streams
+
+### Stream Health-Check
+- **Erreichbarkeit testen:** Button zum Prüfen ob Stream-URL erreichbar ist
+- **HTTP-Status anzeigen:** Zeigt Response-Code und Fehlermeldungen
+- **Unterstützte Typen:** RSS, Podcast, YouTube (Channel/Playlist), iCal
+
+### Einstellungen
+- **HTTP-Timeouts:** Konfigurierbar 5-120 Sekunden
+- **Maximale Dauer:** Gesamtdauer inkl. Redirects
+- **Media-Größe:** Max. Dateigröße für Downloads (1-500 MB)
+- **Log-Level:** Error / Warning / Info
+
+### Berechtigungen
+- **feeds[streams]:** Streams erstellen, bearbeiten, löschen, Einstellungen
+- **feeds[items]:** Einträge bearbeiten, Status ändern
+
+### Performance & Sicherheit
+- **SQL-Injection behoben:** Prepared Statements in allen Queries
+- **N+1 Problem gelöst:** Batch-Loading in Listen-Ansicht
+- **HTTP-Caching:** Etag/Last-Modified Header für effiziente Updates
+- **Composite Index:** Optimierte Queries durch `stream_status_date` Index
 
 ## Migration zu Namespaces (REDAXO 6 Vorbereitung)
 
@@ -96,11 +140,17 @@ Jetzt werden Feeds-Streams regelmäßig dann abgerufen, wenn die Website aufgeru
 
 ### Feed ausgeben
 
+**Wichtig:** In den Queries die Status-Werte beachten:
+- **Status 1** = Online (für Frontend-Ausgabe)
+- **Status 0** = Offline (nicht ausgeben)
+- **Status 2** = Archiviert (nicht standardmäßig ausgeben, außer für Archiv-Seiten)
+
 Um ein Feed auszugeben, können die Inhalte in einem Modul oder Template per SQL oder mit nachfolgender Methode abgerufen werden, z.B.:
 
 ```php
 <?php 
 use FriendsOfRedaxo\Feeds\Stream;
+use FriendsOfRedaxo\Feeds\Item;
 
 $stream_id = 1;
 // Mediamanager Typ mit feeds als erster Effekt
@@ -110,7 +160,8 @@ $media_manager_type = 'feeds_thumb';
 $stream = Stream::get($stream_id);
 // Alternativ: $stream = rex_feeds_stream::get($stream_id); // Weiterhin möglich, aber deprecated
 
-$items = $stream->getPreloadedItems(); // Standard gibt 5 Einträge zurück, sonst gewünschte Anzahl übergeben
+// Nur Online-Einträge ausgeben (status = 1)
+$items = $stream->getPreloadedItems(5, 1); // 5 Einträge mit Status 1 (Online)
     foreach($items as $item) {
         // Titel ermitteln und alles verlinken
         print '<a href="'. $item->getUrl() .'" title="'. rex_escape($stream->getTitle()) .'">';
@@ -121,6 +172,46 @@ $items = $stream->getPreloadedItems(); // Standard gibt 5 Einträge zurück, son
        print '<p>'.rex_escape($item->getContent()).'</p>';
        print '</a>';
     }
+?>
+```
+
+#### Erweiterte Queries mit Status-Filter
+
+```php
+<?php
+use FriendsOfRedaxo\Feeds\Item;
+
+// Nur Online-Einträge eines Streams
+$sql = rex_sql::factory();
+$sql->setQuery('
+    SELECT * FROM ' . Item::table() . ' 
+    WHERE stream_id = :stream_id 
+    AND status = 1 
+    ORDER BY date DESC 
+    LIMIT 10
+', ['stream_id' => $stream_id]);
+
+// Archiv-Seite: Nur archivierte Einträge
+$sql->setQuery('
+    SELECT * FROM ' . Item::table() . ' 
+    WHERE stream_id = :stream_id 
+    AND status = 2 
+    ORDER BY date DESC
+', ['stream_id' => $stream_id]);
+
+// Alle nicht-archivierten Einträge (Online + Offline)
+$sql->setQuery('
+    SELECT * FROM ' . Item::table() . ' 
+    WHERE status != 2 
+    ORDER BY date DESC
+');
+
+// Items durchlaufen
+while ($sql->hasNext()) {
+    $item = Item::createFromDbRow($sql->getRow());
+    // ... Ausgabe
+    $sql->next();
+}
 ?>
 ```
 

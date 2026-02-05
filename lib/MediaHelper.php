@@ -43,18 +43,28 @@ class MediaHelper
             return null;
         }
 
+        $addon = \rex_addon::get('feeds');
+        $timeout = (int) $addon->getConfig('http_timeout', 10);
+        $maxDuration = (int) $addon->getConfig('http_max_duration', 30);
+        $maxSizeMB = (int) $addon->getConfig('media_max_size', 50);
+        $logLevel = $addon->getConfig('log_level', 'warning');
+
         try {
             $client = HttpClient::create([
                 'headers' => [
                     'User-Agent' => 'Mozilla/5.0 (compatible; REDAXO Feeds Addon; +https://github.com/FriendsOfREDAXO/feeds)',
                 ],
                 'max_redirects' => 5,
-                'timeout' => 10,
+                'timeout' => $timeout,
+                'max_duration' => $maxDuration,
             ]);
 
             $response = $client->request('GET', $url);
 
             if (200 !== $response->getStatusCode()) {
+                if (in_array($logLevel, ['warning', 'info'])) {
+                    rex_logger::factory()->log('warning', 'Failed to download media: HTTP ' . $response->getStatusCode() . ' for URL: ' . $url);
+                }
                 return null;
             }
 
@@ -86,6 +96,15 @@ class MediaHelper
 
             $filepath = $mediaPath . '/' . $filename;
             $content = $response->getContent();
+            
+            // Check content size
+            $maxSize = $maxSizeMB * 1024 * 1024;
+            if (strlen($content) > $maxSize) {
+                if (in_array($logLevel, ['warning', 'info'])) {
+                    rex_logger::factory()->log('warning', sprintf('Media file too large (>%dMB): %s', $maxSizeMB, $url));
+                }
+                return null;
+            }
 
             // Validate image
             if (@imagecreatefromstring($content)) {
@@ -94,9 +113,20 @@ class MediaHelper
                     @chmod($filepath, rex::getFilePerm());
                     return $filename;
                 }
+            } else {
+                if (in_array($logLevel, ['warning', 'info'])) {
+                    rex_logger::factory()->log('warning', 'Invalid image format for URL: ' . $url);
+                }
+            }
+        } catch (\Symfony\Component\HttpClient\Exception\TransportException $e) {
+            // Specific handling for DNS/network errors - do not spam logs
+            if ('info' === $logLevel) {
+                rex_logger::factory()->log('info', 'Network error while downloading media: ' . $e->getMessage() . ' | URL: ' . $url);
             }
         } catch (Exception $e) {
-            rex_logger::logException($e);
+            if (in_array($logLevel, ['error', 'warning'])) {
+                rex_logger::logException($e);
+            }
         }
 
         return null;
