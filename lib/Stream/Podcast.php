@@ -161,7 +161,7 @@ class Podcast extends AbstractStream
                     $item = new Item($this->streamId, $uid);
 
                     $item->setTitle($title ?: '');
-                    $content = $rssItem->getContent() ?: $rssItem->getDescription();
+                    $content = $rssItem->getContent() ?: (method_exists($rssItem, 'getDescription') ? $rssItem->getDescription() : null);
                     $item->setContentRaw($content);
                     $item->setContent(strip_tags($content));
                     $item->setUrl($rssItem->getLink() ?: '');
