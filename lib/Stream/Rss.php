@@ -84,7 +84,7 @@ class Rss extends AbstractStream
         }
 
         // 4. Prüfe auf Bilder im Content
-        $content = $rssItem->getContent() ?: $rssItem->getDescription();
+        $content = $rssItem->getContent() ?: (method_exists($rssItem, 'getDescription') ? $rssItem->getDescription() : null);
         if ($content) {
             if (preg_match('/<img[^>]+src=[\'"]([^\'"]+)[\'"][^>]*>/i', $content, $matches)) {
                 return $matches[1];
@@ -164,7 +164,7 @@ class Rss extends AbstractStream
 
                     // Basis-Felder setzen
                     $item->setTitle($title ?: '');
-                    $content = $rssItem->getContent() ?: $rssItem->getDescription();
+                    $content = $rssItem->getContent() ?: (method_exists($rssItem, 'getDescription') ? $rssItem->getDescription() : null);
                     $item->setContentRaw($content);
                     $item->setContent(strip_tags($content));
                     $item->setUrl($rssItem->getLink() ?: '');
