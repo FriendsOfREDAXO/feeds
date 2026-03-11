@@ -1,8 +1,2 @@
 <?php
-
-/**
- * @deprecated Use FriendsOfRedaxo\Feeds\MediaManagerEffect instead
- */
-class rex_effect_feeds extends \FriendsOfRedaxo\Feeds\MediaManagerEffect
-{
-}
+// Class rex_effect_feeds has been moved to lib/rex_effect_feeds.php

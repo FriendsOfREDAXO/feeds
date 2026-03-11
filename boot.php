@@ -17,7 +17,7 @@ if (\rex_addon::get('cronjob')->isAvailable()) {
     \rex_cronjob_manager::registerType(\FriendsOfRedaxo\Feeds\Cronjob::class);
 }
 
-\rex_media_manager::addEffect(\FriendsOfRedaxo\Feeds\MediaManagerEffect::class);
+\rex_media_manager::addEffect(\rex_effect_feeds::class);
 
 if (\rex_addon::get('watson')->isAvailable()) {
     \rex_extension::register(

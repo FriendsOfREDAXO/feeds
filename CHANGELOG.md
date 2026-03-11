@@ -1,5 +1,12 @@
 # Changelog
 
+## 6.2.2 - 2026-03-11
+
+### Bugfixes
+
+- **Media Manager Effect**: `rex_effect_feeds` ist jetzt die primäre Implementierung (non-namespaced) und direkt mit `rex_media_manager::addEffect()` kompatibel – behebt "Class not found"-Fehler bei selbst angelegten Media-Manager-Typen (Issue #260)
+- `FriendsOfRedaxo\Feeds\MediaManagerEffect` bleibt als `@deprecated` Alias erhalten für Abwärtskompatibilität
+
 ## 6.2.0 - 2026-02-05
 
 ### Neue Features
