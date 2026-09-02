@@ -1,5 +1,11 @@
 # Changelog
 
+## 6.2.4 - 2026-09-02
+
+### Bugfixes
+
+- **Medien**: `Item::setMedia()` löschte die vorhandene Mediendatei, bevor der Download versucht wurde. Schlug er fehl — HTTP-Fehler, Timeout, Datei zu groß, kein gültiges Bild —, war das lokale Bild verloren und `media_filename` auf `null`. Jetzt wird zuerst heruntergeladen und erst nach Erfolg aufgeräumt; die alte Datei bleibt liegen, wenn der Download scheitert (#275)
+
 ## 6.2.2 - 2026-03-11
 
 ### Bugfixes
