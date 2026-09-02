@@ -576,20 +576,32 @@ class Item
 
     /**
      * Set media from URL.
+     *
+     * Keeps the current file when the download fails, so a temporary error at the
+     * source does not leave the item without an image.
+     *
      * @param string $url URL of the media file
      */
     public function setMedia($url)
     {
-        // Delete old media file if exists
-        if ($this->media_filename) {
-            $filepath = MediaHelper::getMediaPath() . '/' . $this->media_filename;
+        $previousFilename = $this->media_filename;
+
+        $filename = MediaHelper::saveMediaFile($url, $this->streamId, $this->uid);
+
+        if (null === $filename) {
+            return;
+        }
+
+        // Only remove the previous file when the new one has a different name;
+        // saveMediaFile() overwrites in place when the extension is unchanged.
+        if ($previousFilename && $previousFilename !== $filename) {
+            $filepath = MediaHelper::getMediaPath() . '/' . $previousFilename;
             if (file_exists($filepath)) {
                 unlink($filepath);
             }
         }
 
-        // Save new media file
-        $this->media_filename = MediaHelper::saveMediaFile($url, $this->streamId, $this->uid);
+        $this->media_filename = $filename;
     }
 
     public function setMediaSource($value)
